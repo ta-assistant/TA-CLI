@@ -18,16 +18,16 @@ object1.method1()
 object1.method2(parameter)
 
 # to be clear about those parameter
-# `path` on window path can't directly use by them self you need to add r in font of the path string and double backslash in the end of path string
-r"this\is\path\\" 
+# `path` on window path can't directly use by them self you need to add r in font of the path string
+r"this\is\path" 
 # in Dirmanagement you should put directory name that you want in to the back of the path
 r"this\is\path\dirname" 
 
 ### anyone whio uses macOS, please give me some information that what is the format of the path ###
 
-# `filename` need to be filename and its extension
-filename.txt
-filename.json
+# `filename` need to be filename and its extension and have backslash in front of file name
+r"\filename.txt"
+r"\filename.json"
 
 # if there is anything in doubt, you can mention me in discord
 """
@@ -39,16 +39,19 @@ class FileEditor:
     @staticmethod
     def create_file(path: str, filename: str) -> None:
         with open(path+filename, 'w') as fp:
-             pass
-    @staticmethod
-    def delete_file(path:str,filename:str) -> None:
-        if os.path.exists(path+filename):
-            os.remove(path+filename)
-        else:
-            print("The "+path+filename+" does not exist")
+            pass
 
     @staticmethod
-    def read_file(path: str, filename: str):
+    def delete_file(path:str,filename:str) -> bool:
+        if os.path.exists(path+filename):
+            os.remove(path+filename)
+            return True
+        else:
+            print("The "+path+filename+" does not exist")
+            return False
+
+    @staticmethod
+    def read_file(path: str, filename: str) -> None:
         pass
 
 
@@ -59,8 +62,10 @@ class DirManagement:
             os.mkdir(path)
         except OSError:
             print ("Creation of the directory %s failed" % path)
+            return False
         else:
             print ("Successfully created the directory %s " % path)
+            return True
         
     @staticmethod
     def remove_dir(path: str) -> None:
@@ -68,6 +73,8 @@ class DirManagement:
             shutil.rmtree(path)
         except OSError:
             print ("Deletion of the directory %s failed" % path)
+            return False
         else:
             print ("Successfully deleted the directory %s" % path)
+            return True
                 
