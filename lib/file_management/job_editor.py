@@ -3,6 +3,7 @@ Author vitvara
 =================================================================================================================
 Job editor is about job.json
 its have method that can edit job.json and it already handle case that not have job.json or already have job.json
+path need to be ta dir
 """
 
 from file_management_lib import FileEditor
@@ -12,20 +13,20 @@ import json
 class JobEditor(FileEditor):
     def __init__(self,path : str) -> None:
         self.path = path
-        if os.path.exists(self.path+"draft.json"):
-            self.draft = self.read_file("draft.json")["output_draft"]
+        if os.path.exists(self.path+"\draft.json"):
+            self.draft = self.read_file("\draft.json")["output_draft"]
         else:
             pass
         self.create_file_job()
 
     def init_job(self) -> None:
-        self.create_file(self.path,"job.json")
-        with open(self.path+"job.json", 'w') as outfile:
+        self.create_file(self.path,"\job.json")
+        with open(self.path+"\job.json", 'w') as outfile:
             json.dump({"run_job":[]}, outfile)
             outfile.close()
 
     def create_file_job(self) -> None:
-        if not os.path.exists(self.path+"job.json"):
+        if not os.path.exists(self.path+"\job.json"):
             self.init_job()
             print("job.json created")
         else:
@@ -45,7 +46,7 @@ class JobEditor(FileEditor):
         store = {}
         for key,stu_data in zip(self.draft,stu_data):
             store[key] = stu_data
-        with open(self.path+"job.json", "r+") as file:
+        with open(self.path+"\job.json", "r+") as file:
             data = json.load(file)
             data["run_job"].append(store)
             print(data)
@@ -60,7 +61,7 @@ class JobEditor(FileEditor):
         return data
 
 if __name__ == "__main__":
-    job = JobEditor(r"C:\Users\Admin\Desktop\ex1\ta\\")
+    job = JobEditor(r"C:\Users\Admin\Desktop\ex1\ta")
     stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice job"]
     print(job.write_job(stu_data))
 
