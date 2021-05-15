@@ -1,8 +1,9 @@
 """
 Author vitvara
-
+=================================================================================================================
+Job editor is about job.json
+its have method that can edit job.json and it already handle case that not have job.json or already have job.json
 """
-
 
 from file_management_lib import FileEditor
 import os 
