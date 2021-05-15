@@ -12,10 +12,15 @@ class FileEditor:
             os.remove(path+filename)
         else:
             print("The "+path+filename+" does not exist")
-        
+
+    @staticmethod
+    def read_file(path,filename):
+        pass
+
+
 class DirManagement:
     @staticmethod
-    def create_dir(path):
+    def create_dir(path) -> str:
         try:
             os.mkdir(path)
         except OSError:
@@ -24,7 +29,7 @@ class DirManagement:
             print ("Successfully created the directory %s " % path)
         
     @staticmethod
-    def remove_dir(path):
+    def remove_dir(path) -> str:
         try:
             shutil.rmtree(path)
         except OSError:
