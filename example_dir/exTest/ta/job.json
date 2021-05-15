@@ -1,0 +1,23 @@
+
+{
+    "run_job": [
+      {
+        "file_name": "12345678_test_ex1.zip",
+        "student_id": "12345678",
+        "name": "test",
+        "ex": "ex1",
+        "score1": "10",
+        "score2": "1",
+        "comment": "This is a comment"
+      },
+      {
+        "file_name": "12345679_test2_ex1.zip",
+        "student_id": "12345679",
+        "name": "test2",
+        "ex": "ex1",
+        "score1": "10",
+        "score2": "1",
+        "comment": "This is a comment for job 2"
+      }
+    ]
+  }
