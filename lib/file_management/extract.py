@@ -1,18 +1,34 @@
-#from file_management_lib import FlieManagement
+import os
 
-#class ExtractFile(FlieManagement):
-#    pass
+A = "C:/Users/detec/Documents/Grid"
+path = A
+zip = os.listdir(path)
+count = 0
+print(zip)
+
+for i in zip :
+    count += 1
+print(count)
+
+from file_management_lib import DirManagement
+
+create_dir = DirManagement().create_dir
 
 import zipfile
 
-with zipfile.ZipFile(r"C:\Users\detec\Documents\Grid\Files.zip") as my_zip:
-#    print(my_zip.namelist())
-#    my_zip.extractall(r"C:\Users\detec\Documents\Grid\Unzip")
-#    my_zip.extractall(r"C:\Users\detec\Documents\Grid")
-    my_zip.extractall("Files")
-    my_zip.close()
+for i in zip:
+    name = A+f"/{i}"
+    folder = name[0:-4]
+    print(name,folder)
+    with zipfile.ZipFile(name) as my_zip:
+        create_dir(folder)
+        my_zip.extractall(folder)
+        my_zip.close()
 
-#target = C:\Users\detec\Documents\Grid\Files.zip
-#handle = zipfile.ZipFile(target)
-#handle.extractall()
-#handle.close()
+
+#with zipfile.ZipFile(r"C:\Users\detec\Documents\Grid\Files.zip") as my_zip:
+#    create_dir(r"C:\Users\detec\Documents\Grid\Files")
+#    my_zip.extractall(r"C:\Users\detec\Documents\Grid\Files")
+#    my_zip.close()
+
+    
