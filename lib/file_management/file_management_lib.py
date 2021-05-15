@@ -18,7 +18,7 @@ object1.method1()
 object1.method2(parameter)
 
 # to be clear about those parameter
-# `path` on window path can't directly use by them self you need to add r in font of the path string
+# `path` on window path can't directly use by them self you need to add r in font of the path string to avoid backslash error
 r"this\is\path" 
 # in Dirmanagement you should put directory name that you want in to the back of the path
 r"this\is\path\dirname" 
