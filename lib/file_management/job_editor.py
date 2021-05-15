@@ -1,3 +1,9 @@
+"""
+Author vitvara
+
+"""
+
+
 from file_management_lib import FileEditor
 import os 
 import json
@@ -11,17 +17,28 @@ class JobEditor(FileEditor):
             pass
         self.create_file_job()
 
-    def create_file_job(self):
+    def init_job(self) -> None:
+        self.create_file(self.path,"job.json")
+        with open(self.path+"job.json", 'w') as outfile:
+            json.dump({"run_job":[]}, outfile)
+            outfile.close()
+
+    def create_file_job(self) -> None:
         if not os.path.exists(self.path+"job.json"):
-            self.create_file(self.path,"job.json")
-            with open(self.path+"job.json", 'w') as outfile:
-                json.dump({"run_job":[]}, outfile)
-                outfile.close()
+            self.init_job()
             print("job.json created")
         else:
             print("job.json exits")
 
     def write_job(self, stu_data : list) -> bool:
+        """write job.json
+
+        Args:
+            stu_data (list): list of student data (should ordered)
+
+        Returns:
+            bool: if the stu_data does not match with draft.json return False else True
+        """
         if len(self.draft) != len(stu_data):
             return False
         store = {}

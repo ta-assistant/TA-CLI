@@ -37,24 +37,24 @@ import shutil
 
 class FileEditor:
     @staticmethod
-    def create_file(path,filename) -> str:
+    def create_file(path: str, filename: str) -> None:
         with open(path+filename, 'w') as fp:
              pass
     @staticmethod
-    def delete_file(path,filename) -> str:
+    def delete_file(path:str,filename:str) -> None:
         if os.path.exists(path+filename):
             os.remove(path+filename)
         else:
             print("The "+path+filename+" does not exist")
 
     @staticmethod
-    def read_file(path,filename):
+    def read_file(path: str, filename: str):
         pass
 
 
 class DirManagement:
     @staticmethod
-    def create_dir(path) -> str:
+    def create_dir(path: str) -> None:
         try:
             os.mkdir(path)
         except OSError:
@@ -63,7 +63,7 @@ class DirManagement:
             print ("Successfully created the directory %s " % path)
         
     @staticmethod
-    def remove_dir(path) -> str:
+    def remove_dir(path: str) -> None:
         try:
             shutil.rmtree(path)
         except OSError:
