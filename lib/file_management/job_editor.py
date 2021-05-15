@@ -12,6 +12,13 @@ import json
 
 class JobEditor(FileEditor):
     def __init__(self,path : str) -> None:
+        """
+        create draft.json on ta dir when its not exits
+        and create job.json
+
+        Args:
+            path (str): path of ta directory
+        """
         self.path = path
         if os.path.exists(self.path+"\draft.json"):
             self.draft = self.read_file("\draft.json")["output_draft"]
@@ -33,7 +40,7 @@ class JobEditor(FileEditor):
             print("job.json exits")
 
     def write_job(self, stu_data : list) -> bool:
-        """write job.json
+        """add student data to job.json
 
         Args:
             stu_data (list): list of student data (should ordered)
