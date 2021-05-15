@@ -42,7 +42,7 @@ class FileEditor:
             pass
 
     @staticmethod
-    def delete_file(path:str,filename:str) -> bool:
+    def delete_file(path: str,filename: str) -> bool:
         if os.path.exists(path+filename):
             os.remove(path+filename)
             return True

@@ -9,30 +9,32 @@ from lib.file_management import file_management_lib
 
 
 class TestFileEditor(unittest.TestCase):
+    def setUp(self) -> None:
+        self.file_editor = file_management_lib.FileEditor()
+        return super().setUp()
     def test_create_file(self):
         """
         parameter: path: str, filename: str
         return None
-
         """
-        file_editor = file_management_lib.FileEditor()
-        self.assertIsNone(file_editor.create_file(currentdir,r"\test.txt"))
+        
+        self.assertIsNone(self.file_editor.create_file(currentdir,r"\test.txt"))
 
     def test_read_file(self):
         """
         pass
         """
-        file_editor = file_management_lib.FileEditor()
-        self.assertIsNone(file_editor.read_file(currentdir,r"test.txt"))
+
+        self.assertIsNone(self.file_editor.read_file(currentdir,r"test.txt"))
 
     def test_delete_file(self):
         """
         parameter: path: str, filename: str
         return bool -> if file has been delete return True else: False
         """
-        file_editor = file_management_lib.FileEditor()
-        self.assertTrue(file_editor.delete_file(currentdir,r"\test.txt"))
-        self.assertFalse(file_editor.delete_file(currentdir,r"\test.txt"))
+
+        self.assertTrue(self.file_editor.delete_file(currentdir,r"\test.txt"))
+        self.assertFalse(self.file_editor.delete_file(currentdir,r"\test.txt"))
 
 
 class TestDirManagement(unittest.TestCase):

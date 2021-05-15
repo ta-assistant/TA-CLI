@@ -23,8 +23,7 @@ class JobEditor(FileEditor):
         if os.path.exists(self.path+"\draft.json"):
             self.draft = self.read_file("\draft.json")["output_draft"]
         else:
-            pass
-        self.create_file_job()
+            self.draft = None
 
     def init_job(self) -> None:
         self.create_file(self.path,"\job.json")
@@ -32,12 +31,14 @@ class JobEditor(FileEditor):
             json.dump({"run_job":[]}, outfile)
             outfile.close()
 
-    def create_file_job(self) -> None:
+    def create_file_job(self) -> bool:
         if not os.path.exists(self.path+"\job.json"):
             self.init_job()
             print("job.json created")
+            return True
         else:
             print("job.json exits")
+            return False
 
     def write_job(self, stu_data : list) -> bool:
         """add student data to job.json
@@ -56,7 +57,6 @@ class JobEditor(FileEditor):
         with open(self.path+"\job.json", "r+") as file:
             data = json.load(file)
             data["run_job"].append(store)
-            print(data)
             file.seek(0)
             json.dump(data, file,indent = 2)
         return True
@@ -70,5 +70,6 @@ class JobEditor(FileEditor):
 if __name__ == "__main__":
     job = JobEditor(r"C:\Users\Admin\Desktop\ex1\ta")
     stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice job"]
+    job.create_file_job()
     print(job.write_job(stu_data))
 
