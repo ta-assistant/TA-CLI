@@ -1,35 +1,35 @@
 """
 Author Vitvara
 
-# This libary is about manage file and directory you can import those module to use by
+### This libary is about manage file and directory you can import those module to use by
 
 from file_management_lib import module name
 
-# if you want to use only 1 method you can do it by
+### if you want to use only 1 method you can do it by
 
 method = Object().method
 method(parameter)
 
-# or if you use more than 1 method you should create an variable to keep those Object
+### or if you use more than 1 method you should create an variable to keep those Object
 
 object1 = Object1()
 
 object1.method1()
 object1.method2(parameter)
 
-# to be clear about those parameter
-# `path` on window path can't directly use by themself you need to add r in font of the path string to avoid backslash error
+### to be clear about those parameter
+### `path` on window path can't directly use by themself you need to add r in font of the path string to avoid backslash error
 r"this\is\path" 
-# in DirManagement you should put directory name that you want in to the back of the path
+### in DirManagement you should put directory name that you want in to the back of the path
 r"this\is\path\dirname" 
 
 ### anyone whio uses macOS, please give me some information that what is the format of the path ###
 
-# `filename` need to be filename and its extension and have backslash in front of file name
+### `filename` need to be filename and its extension and have backslash in front of file name
 r"\filename.txt"
 r"\filename.json"
 
-# if there is anything in doubt, you can mention me in discord
+### if there is anything in doubt, you can mention me in discord
 """
 
 import os

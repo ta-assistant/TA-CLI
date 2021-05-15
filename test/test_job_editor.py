@@ -2,9 +2,11 @@ import unittest
 import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
-sys.path.insert(0,parentdir+r"\lib\file_management")
+os.chdir(parentdir+r"\lib\file_management")
+sys.path.insert(0,os.getcwd())
 
 import job_editor
+
 
 
 class TestJobEditor(unittest.TestCase):
