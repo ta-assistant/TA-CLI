@@ -1,12 +1,23 @@
+"""
+Author Paranchai
+
+### This function is about extract only the ".zip" files you can use these method by
+
+unzipfile(path: str)
+
+### if have any suggestions or problem, you can direct message to me
+"""
+
 import os
 import zipfile
 from file_management_lib import DirManagement
 
-def list_file(path):
+def unzipfile(path: str):
+    """
+    ###'path: str' is directory name that you want this function to extract files and create folders in this
+    ### You should to change backslash to sla for prevebt backslash error
+    """
     listfile = os.listdir(path)
-    return listfile
-
-def unzipfile(listfile):
     create_dir = DirManagement().create_dir
     for i in listfile:
         if ".zip" in i :
@@ -16,8 +27,9 @@ def unzipfile(listfile):
                 create_dir(folder)
                 my_zip.extractall(folder)
                 my_zip.close()
+                print(f"Successfully extracted files to {folder}" )
 
-path = "C:/Users/detec/Documents/Grid"
-listfile = list_file(path)
-unzipfile(listfile)
+if __name__ ==  "__main__" :
+    path = "C:/Users/detec/Documents/Grid"
+    unzipfile(path)
     
