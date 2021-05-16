@@ -20,8 +20,9 @@ class JobEditor(FileEditor):
             path (str): path of ta directory
         """
         self.path = path
-        if os.path.exists(self.path+"\draft.json"):
-            self.draft = self.read_file("\draft.json")["output_draft"]
+        if os.path.exists(self.path+r"\draft.json"):
+            self.draft = self.read_file(r"\draft.json")["output_draft"]
+            print("read draft.json on "+self.path+r"\draft.json")
         else:
             self.draft = None
 
@@ -34,10 +35,10 @@ class JobEditor(FileEditor):
     def create_file_job(self) -> bool:
         if not os.path.exists(self.path+"\job.json"):
             self.init_job()
-            print("job.json created")
+            print(self.path+r"\job.json created")
             return True
         else:
-            print("job.json exits")
+            print(self.path+r"\job.json exits")
             return False
 
     def write_job(self, stu_data : list) -> bool:
@@ -50,6 +51,7 @@ class JobEditor(FileEditor):
             bool: if the stu_data does not match with draft.json return False else True
         """
         if len(self.draft) != len(stu_data):
+            print("draft.json dosen't match with student data please try again")
             return False
         store = {}
         for key,stu_data in zip(self.draft,stu_data):
@@ -59,6 +61,7 @@ class JobEditor(FileEditor):
             data["run_job"].append(store)
             file.seek(0)
             json.dump(data, file,indent = 2)
+            print(str(store) + " has been written down in "+ self.path + r"\job.json")
         return True
 
     def read_file(self,name : str) -> dict:
