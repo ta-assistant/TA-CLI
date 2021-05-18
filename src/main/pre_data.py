@@ -16,15 +16,7 @@ def check_draft(path: str) -> bool:
     else:
         return False
 
-
-def check_filename_draft(filename: list,draft: list) -> bool:
-    if len(filename) != len(draft):
-        return False
-    else:
-        return True
-
-
-def get_file_name(path,filename) -> dict:
+def prepare_data(path,filename) -> dict:
     zdraft = JobEditor("").read_file(path+r"\ta\draft.json")
     zdraft = zdraft["zip_file_draft"]
     key=[]
@@ -38,13 +30,10 @@ def get_file_name(path,filename) -> dict:
         else:
             reminder += i
     list_filename = filename.split("_")
-    if not check_filename_draft(list_filename,key):
-        print("Invalid file name " + filename)
-        return {}
     for key,value in zip(key,list_filename):
         prejob[key] = value
 
     return prejob
 
 if __name__ == "__main__":
-    print(get_file_name(r"C:\Users\Admin\Desktop\ex1",r"6310546066_vitvara_ex1"))
+    print(prepare_data(r"C:\Users\Admin\Desktop\ex1",r"6310546066_vitvara_ex1"))

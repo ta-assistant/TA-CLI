@@ -33,11 +33,14 @@ def ask(post_student_data):
     for i in post_student_data:
         if post_student_data[i] == "N/A":
             data_input = input(f"Enter {i}: ")
+            post_student_data[i] = data_input
+    return post_student_data
 
+    
 if __name__ == "__main__":
     pre_student = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1'}
     empty_student = setup_empty_data(r"C:\Users\Admin\Desktop\ex1")
     a = add_pre_student_data(empty_student,pre_student)
     print(a)
-    ask(a)
+    print(ask(a))
     
