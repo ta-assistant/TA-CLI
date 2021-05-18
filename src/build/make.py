@@ -10,20 +10,19 @@ from file_management_lib import DirManagement, FileEditor
 
 
 def init_work_directory(path) -> bool:
-    print(path)
-    print("makeing work directory")
+    print(f"{path} makeing work directory")
     if os.path.exists(path+r"\ta"):
         print(path+" is already a work directory")
     else:
         DirManagement().create_dir(path+r"\ta")
     print("Now you can add your draft.json")
-    while True:
-        draft_init = input("Do you want to fetch draft.json from server:(yes,no) ")
+    for i in range(8):
+        draft_init = input("Do you want to fetch draft.json from the server:(yes,no) ")
         if draft_init.lower() == "yes":
             break
         elif draft_init.lower() == "no":
             break
-
+    print(f"{path} is ready")
 
 if __name__ == "__main__":
     init_work_directory(r"C:\Users\Admin\Desktop\ex1")

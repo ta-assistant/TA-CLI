@@ -20,15 +20,15 @@ def prepare_data(path,filename) -> dict:
     zdraft = JobEditor("").read_file(path+r"\ta\draft.json")
     zdraft = zdraft["zip_file_draft"]
     key=[]
-    reminder = ""
+    remainder = ""
     prejob = {}
     for i in zdraft:
         if i == "{":
-            reminder = ""
+            remainder = ""
         elif i == "}":
-            key.append(reminder)
+            key.append(remainder)
         else:
-            reminder += i
+            remainder += i
     list_filename = filename.split("_")
     for key,value in zip(key,list_filename):
         prejob[key] = value
