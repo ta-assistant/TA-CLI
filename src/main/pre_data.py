@@ -8,6 +8,15 @@ sys.path.insert(0,os.getcwd())
 from job_editor import JobEditor
 
 
+
+def check_draft(path: str) -> bool:
+    if os.path.exists(path+r"\ta\draft.json"):
+        draft = JobEditor("").read_file(path+r"\ta\draft.json")
+        return True
+    else:
+        return False
+
+
 def check_filename_draft(filename: list,draft: list) -> bool:
     if len(filename) != len(draft):
         return False
@@ -32,7 +41,7 @@ def get_file_name(path,filename) -> dict:
     if not check_filename_draft(list_filename,key):
         print("Invalid file name " + filename)
         return {}
-    for key,value in zip(key,filename):
+    for key,value in zip(key,list_filename):
         prejob[key] = value
 
     return prejob
