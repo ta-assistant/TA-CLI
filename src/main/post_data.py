@@ -7,16 +7,37 @@ sys.path.insert(0,os.getcwd())
 
 from job_editor import JobEditor
 
-def check_empty_data(path,pre_student_dict):
-    zdraft = JobEditor("").read_file(path+r"\ta\draft.json")
-    zdraft = zdraft["output_draft"]
+def read_job(path):
+    draft = JobEditor("").read_file(path+r"\ta\draft.json")
+    jdraft = draft["output_draft"]
+    return jdraft
 
+def setup_empty_data(path):
+    empty_student = {}
+    for i in read_job(path):
+        empty_student[i] = "N/A"
+    return empty_student
 
+def add_pre_student_data(empty_student,pre_student_data):
+    for i in pre_student_data:
+        empty_student[i] = pre_student_data[i]
+    return empty_student
+    
 
-
-def ask(path):
-    while True:
-        pass
+def ask(post_student_data):
+    print("===========================")
+    for i in post_student_data:
+        if post_student_data[i] != "N/A":
+            print(f"{i}: {post_student_data[i]}")
+    print("===========================")
+    for i in post_student_data:
+        if post_student_data[i] == "N/A":
+            data_input = input(f"Enter {i}: ")
 
 if __name__ == "__main__":
-    check_empty_data(r"C:\Users\Admin\Desktop\ex1"+)
+    pre_student = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1'}
+    empty_student = setup_empty_data(r"C:\Users\Admin\Desktop\ex1")
+    a = add_pre_student_data(empty_student,pre_student)
+    print(a)
+    ask(a)
+    
