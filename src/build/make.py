@@ -22,6 +22,7 @@ def init_work_directory(path) -> bool:
             break
         elif draft_init.lower() == "no":
             break
+    # extract function
     print(f"{path} is ready")
 
 if __name__ == "__main__":
