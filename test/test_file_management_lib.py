@@ -18,14 +18,14 @@ class TestFileEditor(unittest.TestCase):
         return None
         """
         
-        self.assertIsNone(self.file_editor.create_file(currentdir,r"\test.txt"))
+        self.assertIsNone(self.file_editor.create_file(currentdir,"test.txt"))
 
     def test_read_file(self):
         """
         pass
         """
 
-        self.assertIsNone(self.file_editor.read_file(currentdir,r"test.txt"))
+        self.assertIsNone(self.file_editor.read_file(currentdir,"test.txt"))
 
     def test_delete_file(self):
         """
@@ -33,8 +33,8 @@ class TestFileEditor(unittest.TestCase):
         return bool -> if file has been delete return True else: False
         """
 
-        self.assertTrue(self.file_editor.delete_file(currentdir,r"\test.txt"))
-        self.assertFalse(self.file_editor.delete_file(currentdir,r"\test.txt"))
+        self.assertTrue(self.file_editor.delete_file(currentdir,"test.txt"))
+        self.assertFalse(self.file_editor.delete_file(currentdir,"test.txt"))
 
 
 class TestDirManagement(unittest.TestCase):
@@ -44,8 +44,8 @@ class TestDirManagement(unittest.TestCase):
         return bool -> if directory has been create return Ture else False
         """
         dirmanage = DirManagement()
-        self.assertTrue(dirmanage.create_dir(currentdir+r"\test1"))
-        self.assertFalse(dirmanage.create_dir(currentdir+r"\test1"))
+        self.assertTrue(dirmanage.create_dir(currentdir+"test1"))
+        self.assertFalse(dirmanage.create_dir(currentdir+"test1"))
 
     def test_remove_dir(self):
         """
@@ -53,8 +53,8 @@ class TestDirManagement(unittest.TestCase):
         return bool -> if directory has been remove return Ture else False
         """
         dirmanage = DirManagement()
-        self.assertTrue(dirmanage.remove_dir(currentdir+r"\test1"))
-        self.assertFalse(dirmanage.remove_dir(currentdir+r"\test1"))
+        self.assertTrue(dirmanage.remove_dir(currentdir+"test1"))
+        self.assertFalse(dirmanage.remove_dir(currentdir+"\est1"))
 
     
 

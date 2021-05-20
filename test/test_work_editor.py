@@ -34,8 +34,8 @@ class TestWorkEditor(unittest.TestCase):
         """ 
         self.assertTrue(self.je.create_file_work())
         self.assertFalse(self.je.create_file_work())
-        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
+        self.assertTrue(self.je.delete_file(currentdir,"work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"work.json"))
 
     def test_write_work(self):
         """
@@ -49,8 +49,8 @@ class TestWorkEditor(unittest.TestCase):
         self.assertIsNone(self.je.write_work(stu_data))
         stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'scdfe2': '13', 'comment': 'nice work'}
         self.assertIsNone(self.je.write_work(stu_data))
-        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
+        self.assertTrue(self.je.delete_file(currentdir,"work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"work.json"))
 
     def test_remove_work(self):
         """
@@ -59,8 +59,8 @@ class TestWorkEditor(unittest.TestCase):
         """
         self.assertTrue(self.je.create_file_work())
         self.assertFalse(self.je.create_file_work())
-        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
+        self.assertTrue(self.je.delete_file(currentdir,"work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"work.json"))
 
 if __name__ == "__main__":
     unittest.main()
