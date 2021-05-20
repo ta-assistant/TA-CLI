@@ -6,7 +6,7 @@ its have method that can edit work.json and it already handle case that not have
 path need to be ta dir
 """
 
-from file_management_lib import FileEditor
+from file_management_lib import FileEditor, DirManagement
 import os 
 import json
 

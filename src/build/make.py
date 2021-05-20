@@ -5,8 +5,7 @@ parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.chdir(parentdir+r"\lib\file_management")
 sys.path.insert(0,os.getcwd())
 
-from job_editor import JobEditor
-from file_management_lib import DirManagement, FileEditor
+from file_management_lib import DirManagement
 
 
 
