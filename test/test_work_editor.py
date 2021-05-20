@@ -45,9 +45,9 @@ class TestWorkEditor(unittest.TestCase):
         """
         self.assertTrue(self.je.create_file_work())
         self.assertFalse(self.je.create_file_work())
-        stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice work"]
+        stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
         self.assertTrue(self.je.write_work(stu_data))
-        stu_data = ["6310546066", "vitvara", "ex1", "12", "13"]
+        stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'scdfe2': '13', 'comment': 'nice work'}
         self.assertFalse(self.je.write_work(stu_data))
         self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
         self.assertFalse(self.je.delete_file(currentdir,"\work.json"))

@@ -84,6 +84,15 @@ Author vitvara
 work editor is about work.json
 its have method that can edit work.json and it already handle case that not have work.json or already have work.json
 path need to be ta dir
+
+example use:
+### init work.json
+work = WorkEditor(r"\this\is\path)
+// it will autometic create work.json and read draft.json (if you want to use this module make sure that you check draft.json that already exits)
+### get work.json
+filework = work.read_file(r"\work.json") -> dict
+### writting work.json
+work.write_work()
 """
 import os 
 import json
@@ -119,7 +128,13 @@ class WorkEditor(FileEditor):
             print(self.path+r"\work.json exits")
             return False
 
-    def write_work(self, stu_data : list) -> bool:
+    def check_draft_work(self,stu_data: dict) -> bool:
+        for stu,draft in zip(stu_data,self.draft):
+            if stu != draft:
+                return False
+        return True
+
+    def write_work(self, stu_data : dict) -> bool:
         """add student data to work.json
 
         Args:
@@ -128,18 +143,15 @@ class WorkEditor(FileEditor):
         Returns:
             bool: if the stu_data does not match with draft.json return False else True
         """
-        if len(self.draft) != len(stu_data):
+        if not self.check_draft_work(stu_data):
             print("draft.json dosen't match with student data please try again")
             return False
-        store = {}
-        for key,stu_data in zip(self.draft,stu_data):
-            store[key] = stu_data
         with open(self.path+"\work.json", "r+") as file:
             data = json.load(file)
-            data["run_work"].append(store)
+            data["run_work"].append(stu_data)
             file.seek(0)
             json.dump(data, file,indent = 2)
-            print(str(store) + " has been written down in "+ self.path + r"\work.json")
+            print(str(stu_data) + " has been written down in "+ self.path + r"\work.json")
 
         return True
 
