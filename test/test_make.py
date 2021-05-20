@@ -6,7 +6,6 @@ os.chdir(parentdir+r"\src\build")
 sys.path.insert(0,os.getcwd())
 
 import make
-import unittest
 from unittest.mock import patch
 
 class TestMake(unittest.TestCase):
