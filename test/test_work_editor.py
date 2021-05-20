@@ -2,11 +2,10 @@ import unittest
 import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
-os.chdir(parentdir+r"/lib/file_management")
+os.chdir(parentdir)
 sys.path.insert(0,os.getcwd())
 
-import work_editor
-
+from lib.file_management.file_management_lib import WorkEditor
 
 
 class TestWorkEditor(unittest.TestCase):
@@ -16,7 +15,7 @@ class TestWorkEditor(unittest.TestCase):
         init je
         init draft.json into list of key
         """
-        self.je = work_editor.WorkEditor(currentdir)
+        self.je = WorkEditor(currentdir)
         self.je.draft = [
                             "student_id",
                             "name",
@@ -35,8 +34,8 @@ class TestWorkEditor(unittest.TestCase):
         """ 
         self.assertTrue(self.je.create_file_work())
         self.assertFalse(self.je.create_file_work())
-        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
+        self.assertTrue(self.je.delete_file(currentdir,"work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"work.json"))
 
     def test_write_work(self):
         """
@@ -46,12 +45,12 @@ class TestWorkEditor(unittest.TestCase):
         """
         self.assertTrue(self.je.create_file_work())
         self.assertFalse(self.je.create_file_work())
-        stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice work"]
-        self.assertTrue(self.je.write_work(stu_data))
-        stu_data = ["6310546066", "vitvara", "ex1", "12", "13"]
-        self.assertFalse(self.je.write_work(stu_data))
-        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
+        stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
+        self.assertIsNone(self.je.write_work(stu_data))
+        stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'scdfe2': '13', 'comment': 'nice work'}
+        self.assertIsNone(self.je.write_work(stu_data))
+        self.assertTrue(self.je.delete_file(currentdir,"work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"work.json"))
 
     def test_remove_work(self):
         """
@@ -60,8 +59,8 @@ class TestWorkEditor(unittest.TestCase):
         """
         self.assertTrue(self.je.create_file_work())
         self.assertFalse(self.je.create_file_work())
-        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
+        self.assertTrue(self.je.delete_file(currentdir,"work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"work.json"))
 
 if __name__ == "__main__":
     unittest.main()
