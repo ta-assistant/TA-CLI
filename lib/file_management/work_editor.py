@@ -1,8 +1,8 @@
 """
 Author vitvara
 =================================================================================================================
-Job editor is about job.json
-its have method that can edit job.json and it already handle case that not have job.json or already have job.json
+work editor is about work.json
+its have method that can edit work.json and it already handle case that not have work.json or already have work.json
 path need to be ta dir
 """
 
@@ -10,11 +10,11 @@ from file_management_lib import FileEditor
 import os 
 import json
 
-class JobEditor(FileEditor):
+class WorkEditor(FileEditor):
     def __init__(self,path : str) -> None:
         """
         create draft.json on ta dir when its not exits
-        and create job.json
+        and create work.json
 
         Args:
             path (str): path of ta directory
@@ -26,23 +26,23 @@ class JobEditor(FileEditor):
         else:
             self.draft = None
 
-    def init_job(self) -> None:
-        self.create_file(self.path,"\job.json")
-        with open(self.path+"\job.json", 'w') as outfile:
-            json.dump({"run_job":[]}, outfile)
+    def init_work(self) -> None:
+        self.create_file(self.path,"\work.json")
+        with open(self.path+"\work.json", 'w') as outfile:
+            json.dump({"run_work":[]}, outfile)
             outfile.close()
 
-    def create_file_job(self) -> bool:
-        if not os.path.exists(self.path+"\job.json"):
-            self.init_job()
-            print(self.path+r"\job.json created")
+    def create_file_work(self) -> bool:
+        if not os.path.exists(self.path+"\work.json"):
+            self.init_work()
+            print(self.path+r"\work.json created")
             return True
         else:
-            print(self.path+r"\job.json exits")
+            print(self.path+r"\work.json exits")
             return False
 
-    def write_job(self, stu_data : list) -> bool:
-        """add student data to job.json
+    def write_work(self, stu_data : list) -> bool:
+        """add student data to work.json
 
         Args:
             stu_data (list): list of student data (should ordered)
@@ -56,12 +56,13 @@ class JobEditor(FileEditor):
         store = {}
         for key,stu_data in zip(self.draft,stu_data):
             store[key] = stu_data
-        with open(self.path+"\job.json", "r+") as file:
+        with open(self.path+"\work.json", "r+") as file:
             data = json.load(file)
-            data["run_job"].append(store)
+            data["run_work"].append(store)
             file.seek(0)
             json.dump(data, file,indent = 2)
-            print(str(store) + " has been written down in "+ self.path + r"\job.json")
+            print(str(store) + " has been written down in "+ self.path + r"\work.json")
+
         return True
 
     def read_file(self,name : str) -> dict:
@@ -71,8 +72,8 @@ class JobEditor(FileEditor):
         return data
 
 if __name__ == "__main__":
-    job = JobEditor(r"C:\Users\Admin\Desktop\ex1\ta")
-    stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice job"]
-    job.create_file_job()
-    print(job.write_job(stu_data))
+    work = WorkEditor(r"C:\Users\Admin\Desktop\ex1\ta")
+    stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice work"]
+    work.create_file_work()
+    print(work.write_work(stu_data))
 
