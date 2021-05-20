@@ -10,8 +10,9 @@ from lib.file_management.file_management_lib import DirManagement, FileEditor
 
 class TestDraftCheck(unittest.TestCase):
     def setUp(self) -> None:
-        DirManagement().create_dir(currentdir+r"\ta")
-        FileEditor().create_file(currentdir+r"\ta",r"\draft.json")
+        self.ta_dir = os.path.join(currentdir,"ta")
+        DirManagement().create_dir(self.ta_dir)
+        FileEditor().create_file(self.ta_dir,"draft.json")
         return super().setUp()
 
     def test_check_draft(self):

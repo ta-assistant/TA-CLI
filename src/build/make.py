@@ -1,11 +1,9 @@
 import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0,parentdir)
 
-os.chdir(parentdir+r"\lib\file_management")
-sys.path.insert(0,os.getcwd())
-
-from file_management_lib import DirManagement
+from lib.file_management.file_management_lib import DirManagement,FileEditor
 
 
 
@@ -20,11 +18,12 @@ def create_draft() -> bool:
 
 def init_work_directory(path) -> bool:
     print(f"{path} makeing work directory")
-    if os.path.exists(path+r"\ta"):
+    ta_path = os.path.join(path,"ta")
+    if os.path.exists(ta_path):
         print(path+" is already a work directory")
         return False
     else:
-        DirManagement().create_dir(path+r"\ta")
+        DirManagement().create_dir(ta_path)
     print("Now you can add your draft.json")
     if create_draft():
         pass
@@ -33,7 +32,8 @@ def init_work_directory(path) -> bool:
     return True
 
 def reset(path):
-    DirManagement.remove_dir(path+r"\ta")
+    ta_path = os.path.join(path,"ta")
+    DirManagement.remove_dir(ta_path)
     
 if __name__ == "__main__":
     init_work_directory(r"C:\Users\Admin\Desktop\ex1")

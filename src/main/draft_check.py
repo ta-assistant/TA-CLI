@@ -1,12 +1,8 @@
-import os,sys,inspect
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(os.path.dirname(currentdir))
-
-os.chdir(parentdir+r"\lib\file_management")
-sys.path.insert(0,os.getcwd())
+import os
 
 def check_draft(path) -> bool:
-        if os.path.exists(path+r"\ta\draft.json"):
-            return True
-        else:
-            return False
+    path_draft = os.path.join(path,"ta","draft.json")
+    if os.path.exists(path_draft):
+        return True
+    else:
+        return False
