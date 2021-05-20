@@ -13,12 +13,12 @@ from lib.file_management.file_management_lib import FileEditor, DirManagement
 class StudentData:
     def __init__(self,path,filename) -> None:
         self.path = path
+        self.draft = self.read_draft()
         self.pre_data = self.prepare_data(filename)
         self.pre_data = self.add_pre_student_data(self.setup_empty_data(),self.pre_data)
 
     def prepare_data(self,filename) -> dict:
-        zdraft = WorkEditor("").read_file(self.path+r"\ta\draft.json")
-        zdraft = zdraft["zip_file_draft"]
+        
         key=[]
         remainder = ""
         prework = {}
@@ -35,6 +35,10 @@ class StudentData:
 
         return prework
 
+    def read_draft(self):
+        zdraft = WorkEditor("").read_file(self.path+r"\ta\draft.json")
+        zdraft = zdraft["zip_file_draft"]
+        return zdraft
 
     def read_work(self) -> dict:
         draft = WorkEditor("").read_file(self.path+r"\ta\draft.json")
