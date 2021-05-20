@@ -145,3 +145,13 @@ class WorkEditor(FileEditor):
             data = json.load(f)
 
         return data
+if __name__ == "__main__":
+    import os,sys,inspect
+    currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    rootdir = os.path.dirname(os.path.dirname(currentdir))
+    DirManagement().create_dir(rootdir+r"\ta")
+    print(rootdir)
+    work = WorkEditor(rootdir+r"\ta")
+    stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
+    work.create_file_work()
+    work.write_work(stu_data)
