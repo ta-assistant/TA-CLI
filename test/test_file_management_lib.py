@@ -5,12 +5,12 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 
-from lib.file_management import file_management_lib
+from lib.file_management.file_management_lib import FileEditor, DirManagement
 
 
 class TestFileEditor(unittest.TestCase):
     def setUp(self) -> None:
-        self.file_editor = file_management_lib.FileEditor()
+        self.file_editor = FileEditor()
         return super().setUp()
     def test_create_file(self):
         """
@@ -43,7 +43,7 @@ class TestDirManagement(unittest.TestCase):
         parameter: path: str + your dir name
         return bool -> if directory has been create return Ture else False
         """
-        dirmanage = file_management_lib.DirManagement()
+        dirmanage = DirManagement()
         self.assertTrue(dirmanage.create_dir(currentdir+r"\test1"))
         self.assertFalse(dirmanage.create_dir(currentdir+r"\test1"))
 
@@ -52,7 +52,7 @@ class TestDirManagement(unittest.TestCase):
         parameter: path: str + your dir name
         return bool -> if directory has been remove return Ture else False
         """
-        dirmanage = file_management_lib.DirManagement()
+        dirmanage = DirManagement()
         self.assertTrue(dirmanage.remove_dir(currentdir+r"\test1"))
         self.assertFalse(dirmanage.remove_dir(currentdir+r"\test1"))
 

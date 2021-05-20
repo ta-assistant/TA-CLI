@@ -2,11 +2,10 @@ import unittest
 import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
-os.chdir(parentdir+r"/lib/file_management")
+os.chdir(parentdir)
 sys.path.insert(0,os.getcwd())
 
-import work_editor
-
+from lib.file_management.file_management_lib import WorkEditor
 
 
 class TestWorkEditor(unittest.TestCase):
@@ -16,7 +15,7 @@ class TestWorkEditor(unittest.TestCase):
         init je
         init draft.json into list of key
         """
-        self.je = work_editor.WorkEditor(currentdir)
+        self.je = WorkEditor(currentdir)
         self.je.draft = [
                             "student_id",
                             "name",
