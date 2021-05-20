@@ -5,18 +5,18 @@ parentdir = os.path.dirname(currentdir)
 os.chdir(parentdir+r"/lib/file_management")
 sys.path.insert(0,os.getcwd())
 
-import job_editor
+import work_editor
 
 
 
-class TestJobEditor(unittest.TestCase):
+class TestWorkEditor(unittest.TestCase):
     
     def setUp(self) -> None:
         """
         init je
         init draft.json into list of key
         """
-        self.je = job_editor.JobEditor(currentdir)
+        self.je = work_editor.WorkEditor(currentdir)
         self.je.draft = [
                             "student_id",
                             "name",
@@ -28,40 +28,40 @@ class TestJobEditor(unittest.TestCase):
 
         return super().setUp()
 
-    def test_init_job(self):
+    def test_init_work(self):
         """
-        create job.json if it can created return ture else false
+        create work.json if it can created return ture else false
         and delete it if it can be deleted retrun true else flase
         """ 
-        self.assertTrue(self.je.create_file_job())
-        self.assertFalse(self.je.create_file_job())
-        self.assertTrue(self.je.delete_file(currentdir,"\job.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\job.json"))
+        self.assertTrue(self.je.create_file_work())
+        self.assertFalse(self.je.create_file_work())
+        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
 
-    def test_write_job(self):
+    def test_write_work(self):
         """
-        create job.json if it can created return ture else false
-        call write_job() if it can write return true else false
+        create work.json if it can created return ture else false
+        call write_work() if it can write return true else false
         and delete it if it can be deleted retrun true else flase
         """
-        self.assertTrue(self.je.create_file_job())
-        self.assertFalse(self.je.create_file_job())
-        stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice job"]
-        self.assertTrue(self.je.write_job(stu_data))
+        self.assertTrue(self.je.create_file_work())
+        self.assertFalse(self.je.create_file_work())
+        stu_data = ["6310546066", "vitvara", "ex1", "12", "13", "nice work"]
+        self.assertTrue(self.je.write_work(stu_data))
         stu_data = ["6310546066", "vitvara", "ex1", "12", "13"]
-        self.assertFalse(self.je.write_job(stu_data))
-        self.assertTrue(self.je.delete_file(currentdir,"\job.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\job.json"))
+        self.assertFalse(self.je.write_work(stu_data))
+        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
 
-    def test_remove_job(self):
+    def test_remove_work(self):
         """
-        create job.json if it can created return ture else false
+        create work.json if it can created return ture else false
         and delete it if it can be deleted retrun true else flase
         """
-        self.assertTrue(self.je.create_file_job())
-        self.assertFalse(self.je.create_file_job())
-        self.assertTrue(self.je.delete_file(currentdir,"\job.json"))
-        self.assertFalse(self.je.delete_file(currentdir,"\job.json"))
+        self.assertTrue(self.je.create_file_work())
+        self.assertFalse(self.je.create_file_work())
+        self.assertTrue(self.je.delete_file(currentdir,"\work.json"))
+        self.assertFalse(self.je.delete_file(currentdir,"\work.json"))
 
 if __name__ == "__main__":
     unittest.main()
