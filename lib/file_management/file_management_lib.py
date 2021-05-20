@@ -1,16 +1,18 @@
+import json
 import os
 import shutil
+
 
 class FileEditor:
     @staticmethod
     def create_file(path: str, filename: str) -> None:
-        file_path = os.path.join(path,filename)
+        file_path = os.path.join(path, filename)
         with open(file_path, 'w') as fp:
             pass
 
     @staticmethod
-    def delete_file(path: str,filename: str) -> bool:
-        file_path = os.path.join(path,filename)
+    def delete_file(path: str, filename: str) -> bool:
+        file_path = os.path.join(path, filename)
         if os.path.exists(file_path):
             os.remove(file_path)
             return True
@@ -29,29 +31,26 @@ class DirManagement:
         try:
             os.mkdir(path)
         except OSError:
-            print ("Creation of the directory %s failed" % path)
+            print("Creation of the directory %s failed" % path)
             return False
         else:
-            print ("Successfully created the directory %s " % path)
+            print("Successfully created the directory %s " % path)
             return True
-        
+
     @staticmethod
     def remove_dir(path: str) -> None:
         try:
             shutil.rmtree(path)
         except OSError:
-            print ("Deletion of the directory %s failed" % path)
+            print("Deletion of the directory %s failed" % path)
             return False
         else:
-            print ("Successfully deleted the directory %s" % path)
+            print("Successfully deleted the directory %s" % path)
             return True
 
 
-import os 
-import json
-
 class WorkEditor(FileEditor):
-    def __init__(self,path : str) -> None:
+    def __init__(self, path: str) -> None:
         """
         create draft.json on ta dir when its not exits
         and create work.json
@@ -60,12 +59,13 @@ class WorkEditor(FileEditor):
             path (str): path of ta directory
         """
         self.path = path
-        self.work_path = os.path.join(self.path,"work.json")
+        self.work_path = os.path.join(self.path, "work.json")
+
     def init_work(self) -> None:
-        
-        self.create_file(self.path,"work.json")
+
+        self.create_file(self.path, "work.json")
         with open(self.work_path, 'w') as outfile:
-            json.dump({"run_work":[]}, outfile)
+            json.dump({"run_work": []}, outfile)
             outfile.close()
 
     def create_file_work(self) -> bool:
@@ -77,7 +77,7 @@ class WorkEditor(FileEditor):
             print(self.work_path+"work.json exits")
             return False
 
-    def write_work(self, stu_data : dict) -> bool:
+    def write_work(self, stu_data: dict) -> bool:
         """add student data to work.json
 
         Args:
@@ -90,23 +90,29 @@ class WorkEditor(FileEditor):
             data = json.load(file)
             data["run_work"].append(stu_data)
             file.seek(0)
-            json.dump(data, file,indent = 2)
-            print(str(stu_data) + " has been written down in "+ self.work_path)
+            json.dump(data, file, indent=2)
+            print(str(stu_data) + " has been written down in " + self.work_path)
             file.close()
 
-    def read_file(self,name : str) -> dict:
+    def read_file(self, name: str) -> dict:
         with open(self.path+name) as f:
             data = json.load(f)
 
         return data
+
+
 if __name__ == "__main__":
-    import os,sys,inspect
-    currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    import os
+    import sys
+    import inspect
+    currentdir = os.path.dirname(os.path.abspath(
+        inspect.getfile(inspect.currentframe())))
     rootdir = os.path.dirname(os.path.dirname(currentdir))
     ta = os.path.join("ta")
     DirManagement().create_dir(ta)
     print(rootdir)
     work = WorkEditor(ta)
-    stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
+    stu_data = {'student_id': '6310546066', 'name': 'vitvara',
+                'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
     work.create_file_work()
     work.write_work(stu_data)
