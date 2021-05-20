@@ -80,9 +80,3 @@ class StudentData:
         post_data = self.data_input(post_student_data)
         return post_data
 
-if __name__ == "__main__":
-    stu1 = StudentData(r"C:\Users\Admin\Desktop\ex1","6310546066_vitvara_ex1")
-    stu1.prepare_data()
-    stu1.add_pre_student_data(stu1.setup_empty_data())
-    print(stu1.ask())
-    
