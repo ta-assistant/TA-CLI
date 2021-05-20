@@ -107,12 +107,7 @@ class WorkEditor(FileEditor):
             path (str): path of ta directory
         """
         self.path = path
-        if os.path.exists(self.path+r"\draft.json"):
-            self.draft = self.read_file(r"\draft.json")["output_draft"]
-            print("read draft.json on "+self.path+r"\draft.json")
-        else:
-            self.draft = None
-
+    
     def init_work(self) -> None:
         self.create_file(self.path,"\work.json")
         with open(self.path+"\work.json", 'w') as outfile:
@@ -128,12 +123,6 @@ class WorkEditor(FileEditor):
             print(self.path+r"\work.json exits")
             return False
 
-    def check_draft_work(self,stu_data: dict) -> bool:
-        for stu,draft in zip(stu_data,self.draft):
-            if stu != draft:
-                return False
-        return True
-
     def write_work(self, stu_data : dict) -> bool:
         """add student data to work.json
 
@@ -143,17 +132,13 @@ class WorkEditor(FileEditor):
         Returns:
             bool: if the stu_data does not match with draft.json return False else True
         """
-        if not self.check_draft_work(stu_data):
-            print("draft.json dosen't match with student data please try again")
-            return False
         with open(self.path+"\work.json", "r+") as file:
             data = json.load(file)
             data["run_work"].append(stu_data)
             file.seek(0)
             json.dump(data, file,indent = 2)
             print(str(stu_data) + " has been written down in "+ self.path + r"\work.json")
-
-        return True
+            file.close()
 
     def read_file(self,name : str) -> dict:
         with open(self.path+name) as f:
