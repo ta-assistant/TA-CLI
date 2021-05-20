@@ -92,7 +92,7 @@ work = WorkEditor(r"\this\is\path)
 ### get work.json
 filework = work.read_file(r"\work.json") -> dict
 ### writting work.json
-work.write_work()
+work.write_work({'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'})
 """
 import os 
 import json
