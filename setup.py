@@ -11,13 +11,13 @@ def read_requirements():
 
 
 setup(
-    name="assist",
+    name="ta",
     version="0.1",
     packages=find_packages(),
     include_package_data=True,
     install_requires=read_requirements(),
     entry_points="""
     [console_scripts]
-    assist=assist.cli:cli
+    ta=ta.cli:cli
     """
 )
