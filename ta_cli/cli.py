@@ -26,7 +26,7 @@ def cli(init, start, fetch):
                 os.system(bashcommand)
                 student_data = StudentData(current_dir, folder)
                 student_data.prepare_student_data()
-                student_data.ask()
+                click.echo(student_data.ask())
         else:
             return
     elif fetch:

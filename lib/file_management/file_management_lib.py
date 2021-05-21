@@ -50,7 +50,8 @@ class DirManagement:
 
 
 class WorkEditor(FileEditor):
-    def __init__(self, path: str, workId) -> None:
+
+    def __init__(self, path: str, workId=None) -> None:
         """
         create draft.json on ta dir when its not exits
         and create work.json
