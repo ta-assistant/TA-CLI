@@ -30,7 +30,7 @@ def check_valid_filename(path: str,filename: str) -> bool:
         bool: if zip file name is valid return true else false
     """
     fdraft_path = os.path.join(path,"ta","draft.json")
-    fdraft = WorkEditor("").read_file(path+r"\ta\draft.json")
+    fdraft = WorkEditor("").read_file(fdraft_path)
     fdraft = fdraft["fileDraft"]
     key=[]
     reminder = ""
