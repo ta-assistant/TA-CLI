@@ -50,7 +50,7 @@ class DirManagement:
 
 
 class WorkEditor(FileEditor):
-    def __init__(self, path: str) -> None:
+    def __init__(self, path: str, workId) -> None:
         """
         create draft.json on ta dir when its not exits
         and create work.json
@@ -60,12 +60,18 @@ class WorkEditor(FileEditor):
         """
         self.path = path
         self.work_path = os.path.join(self.path, "work.json")
+        self.draft = "N/A"
+        self.workId = workId
+
+    def add_draft(self):
+        self.draft = self.read_file(os.path.join(
+            self.path, "ta"), "draft.json")["workDraft"]
 
     def init_work(self) -> None:
-
         self.create_file(self.path, "work.json")
         with open(self.work_path, 'w') as outfile:
-            json.dump({"run_work": []}, outfile)
+            json.dump({"workId": str(self.workId),
+                       "workDraft": self.draft, "scores": []}, outfile)
             outfile.close()
 
     def create_file_work(self) -> bool:
@@ -88,14 +94,15 @@ class WorkEditor(FileEditor):
         """
         with open(self.work_path, "r+") as file:
             data = json.load(file)
-            data["run_work"].append(stu_data)
+            data["scores"].append(stu_data)
             file.seek(0)
             json.dump(data, file, indent=2)
             print(str(stu_data) + " has been written down in " + self.work_path)
             file.close()
 
     def read_file(self, name: str) -> dict:
-        with open(self.path+name) as f:
+        file_path = os.path.join(self.path, name)
+        with open(file_path) as f:
             data = json.load(f)
 
         return data
@@ -108,11 +115,17 @@ if __name__ == "__main__":
     currentdir = os.path.dirname(os.path.abspath(
         inspect.getfile(inspect.currentframe())))
     rootdir = os.path.dirname(os.path.dirname(currentdir))
-    ta = os.path.join("ta")
+    ta = os.path.join(rootdir, "ta")
+    print(ta)
+    work_path = os.path.join(ta, "work.json")
     DirManagement().create_dir(ta)
     print(rootdir)
-    work = WorkEditor(ta)
+    work = WorkEditor(ta, 123456)
+    work.create_file_work()
+    print(work.read_file(work_path))
     stu_data = {'student_id': '6310546066', 'name': 'vitvara',
                 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
     work.create_file_work()
     work.write_work(stu_data)
+    print()
+    print(work.read_file(work_path))

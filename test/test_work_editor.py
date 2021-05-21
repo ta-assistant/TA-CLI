@@ -5,8 +5,8 @@ parentdir = os.path.dirname(currentdir)
 os.chdir(parentdir)
 sys.path.insert(0,os.getcwd())
 
-from lib.file_management.file_management_lib import WorkEditor
 
+from lib.file_management.file_management_lib import WorkEditor
 
 class TestWorkEditor(unittest.TestCase):
     
@@ -15,7 +15,7 @@ class TestWorkEditor(unittest.TestCase):
         init je
         init draft.json into list of key
         """
-        self.je = WorkEditor(currentdir)
+        self.je = WorkEditor(currentdir,1234)
         self.je.draft = [
                             "student_id",
                             "name",
