@@ -24,7 +24,7 @@ class StudentData:
     def __init__(self,path: str,filename: str) -> None:
         """
         init draft 
-        draft_zip (dict) 
+        draft_file (str) 
         draft_work (list)
         if user did not have draft.json it will return None
 
@@ -34,7 +34,7 @@ class StudentData:
         """
         self.path = path
         self.draft_path = os.path.join(path,"ta","draft.json")
-        self.draft_zip = self._read_draft_zip()
+        self.draft_file = self._read_draft_zip()
         self.draft_work = self._read_draft_work()
         self.pre_data = None
         self.filename = filename
@@ -42,7 +42,7 @@ class StudentData:
     def _filename_pre_data(self) -> dict:
         """prepare filename to dict
         pseudo code:
-        -get key word form zip file draft and store it in key
+        -get key word form file draft and store it in key
         -split filename with "_" so we will got list of student name, id, ex, etc.
         -we will zip it together and store into prework(dict) that keep student data and key word 
         example: {"student_id": "1234567890", "name": "Alex", "ex": "ex1}
@@ -53,7 +53,7 @@ class StudentData:
         key=[]
         remainder = ""
         prework = {}
-        for i in self.draft_zip:
+        for i in self.draft_file:
             if i == "{":
                 remainder = ""
             elif i == "}":
@@ -82,19 +82,19 @@ class StudentData:
         self.pre_data = empty_student
 
     """
-    Read draft will return dictionary and if file draft.json is not exists it will return None
+    Read draft will return str in fileDraft and list in outputDraft if file draft.json is not exists it will return None
     """
-    def _read_draft_zip(self) -> dict:
+    def _read_draft_zip(self) -> str:
         if os.path.exists(self.draft_path):
-            zdraft = WorkEditor("").read_file(self.draft_path)
-            zdraft = zdraft["zip_file_draft"]
-            return zdraft
+            fdraft = WorkEditor("").read_file(self.draft_path)
+            fdraft = fdraft["fileDraft"]
+            return fdraft
         return None
 
-    def _read_draft_work(self) -> dict:
+    def _read_draft_work(self) -> list:
         if os.path.exists(self.draft_path):
             draft = WorkEditor("").read_file(self.draft_path)
-            jdraft = draft["output_draft"]
+            jdraft = draft["outputDraft"]
             return jdraft
         return None  
 

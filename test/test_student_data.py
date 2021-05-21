@@ -17,7 +17,7 @@ class TestStuData(unittest.TestCase):
         test that when we have perfect env then it will produce a perfect data that we need
         """
         stu1 = student_data.StudentData(currentdir,"6310546066_vitvara_ex1")
-        stu1.draft_zip = "{student_id}_{name}_{ex}.zip"
+        stu1.draft_file = "{student_id}_{name}_{ex}.zip"
         stu1.draft_work = [
                         "student_id",
                         "name",
@@ -35,7 +35,7 @@ class TestStuData(unittest.TestCase):
         """
         stu1 = student_data.StudentData(currentdir,"6310546066_vitvara_ex1")
         self.assertIsNone(stu1.pre_data)
-        self.assertIsNone(stu1.draft_zip)
+        self.assertIsNone(stu1.draft_file)
         self.assertIsNone(stu1.draft_work)
 
         
