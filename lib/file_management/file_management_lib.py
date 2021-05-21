@@ -61,7 +61,7 @@ class WorkEditor(FileEditor):
         """
         self.path = path
         self.work_path = os.path.join(self.path,"work.json")
-        
+
     def init_work(self) -> None:
         
         self.create_file(self.path,"work.json")
@@ -89,7 +89,7 @@ class WorkEditor(FileEditor):
         """
         with open(self.work_path, "r+") as file:
             data = json.load(file)
-            data["run_work"].append(stu_data)
+            data["scores"].append(stu_data)
             file.seek(0)
             json.dump(data, file,indent = 2)
             print(str(stu_data) + " has been written down in "+ self.work_path)
