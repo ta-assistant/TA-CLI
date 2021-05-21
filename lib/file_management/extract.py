@@ -59,7 +59,7 @@ def unzipfile(path: str):
     create_dir = DirManagement().create_dir
     for i in listfile:
         if ".zip" in i :
-            name = os.path.join(path, f"/{i}")
+            name = os.path.join(path, f"{i}")
             folder = name[0:-4]
             if check_valid_filename(path,folder):
                 with zipfile.ZipFile(name) as my_zip:
