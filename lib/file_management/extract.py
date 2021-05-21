@@ -10,8 +10,8 @@ unzipfile(path: str)
 
 import os
 import zipfile
-from file_management_lib import DirManagement
-from job_editor import JobEditor
+from file_management_lib import DirManagement, WorkEditor
+
 
 def check_filename_draft(filename: list,draft: list) -> bool:
     if len(filename) != len(draft):
@@ -29,12 +29,13 @@ def check_valid_filename(path: str,filename: str) -> bool:
     Returns:
         bool: if zip file name is valid return true else false
     """
-    zdraft = JobEditor("").read_file(path+r"\ta\draft.json")
-    zdraft = zdraft["zip_file_draft"]
+    fdraft_path = os.path.join(path,"ta","draft.json")
+    fdraft = WorkEditor("").read_file(path+r"\ta\draft.json")
+    fdraft = fdraft["fileDraft"]
     key=[]
     reminder = ""
     prejob = {}
-    for i in zdraft:
+    for i in fdraft:
         if i == "{":
             reminder = ""
         elif i == "}":
@@ -58,7 +59,7 @@ def unzipfile(path: str):
     create_dir = DirManagement().create_dir
     for i in listfile:
         if ".zip" in i :
-            name = path + f"/{i}"
+            name = os.path.join(path, f"/{i}")
             folder = name[0:-4]
             if check_valid_filename(path,folder):
                 with zipfile.ZipFile(name) as my_zip:
@@ -68,8 +69,3 @@ def unzipfile(path: str):
                     print(f"Successfully extracted files to {folder}")
 
 
-if __name__ ==  "__main__" :
-    path = "C:/Users/detec/Documents/Grid"
-    unzipfile(path)
-
-    
