@@ -1,0 +1,12 @@
+
+{
+    "zip_file_draft": "{student_id}_{name}_{ex}.zip",
+    "output_draft": [
+      "student_id",
+      "name",
+      "ex",
+      "score1",
+      "score2",
+      "comment"
+    ]
+  }
