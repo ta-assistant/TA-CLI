@@ -23,15 +23,16 @@ class TestStuData(unittest.TestCase):
                         "score2",
                         "comment"
                         ]
-        stu1.prepare_data()
-        self.assertEqual(stu1.pre_data,{'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1'})
-        stu1.add_pre_student_data(stu1.setup_empty_data())
+        stu1.prepare_student_data()
         self.assertEqual(stu1.pre_data,{'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': 'N/A', 'score2': 'N/A', 'comment': 'N/A'})
         self.assertEqual(stu1.ask(),{'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '1', 'score2': '1', 'comment': '1'})
+        
     def test_not_have_draft(self):
         stu1 = student_data.StudentData(currentdir,"6310546066_vitvara_ex1")
         self.assertIsNone(stu1.pre_data)
         self.assertIsNone(stu1.draft_zip)
         self.assertIsNone(stu1.draft_work)
+
+        
 if __name__ == "__main__":
     unittest.main()
