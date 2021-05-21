@@ -61,11 +61,12 @@ class WorkEditor(FileEditor):
         """
         self.path = path
         self.work_path = os.path.join(self.path,"work.json")
+        
     def init_work(self) -> None:
         
         self.create_file(self.path,"work.json")
         with open(self.work_path, 'w') as outfile:
-            json.dump({"run_work":[]}, outfile)
+            json.dump({"scores":[]}, outfile)
             outfile.close()
 
     def create_file_work(self) -> bool:

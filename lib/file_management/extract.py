@@ -14,6 +14,9 @@ from file_management_lib import DirManagement, WorkEditor
 
 
 def check_filename_draft(filename: list,draft: list) -> bool:
+    """to check that file name form is match with draft(fileDraft)
+    draft fileDraft
+    """
     if len(filename) != len(draft):
         return False
     else:
@@ -57,9 +60,9 @@ def unzipfile(path: str):
     """
     listfile = os.listdir(path)
     create_dir = DirManagement().create_dir
-    for i in listfile:
-        if ".zip" in i :
-            name = os.path.join(path, f"/{i}")
+    for filename in listfile:
+        if ".zip" in filename :
+            name = os.path.join(path, f"/{filename}")
             folder = name[0:-4]
             if check_valid_filename(path,folder):
                 with zipfile.ZipFile(name) as my_zip:
