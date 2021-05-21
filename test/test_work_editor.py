@@ -15,7 +15,7 @@ class TestWorkEditor(unittest.TestCase):
         init je
         init draft.json into list of key
         """
-        self.je = WorkEditor(currentdir)
+        self.je = WorkEditor(currentdir,1234)
         self.je.draft = [
                             "student_id",
                             "name",
