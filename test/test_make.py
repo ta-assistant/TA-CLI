@@ -9,12 +9,21 @@ import make
 from unittest.mock import patch
 
 class TestMake(unittest.TestCase):
+    
     @patch("make.create_draft",return_value='yes')
     def test_init_make(self,input):
+        """
+        call init_work_directory to set test to work dir
+        Args:
+            input (str): "yes"
+        """
         self.assertTrue(make.init_work_directory(currentdir))
         self.assertFalse(make.init_work_directory(currentdir))
 
     def tearDown(self) -> None:
+        """
+        when test finish reset test into normal dir (not work directory)
+        """
         make.reset(currentdir)
         return super().tearDown()
 
