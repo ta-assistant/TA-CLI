@@ -3,9 +3,7 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 sys.path.insert(0,parentdir)
 
-from lib.file_management.file_management_lib import DirManagement,FileEditor
-
-
+from lib.file_management.file_management_lib import DirManagement, FileEditor, WorkEditor
 
 def create_draft() -> bool:
     for i in range(8):
@@ -27,7 +25,6 @@ def init_work_directory(path) -> bool:
     print("Now you can add your draft.json")
     if create_draft():
         pass
-    # extract function
     print(f"{path} is ready")
     return True
 
