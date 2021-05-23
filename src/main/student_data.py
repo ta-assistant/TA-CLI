@@ -1,9 +1,8 @@
 import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
-
 sys.path.insert(0,parentdir)
-
+import json
 from lib.file_management.file_management_lib import FileEditor, DirManagement,WorkEditor
 
 def inask(question: str) -> str:
@@ -20,7 +19,7 @@ def inask(question: str) -> str:
     return answer
 
 class StudentData:
-    def __init__(self,path: str,filename: str) -> None:
+    def __init__(self,path: str,filename: str,draft: dict) -> None:
         """
         init draft 
         draft_file (str) 
@@ -31,10 +30,9 @@ class StudentData:
             path (str): path of work directory
             filename (str): name of student's directory of file
         """
-        self.path = path
-        self.draft_path = os.path.join(path,"ta","draft.json")
-        self.draft_file = self._read_draft_zip()
-        self.draft_work = self._read_draft_work()
+        self.draft = draft["workDraft"]
+        self.draft_file = self.draft["fileDraft"]
+        self.draft_out = self.draft["outputDraft"]
         self.pre_data = None
         self.filename = filename
 
@@ -62,7 +60,6 @@ class StudentData:
         list_filename = self.filename.split("_")
         for key,value in zip(key,list_filename):
             prework[key] = value
-
         self.pre_data = prework     
 
     def prepare_student_data(self) -> dict:
@@ -74,28 +71,11 @@ class StudentData:
         """
         self._filename_pre_data()
         empty_student = {}
-        for i in self.draft_work:
+        for i in self.draft_out:
             empty_student[i] = "N/A"
         for i in self.pre_data:
             empty_student[i] = self.pre_data[i]
         self.pre_data = empty_student
-
-    """
-    Read draft will return str in fileDraft and list in outputDraft if file draft.json is not exists it will return None
-    """
-    def _read_draft_zip(self) -> str:
-        if os.path.exists(self.draft_path):
-            fdraft = WorkEditor("").read_file(self.draft_path)
-            fdraft = fdraft["fileDraft"]
-            return fdraft
-        return None
-
-    def _read_draft_work(self) -> list:
-        if os.path.exists(self.draft_path):
-            draft = WorkEditor("").read_file(self.draft_path)
-            jdraft = draft["outputDraft"]
-            return jdraft
-        return None  
 
     def data_input(self,post_student_data: dict) -> dict:
         """get data form user and set into student data(dict)
@@ -124,7 +104,7 @@ class StudentData:
         pseudo code:
         loop empty_student_data if its not "N/A" it will print out its key and value
         then it will call data_input
-
+        
         Returns:
             data_input: return student data that ready to write
         """

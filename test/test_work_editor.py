@@ -5,10 +5,7 @@ parentdir = os.path.dirname(currentdir)
 os.chdir(parentdir)
 sys.path.insert(0,os.getcwd())
 
-<<<<<<< HEAD
-=======
 from lib.file_management.file_management_lib import WorkEditor, DirManagement
->>>>>>> master
 
 from lib.file_management.file_management_lib import WorkEditor
 
@@ -19,18 +16,6 @@ class TestWorkEditor(unittest.TestCase):
         init we
         init draft.json into list of key
         """
-<<<<<<< HEAD
-        self.je = WorkEditor(currentdir,1234)
-        self.je.draft = [
-                            "student_id",
-                            "name",
-                            "ex",
-                            "score1",
-                            "score2",
-                            "comment"
-                            ]
-
-=======
         self.we = WorkEditor()
         self.draft = {"workDraft":{
     "fileDraft": "{student_id}_{name}_{ex}.zip",
@@ -44,7 +29,6 @@ class TestWorkEditor(unittest.TestCase):
     ]
   }}
         DirManagement.create_dir(os.path.join(currentdir,"ta"))
->>>>>>> master
         return super().setUp()
 
     # def test_init_work(self):
@@ -72,7 +56,6 @@ class TestWorkEditor(unittest.TestCase):
         self.assertIsNone(self.we.write_work(currentdir,stu_data))
         self.assertEqual(self.we.read_work(currentdir),{
   "workId": "123456",
-  "workDraft": {
     "workDraft": {
       "fileDraft": "{student_id}_{name}_{ex}.zip",
       "outputDraft": [
@@ -84,7 +67,7 @@ class TestWorkEditor(unittest.TestCase):
         "comment"
       ]
     }
-  },
+  ,
   "scores": [
     {
       "student_id": "6310546066",

@@ -13,7 +13,6 @@ def create_draft() -> bool:
         elif draft_init.lower() == "no":
             return False
 
-
 def init_work_directory(path) -> bool:
     print(f"{path} makeing work directory")
     ta_path = os.path.join(path,"ta")
