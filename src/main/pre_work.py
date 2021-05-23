@@ -1,53 +1,61 @@
-import os,sys,inspect
-from posix import PRIO_PGRP
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(os.path.dirname(currentdir))
-sys.path.insert(0,parentdir)
-
 from lib.file_management.file_management_lib import WorkEditor
+import os
+import sys
+import inspect
+from posix import PRIO_PGRP
+currentdir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0, parentdir)
+
 
 class Work(WorkEditor):
     def __init__(self) -> None:
         super().__init__()
-        self.path = None
-        self.workId = None
-        self.draft = None
+        self.__path = None
+        self.__workId = None
+        self.__draft = None
 
-    # propert        
+    # propert
     @property
     def path(self):
-        return self.path
+        return self.__path
+
     @property
     def workId(self):
-        return self.workId
+        return self.__workId
+
     @property
     def draft(self):
-        return self.draft
+        return self.__draft
     # setter
+
     @path.setter
-    def path(self,value):
-        if os.path.exists(value):
-            print("Invalid path")
-        else:
-            self.path = value
+    def path(self, value):
+        # if os.path.exists(value):
+        #     print("Invalid path")
+        # else:
+        self.__path = value
+
     @workId.setter
-    def workId(self,value):
-        self.workId = value
+    def workId(self, value):
+        self.__workId = value
+
     @draft.setter
-    def draft(self,value):
+    def draft(self, value):
         try:
             draft = value["workDraft"]["fileDraft"]
             draft = value["workDraft"]["outputDraft"]
-            self.draft = value["workDraft"]
+            self.__draft = value["workDraft"]
         except KeyError:
             print("Invalid draft.")
 
     def property_is_ready(self):
-        if self.path == None:
+        if self.__path == None:
             return False
-        if self.draft == None:
+        if self.__draft == None:
             return False
-        if self.workId == None:
+        if self.__workId == None:
             return False
         return True
 
@@ -57,14 +65,13 @@ class Work(WorkEditor):
         self.add_workid()
 
     def create_file_work(self):
-        return super().create_file_work(self.path)   
-    
+        return super().create_file_work(self.__path)
+
     def add_workid(self):
-        return super().add_workid(self.path, self.workId)
-    
+        return super().add_workid(self.__path, self.__workId)
+
     def add_draft(self):
-        return super().add_draft(self.path, self.draft)
-    
+        return super().add_draft(self.__path, self.__draft)
+
     def write_work(self, stu_data: dict) -> bool:
-        return super().write_work(self.path, stu_data)
-        
+        return super().write_work(self.__path, stu_data)

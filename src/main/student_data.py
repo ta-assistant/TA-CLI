@@ -35,9 +35,8 @@ class StudentData:
             path (str): path of work directory
             filename (str): name of student's directory of file
         """
-        self.draft = draft["workDraft"]
-        self.draft_file = self.draft["fileDraft"]
-        self.draft_out = self.draft["outputDraft"]
+        self.draft_file = draft["fileDraft"]
+        self.draft_out = draft["outputDraft"]
         self.pre_data = None
         self.filename = filename
 

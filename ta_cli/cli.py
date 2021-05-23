@@ -1,9 +1,14 @@
 import click
 import os
 import sys
+import json
+
+from click.decorators import command
 from src.build import make
 from src.main.draft_check import check_draft
 from src.main.student_data import StudentData
+from src.main.pre_work import Work
+from lib.file_management.extract import unzipfile
 
 
 @click.command()
@@ -15,19 +20,25 @@ def cli(init, start, fetch):
     if init:
         make.init_work_directory(current_dir)
     elif start:
-        click.echo(current_dir)
         if check_draft(current_dir):
-            click.echo("yes")
-            list_student_dir = os.listdir(current_dir)
-            for folder in list_student_dir:
-                if folder == "ta" or folder == ".DS_Store":
-                    continue
-                bashcommand = f"code {folder}"
-                os.system(bashcommand)
-                student_data = StudentData(current_dir, folder)
-                student_data.prepare_student_data()
-                click.echo(student_data.ask())
-        else:
-            return
-    elif fetch:
-        pass
+            with open(os.path.join(current_dir, "ta", "draft.json")) as file:
+                draft = json.load(file)
+                file.close()
+            work = Work()
+            work.draft = draft
+            work.path = current_dir
+            click.echo(current_dir)
+            work.workId = 6310546031
+            if work.property_is_ready():
+                unzipfile(current_dir)
+                work.create()
+                list_file = os.listdir(current_dir)
+                for file in list_file:
+                    if "." in file:
+                        continue
+                    command = f"code {file}"
+                    os.system(command)
+                    student = StudentData(
+                        path=work.path, filename=file, draft=work.draft)
+                    student.prepare_student_data()
+                    work.write_work(student.ask())
