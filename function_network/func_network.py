@@ -5,7 +5,7 @@ import os
 
 class Call_api:
     def __init__(self, apikey) -> None:
-        
+
 
         self.hparameter = { 'Authorization': apikey,
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ class WriteWorkdaft:
             except Exception as e:
                 print(e)
                 raise
-        with open(os.path.join(os.getcwd()+'/function_network', "WorkDaft.json"), "w") as create:
+        with open(os.path.join(os.getcwd()+'/function_network', "workDraft.json"), "w") as create:
             json.dump(self.work, create)
         print("workDraft.json file has been created")
 
