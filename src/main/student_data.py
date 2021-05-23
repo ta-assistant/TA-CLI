@@ -1,11 +1,13 @@
-import os,sys,inspect
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+import json
+from lib.file_management.file_management_lib import FileEditor, DirManagement, WorkEditor
+import os
+import sys
+import inspect
+currentdir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0, parentdir)
 
-os.chdir(parentdir)
-sys.path.insert(0,os.getcwd())
-
-from lib.file_management.file_management_lib import FileEditor, DirManagement,WorkEditor
 
 def inask(question: str) -> str:
     """
@@ -20,8 +22,9 @@ def inask(question: str) -> str:
     answer = input(question)
     return answer
 
+
 class StudentData:
-    def __init__(self,path: str,filename: str) -> None:
+    def __init__(self, path: str, filename: str, draft: dict) -> None:
         """
         init draft 
         draft_file (str) 
@@ -32,10 +35,8 @@ class StudentData:
             path (str): path of work directory
             filename (str): name of student's directory of file
         """
-        self.path = path
-        self.draft_path = os.path.join(path,"ta","draft.json")
-        self.draft_file = self._read_draft_zip()
-        self.draft_work = self._read_draft_work()
+        self.draft_file = draft["fileDraft"]
+        self.draft_out = draft["outputDraft"]
         self.pre_data = None
         self.filename = filename
 
@@ -50,7 +51,7 @@ class StudentData:
         Returns:
             dict: student data form file name
         """
-        key=[]
+        key = []
         remainder = ""
         prework = {}
         for i in self.draft_file:
@@ -61,10 +62,9 @@ class StudentData:
             else:
                 remainder += i
         list_filename = self.filename.split("_")
-        for key,value in zip(key,list_filename):
+        for key, value in zip(key, list_filename):
             prework[key] = value
-
-        self.pre_data = prework     
+        self.pre_data = prework
 
     def prepare_student_data(self) -> dict:
         """make that studect_data(dict) ready for the next step by get the output draft 
@@ -75,30 +75,13 @@ class StudentData:
         """
         self._filename_pre_data()
         empty_student = {}
-        for i in self.draft_work:
+        for i in self.draft_out:
             empty_student[i] = "N/A"
         for i in self.pre_data:
             empty_student[i] = self.pre_data[i]
         self.pre_data = empty_student
 
-    """
-    Read draft will return str in fileDraft and list in outputDraft if file draft.json is not exists it will return None
-    """
-    def _read_draft_zip(self) -> str:
-        if os.path.exists(self.draft_path):
-            fdraft = WorkEditor("").read_file(self.draft_path)
-            fdraft = fdraft["fileDraft"]
-            return fdraft
-        return None
-
-    def _read_draft_work(self) -> list:
-        if os.path.exists(self.draft_path):
-            draft = WorkEditor("").read_file(self.draft_path)
-            jdraft = draft["outputDraft"]
-            return jdraft
-        return None  
-
-    def data_input(self,post_student_data: dict) -> dict:
+    def data_input(self, post_student_data: dict) -> dict:
         """get data form user and set into student data(dict)
         pseudo code:
         for loop post_student_data and if its "N/A" ask user for information
@@ -137,4 +120,3 @@ class StudentData:
         print("===========================")
         post_data = self.data_input(post_student_data)
         return post_data
-
