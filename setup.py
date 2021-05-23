@@ -18,6 +18,6 @@ setup(
     install_requires=read_requirements(),
     entry_points="""
     [console_scripts]
-    ta=ta.cli:cli
+    ta=ta_cli.cli:cli
     """
 )

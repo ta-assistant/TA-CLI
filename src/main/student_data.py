@@ -1,9 +1,13 @@
-import os,sys,inspect
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(os.path.dirname(currentdir))
-sys.path.insert(0,parentdir)
 import json
-from lib.file_management.file_management_lib import FileEditor, DirManagement,WorkEditor
+from lib.file_management.file_management_lib import FileEditor, DirManagement, WorkEditor
+import os
+import sys
+import inspect
+currentdir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0, parentdir)
+
 
 def inask(question: str) -> str:
     """
@@ -18,8 +22,9 @@ def inask(question: str) -> str:
     answer = input(question)
     return answer
 
+
 class StudentData:
-    def __init__(self,path: str,filename: str,draft: dict) -> None:
+    def __init__(self, path: str, filename: str, draft: dict) -> None:
         """
         init draft 
         draft_file (str) 
@@ -30,9 +35,8 @@ class StudentData:
             path (str): path of work directory
             filename (str): name of student's directory of file
         """
-        self.draft = draft["workDraft"]
-        self.draft_file = self.draft["fileDraft"]
-        self.draft_out = self.draft["outputDraft"]
+        self.draft_file = draft["fileDraft"]
+        self.draft_out = draft["outputDraft"]
         self.pre_data = None
         self.filename = filename
 
@@ -47,7 +51,7 @@ class StudentData:
         Returns:
             dict: student data form file name
         """
-        key=[]
+        key = []
         remainder = ""
         prework = {}
         for i in self.draft_file:
@@ -58,9 +62,9 @@ class StudentData:
             else:
                 remainder += i
         list_filename = self.filename.split("_")
-        for key,value in zip(key,list_filename):
+        for key, value in zip(key, list_filename):
             prework[key] = value
-        self.pre_data = prework     
+        self.pre_data = prework
 
     def prepare_student_data(self) -> dict:
         """make that studect_data(dict) ready for the next step by get the output draft 
@@ -77,7 +81,7 @@ class StudentData:
             empty_student[i] = self.pre_data[i]
         self.pre_data = empty_student
 
-    def data_input(self,post_student_data: dict) -> dict:
+    def data_input(self, post_student_data: dict) -> dict:
         """get data form user and set into student data(dict)
         pseudo code:
         for loop post_student_data and if its "N/A" ask user for information
@@ -104,7 +108,7 @@ class StudentData:
         pseudo code:
         loop empty_student_data if its not "N/A" it will print out its key and value
         then it will call data_input
-        
+
         Returns:
             data_input: return student data that ready to write
         """
@@ -116,4 +120,3 @@ class StudentData:
         print("===========================")
         post_data = self.data_input(post_student_data)
         return post_data
-

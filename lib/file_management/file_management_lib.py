@@ -49,16 +49,6 @@ class DirManagement:
             return True
 
 
-<<<<<<< HEAD
-import os 
-import json
-
-class WorkEditor(FileEditor):    
-    def init_work(self,path) -> None:
-        self.create_file(os.path.join(path,"ta"),"work.json")
-        with open(os.path.join(path,"ta","work.json"), 'w') as outfile:
-            json.dump({"workId":"N/A","workDraft":"N/A","scores":[]}, outfile)
-=======
 class WorkEditor(FileEditor):
     def __init__(self, path: str) -> None:
         """
@@ -71,35 +61,31 @@ class WorkEditor(FileEditor):
         self.path = path
         self.work_path = os.path.join(self.path,"work.json")
 
-
-    def init_work(self) -> None:
-
-        self.create_file(self.path, "work.json")
-        with open(self.work_path, 'w') as outfile:
-            json.dump({"scores":[]}, outfile)
->>>>>>> test_cli
+    def init_work(self, path) -> None:
+        self.create_file(os.path.join(path, "ta"), "work.json")
+        with open(os.path.join(path, "ta", "work.json"), 'w') as outfile:
+            json.dump({"workId": "N/A", "workDraft": "N/A",
+                       "scores": []}, outfile)
             outfile.close()
 
-    def check_exits_work(self,path):
-        if os.path.exists(os.path.join(path,"ta","work.json")):
+    def check_exits_work(self, path):
+        if os.path.exists(os.path.join(path, "ta", "work.json")):
             return True
         else:
-            print(os.path.join(path,"ta","work.json")+" doesn't exits")
+            print(os.path.join(path, "ta", "work.json")+" doesn't exits")
             return False
 
-<<<<<<< HEAD
+
     def create_file_work(self,path) -> bool:
         if not self.check_exits_work(path):
             self.init_work(path)
-            print(os.path.join(path,"ta","work.json")+" created")
+            print(os.path.join(path, "ta", "work.json")+" created")
             return True
         else:
             return False
 
-    def write_work(self, path,stu_data : dict) -> bool:
-=======
-    def write_work(self, stu_data: dict) -> bool:
->>>>>>> test_cli
+
+    def write_work(self, path, stu_data: dict) -> bool:
         """add student data to work.json
 
         Args:
@@ -108,49 +94,44 @@ class WorkEditor(FileEditor):
         Returns:
             bool: if the stu_data does not match with draft.json return False else True
         """
-        with open(os.path.join(path,"ta","work.json"), "r+") as file:
+        with open(os.path.join(path, "ta", "work.json"), "r+") as file:
             data = json.load(file)
             data["scores"].append(stu_data)
             file.seek(0)
-<<<<<<< HEAD
             json.dump(data, file,indent = 2)
             print(str(stu_data) + " has been written down in "+ os.path.join(path,"ta","work.json"))
             file.close()
 
-    def add_workid(self,path,workId):
+    def add_workid(self, path, workId):
         if self.check_exits_work(path):
-            with open(os.path.join(path,"ta","work.json"),"r") as file:
+            with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)
                 file.close()
-            with open(os.path.join(path,"ta","work.json"),"w") as file:
+            with open(os.path.join(path, "ta", "work.json"), "w") as file:
                 data["workId"] = str(workId)
-                json.dump(data,file)
+                json.dump(data, file)
                 file.close()
             print(f"Your workId is {workId}")
-      
-    def add_draft(self,path,draft):
+
+    def add_draft(self, path, draft):
         if self.check_exits_work(path):
-            with open(os.path.join(path,"ta","work.json"),"r") as file:
+            with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)
                 file.close()
-            with open(os.path.join(path,"ta","work.json"),"w") as file:
+            with open(os.path.join(path, "ta", "work.json"), "w") as file:
                 data["workDraft"] = draft
-                json.dump(data,file)
+                json.dump(data, file)
                 file.close()
             print("Sucessfully add draft")
 
-    def read_work(self,path) -> dict:
+    def read_work(self, path) -> dict:
         if self.check_exits_work(path):
-            with open(os.path.join(path,"ta","work.json")) as file:
+            with open(os.path.join(path, "ta", "work.json")) as file:
                 data = json.load(file)
                 file.close()
             return data
         else:
             return {}
-=======
-            json.dump(data, file, indent=2)
-            print(str(stu_data) + " has been written down in " + self.work_path)
-            file.close()
 
     def read_file(self, name: str) -> dict:
         with open(self.path+name) as f:
@@ -174,4 +155,6 @@ if __name__ == "__main__":
                 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
     work.create_file_work()
     work.write_work(stu_data)
+>>>>>>> test_cli
+=======
 >>>>>>> test_cli
