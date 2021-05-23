@@ -1,10 +1,7 @@
 """
 Author Paranchai
-
 ### This function is about extract only the ".zip" files you can use these method by
-
 unzipfile(path: str)
-
 ### if have any suggestions or problem, you can direct message to me
 """
 
