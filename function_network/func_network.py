@@ -17,7 +17,7 @@ class Call_api:
         self.url = f'{self.prefix}{self.apipath}'
 
         self.res = self.response()
-        # self.createworkdraft()
+        self.createworkdraft()
 
     def response(self):
         res = requests.get(self.url, headers=self.hparameter)
