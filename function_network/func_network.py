@@ -4,26 +4,30 @@ import os
 
 
 class Call_api:
-    def __init__(self, apikey, workid, prefix="https://google.com") -> None:
+    def __init__(self, apikey) -> None:
+        
 
         self.hparameter = { 'Authorization': apikey,
-                    'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
         }
 
-        self.dparameter = {
-            "workID": workid
-        }
 
-        self.prefix = prefix
+        self.url = "https://ta-api.sirateek.dev/v1/workManagement/testWork/getWorkDraft"
 
-        self.url = self.find_path(self.prefix, "/v1/getWorkDraft/")
+        self.res = self.response()
+        self.get_workdraft()
 
     def response(self):
-        res = requests.get(self.url, headers=self.hparameter, data=self.dparameter)
+        res = requests.get(self.url, headers=self.hparameter)
         return res
 
-    def find_path(self, start, api_path) -> str:
-        return f"{start}{api_path}"
+    def get_workdraft(self):
+        if self.res.status_code == 200:
+            print('Success to access')    
+            self.data = self.res.json()['workDraft']
+            WriteWorkdaft(self.data)
+        else:
+            print(self.res.json()['message'])
 
 
 class WriteWorkdaft:
@@ -38,20 +42,11 @@ class WriteWorkdaft:
             except Exception as e:
                 print(e)
                 raise
-        with open(os.path.join(os.getcwd()+'/function_network', "Work_daft.json"), "w") as create:
+        with open(os.path.join(os.getcwd()+'/function_network', "WorkDaft.json"), "w") as create:
             json.dump(self.work, create)
-        print("json file has been created")
+        print("workDraft.json file has been created")
 
 
 if __name__ == "__main__":
-    api_called = Call_api('ApiKey', 'testWork')
-    print(api_called.response())
-    a = {"workDraft": {
-        "outputDraft": [
-            "a",
-            "b",
-            "score1"
-        ],
-        "zipFileDraft": "{a}_{b}.zip"} }
-    WriteWorkdaft(a)
+    Call_api('K4nPEs7RhhCzcjdlvr3X==')
 
