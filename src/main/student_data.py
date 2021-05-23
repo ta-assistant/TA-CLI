@@ -15,7 +15,6 @@ def inask(question: str) -> str:
     but it need to create a sperate function and call it in function that we want to use
     Args:
         question (str): any string
-
     Returns:
         str: user input
     """
@@ -30,7 +29,6 @@ class StudentData:
         draft_file (str) 
         draft_work (list)
         if user did not have draft.json it will return None
-
         Args:
             path (str): path of work directory
             filename (str): name of student's directory of file
@@ -47,7 +45,6 @@ class StudentData:
         -split filename with "_" so we will got list of student name, id, ex, etc.
         -we will zip it together and store into prework(dict) that keep student data and key word 
         example: {"student_id": "1234567890", "name": "Alex", "ex": "ex1}
-
         Returns:
             dict: student data form file name
         """
@@ -69,7 +66,6 @@ class StudentData:
     def prepare_student_data(self) -> dict:
         """make that studect_data(dict) ready for the next step by get the output draft 
         and set it into student_data and have its value is "N/"A
-
         Returns:
             dict: empty student data that have only data from file name but another is "N/A"
         """
@@ -91,7 +87,6 @@ class StudentData:
         {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '10', 'score2': '20', 'comment': 'nice work'}
         Args:
             post_student_data (dict): empty_student_data
-
         Returns:
             dict: student data that ready to write
         """
@@ -108,7 +103,6 @@ class StudentData:
         pseudo code:
         loop empty_student_data if its not "N/A" it will print out its key and value
         then it will call data_input
-
         Returns:
             data_input: return student data that ready to write
         """
