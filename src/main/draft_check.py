@@ -3,10 +3,8 @@ import os
 def check_draft(path: str) -> bool:
     """
     check draft.json that exist or not
-
     Args:
         path (str): path of work directory
-
     Returns:
         bool: if draft.json exists return true else false
     """
