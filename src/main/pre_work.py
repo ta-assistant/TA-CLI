@@ -9,7 +9,7 @@ from lib.file_management.file_management_lib import WorkEditor
 class Work(WorkEditor):
     def __init__(self) -> None:
         super().__init__()
-        self.path = None
+        self.path =  None
         self.workId = None
         self.draft = None
 

@@ -32,7 +32,6 @@ class TestStuData(unittest.TestCase):
         """
     
         stu1 = student_data.StudentData(currentdir,"6310546066_vitvara_ex1",self.draft)
-        stu1.draft_file = "{student_id}_{name}_{ex}.zip"
         stu1.prepare_student_data()
         self.assertEqual(stu1.pre_data,{'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': 'N/A', 'score2': 'N/A', 'comment': 'N/A'})
         self.assertEqual(stu1.ask(),{'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '1', 'score2': '1', 'comment': '1'})
@@ -40,7 +39,6 @@ class TestStuData(unittest.TestCase):
     @patch("student_data.inask",return_value='-99')
     def test_skip(self,input):
         stu1 = student_data.StudentData(currentdir,"6310546066_vitvara_ex1",self.draft)
-        stu1.draft_file = "{student_id}_{name}_{ex}.zip"
         stu1.prepare_student_data()
         self.assertEqual(stu1.pre_data,{'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': 'N/A', 'score2': 'N/A', 'comment': 'N/A'})
         self.assertEqual(stu1.ask(),{'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': 'N/A', 'score2': 'N/A', 'comment': 'N/A'})
