@@ -30,10 +30,3 @@ def init_work_directory(path) -> bool:
 def reset(path):
     ta_path = os.path.join(path,"ta")
     DirManagement.remove_dir(ta_path)
-    
-if __name__ == "__main__":
-    init_work_directory(r"C:\Users\Admin\Desktop\ex1")
-    
-
-
-
