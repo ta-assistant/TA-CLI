@@ -48,11 +48,13 @@ class WriteWorkdaft:
             json.dump(self.work, create)
         print("workDraft.json file has been created")
 
-class SendData(Call_api):
+class SendData:
     def __init__(self, apikey, id) -> None:
-        super().__init__(apikey, id)
+        self.hparameter = { 'Authorization': apikey,
+                'Content-Type': 'application/json',
+        }
         self.prefix = "https://ta-api.sirateek.dev/"
-        self.apipath = f'v1/workManagement/{self.id}/submitScores'
+        self.apipath = f'v1/workManagement/{id}/submitScores'
         self.posturl = f'{self.prefix}{self.apipath}'
         self.getworkDraft()
         
