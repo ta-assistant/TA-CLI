@@ -24,12 +24,12 @@ class Call_api:
         if self.res.status_code == 200:
             print('Success to access')    
             self.data = self.res.json()['workDraft']
-            self.create_work(self.data)
+            self.writejson(self.data)
         else:
             print(self.res.json()['message'])
 
 
-    def create_work(self, data) -> None:
+    def writejson(self, data) -> None:
         if not os.path.exists(os.getcwd()+'/function_network'):
             try:
                 os.makedirs(os.getcwd()+'/function_network')
