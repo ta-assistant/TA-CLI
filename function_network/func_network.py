@@ -7,17 +7,23 @@ import sys
 class Call_api:
     def __init__(self, apikey, id) -> None:
         self.apikey = apikey
-        p = open("function_network\config.txt", "r")
-        self.prefix = p.read().split()[2]
-        p.close()
+        self.prefix = self.readprefix()
+
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
 
         self.getapi = f"v1/workManagement/{id}/getWorkDraft"
+        
         self.url = self.prefix+self.getapi
         self.createworkdraft()
 
+    
+    def readprefix(self):
+        p = open("function_network\config.txt", "r")
+        prefix = p.read().split()[2]
+        p.close()
+        return prefix
 
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
