@@ -1,29 +1,28 @@
 import requests
 import json
 import os
+import sys
+sys.path.insert(1,f"{os.getcwd()}/function_network")
+from config import *
+
+
 
 
 class Call_api:
     def __init__(self, apikey, id) -> None:
-
-
-        self.hparameter = { 'Authorization': apikey,
+        self.apikey = apikey
+        self.id = id
+        self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
 
-        self.id = id
-        self.prefix = "https://ta-api.sirateek.dev/"
-        self.apipath = f'v1/workManagement/{self.id}/getWorkDraft'
-        self.url = f'{self.prefix}{self.apipath}'
+        self.getapi = f'v1/workManagement/{id}/getWorkDraft'
+        self.url = f'{prefix}{self.getapi}'
 
-        self.res = self.response()
-        self.createworkdraft()
 
-    def response(self):
-        res = requests.get(self.url, headers=self.hparameter)
-        return res
 
     def createworkdraft(self):
+        self.res = requests.get(self.url, headers=self.hparameter)
         if self.res.status_code == 200:
             print('Success to access')    
             self.data = self.res.json()['workDraft']
@@ -37,7 +36,7 @@ class WriteWorkdaft:
         self.work = workdaft
         self.create_work()
 
-    def create_work(self) -> None:
+    def create_work(self, work) -> None:
         if not os.path.exists(os.getcwd()+'/function_network'):
             try:
                 os.makedirs(os.getcwd()+'/function_network')
@@ -50,12 +49,15 @@ class WriteWorkdaft:
 
 class SendData:
     def __init__(self, apikey, id) -> None:
-        self.hparameter = { 'Authorization': apikey,
+        self.apikey = apikey
+        self.id = id
+        self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
-        self.prefix = "https://ta-api.sirateek.dev/"
-        self.apipath = f'v1/workManagement/{id}/submitScores'
-        self.posturl = f'{self.prefix}{self.apipath}'
+
+
+        self.postapi = f'v1/workManagement/{id}/submitScores'
+        self.posturl = f'{prefix}{self.postapi}'
         self.getworkDraft()
         
 
