@@ -4,9 +4,6 @@ import os
 import sys
 
 
-
-
-
 class Call_api:
     def __init__(self, apikey, id) -> None:
         self.apikey = apikey
@@ -22,23 +19,17 @@ class Call_api:
         self.createworkdraft()
 
 
-
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
         if self.res.status_code == 200:
             print('Success to access')    
             self.data = self.res.json()['workDraft']
-            WriteWorkdaft(self.data)
+            self.create_work(self.data)
         else:
             print(self.res.json()['message'])
 
 
-class WriteWorkdaft:
-    def __init__(self, workdaft) -> None:
-        self.work = workdaft
-        self.create_work()
-
-    def create_work(self) -> None:
+    def create_work(self, data) -> None:
         if not os.path.exists(os.getcwd()+'/function_network'):
             try:
                 os.makedirs(os.getcwd()+'/function_network')
@@ -46,8 +37,9 @@ class WriteWorkdaft:
                 print(e)
                 raise
         with open(os.path.join(os.getcwd()+'/function_network', "workDraft.json"), "w") as create:
-            json.dump(self.work, create)
+            json.dump(data, create)
         print("workDraft.json file has been created")
+
 
 class SendData:
     def __init__(self, apikey, id) -> None:
