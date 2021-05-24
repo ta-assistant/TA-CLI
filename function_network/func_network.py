@@ -2,8 +2,7 @@ import requests
 import json
 import os
 import sys
-sys.path.insert(1,f"{os.getcwd()}/function_network")
-from config import *
+
 
 
 
@@ -11,13 +10,16 @@ from config import *
 class Call_api:
     def __init__(self, apikey, id) -> None:
         self.apikey = apikey
-        self.id = id
+        p = open("function_network\config.txt", "r")
+        self.prefix = p.read().split()[2]
+        p.close()
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
 
-        self.getapi = f'v1/workManagement/{id}/getWorkDraft'
-        self.url = f'{prefix}{self.getapi}'
+        self.getapi = f"v1/workManagement/{id}/getWorkDraft"
+        self.url = self.prefix+self.getapi
+        self.createworkdraft()
 
 
 
@@ -36,7 +38,7 @@ class WriteWorkdaft:
         self.work = workdaft
         self.create_work()
 
-    def create_work(self, work) -> None:
+    def create_work(self) -> None:
         if not os.path.exists(os.getcwd()+'/function_network'):
             try:
                 os.makedirs(os.getcwd()+'/function_network')
@@ -50,14 +52,16 @@ class WriteWorkdaft:
 class SendData:
     def __init__(self, apikey, id) -> None:
         self.apikey = apikey
-        self.id = id
+        p = open("function_network\config.txt", "r")
+        self.prefix = p.read().split()[2]
+        p.close()
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
 
 
-        self.postapi = f'v1/workManagement/{id}/submitScores'
-        self.posturl = f'{prefix}{self.postapi}'
+        self.postapi = f"v1/workManagement/{id}/submitScores"
+        self.posturl = self.prefix+self.postapi
         self.getworkDraft()
         
 
