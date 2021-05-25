@@ -19,7 +19,7 @@ class CallApi:
     
     def readprefix(self):
         p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        prefix = p.read().split()[2]
+        prefix = p.read().split()[2][0:-1]
         p.close()
         return prefix
 
@@ -45,7 +45,7 @@ class SendData:
         self.apikey = apikey
         self.path = path
         p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        self.prefix = p.read().split()[2]
+        self.prefix = p.read().split()[2][0:-1]
         p.close()
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ class SendData:
 
         self.postapi = f"v1/workManagement/{workID}/submitScores"
         self.posturl = self.prefix+self.postapi
-
+        self.getworkDraft()
         
 
     def getworkDraft(self):
