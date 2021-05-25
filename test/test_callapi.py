@@ -4,7 +4,7 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-from function_network.func_network import CallApi, SendData
+from lib.file_management.func_network import CallApi
 
 class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
