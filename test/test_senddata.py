@@ -28,10 +28,13 @@ class TestSendData(unittest.TestCase):
             "param2": "print('hello')",
             "comment": "good"
         }]
-}
-        with open(os.path.join(self.path, "wrok.json"), "w") as create:
+}       
+        data1 = "prefix = https://ta-api.sirateek.dev/"
+        with open(os.path.join(self.path, "config.txt"), "w") as create:
+            json.dump(data1, create)
+        with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(data, create)
-        self.post = SendData('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', parentdir+r'\testypath')
+        self.post = SendData('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', parentdir)
 
         return super().setUp()
 
