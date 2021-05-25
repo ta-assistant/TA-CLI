@@ -8,7 +8,7 @@ from lib.file_management.function_network.func_network import CallApi
 
 class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
-        self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', r'C:\vs\ta\TA-CLI\testypath')
+        self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', parentdir+r'\testypath')
         return super().setUp()
 
     def test_readprefix(self):
