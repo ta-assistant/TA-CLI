@@ -68,6 +68,4 @@ class SendData:
             print(send.json())
 
             
-if __name__ == "__main__":
-    CallApi('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', r'C:\vs\ta\TA-CLI\testypath')
-    SendData('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', r'C:\vs\ta\TA-CLI\testypath')
+
