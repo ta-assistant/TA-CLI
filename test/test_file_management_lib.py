@@ -54,7 +54,7 @@ class TestDirManagement(unittest.TestCase):
         """
         dirmanage = DirManagement()
         self.assertTrue(dirmanage.remove_dir(currentdir+"test1"))
-        self.assertFalse(dirmanage.remove_dir(currentdir+"\est1"))
+        self.assertFalse(dirmanage.remove_dir(currentdir+"test1"))
 
     
 
