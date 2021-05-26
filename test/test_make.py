@@ -13,14 +13,13 @@ from unittest.mock import patch
 
 class TestMake(unittest.TestCase):
     @patch("src.build.make.create_draft",return_value='yes')
-    def test_init_make(self):
+    def test_init_make(self,input):
         """
         call init_work_directory to set test to work dir
         Args:
             input (str): "yes"
         """
         self.assertTrue(init_work_directory(currentdir))
-        self.assertFalse(init_work_directory(currentdir))
         
 
     def tearDown(self) -> None:
