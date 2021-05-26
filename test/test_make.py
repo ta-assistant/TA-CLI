@@ -23,12 +23,12 @@ class TestMake(unittest.TestCase):
         self.assertFalse(init_work_directory(currentdir))
         
 
-    # def tearDown(self) -> None:
-    #     """
-    #     when test finish reset test into normal dir (not work directory)
-    #     """
-    #     reset(currentdir)
-    #     return super().tearDown()
+    def tearDown(self) -> None:
+        """
+        when test finish reset test into normal dir (not work directory)
+        """
+        reset(currentdir)
+        return super().tearDown()
 
 if __name__ == "__main__":
     unittest.main()
