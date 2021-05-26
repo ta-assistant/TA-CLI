@@ -44,9 +44,10 @@ class SendData:
     def __init__(self, apikey, workID, path) -> None:
         self.apikey = apikey
         self.path = path
-        p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        self.prefix = p.read().split()[2][0:-1]
-        p.close()
+        config = ConfigParser() 
+        configFilePath = os.path.join(self.path,"ta","config.txt")
+        config.readfp(open(configFilePath))
+        self.prefix = config.get("CONFIG","prefix")
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }

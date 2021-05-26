@@ -29,9 +29,11 @@ class TestSendData(unittest.TestCase):
             "comment": "good"
         }]
 }       
-        data1 = "prefix = https://ta-api.sirateek.dev/"
+        data = "[CONFIG]\nprefix = https://ta-api.sirateek.dev/"
         with open(os.path.join(self.path, "config.txt"), "w") as create:
-            json.dump(data1, create)
+            create.write(data)
+            print("config.txt has been init.")
+            create.close()
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(data, create)
         self.post = SendData('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', parentdir)
