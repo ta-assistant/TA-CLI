@@ -4,7 +4,7 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 print(parentdir)
-from lib.file_management.function_network.func_network import SendData
+from lib.function_network.func_network import SendData
 from lib.file_management.file_management_lib import FileEditor, DirManagement
 
 class TestSendData(unittest.TestCase):
