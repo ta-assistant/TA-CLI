@@ -5,10 +5,10 @@ import json
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
-filemanagedir = os.path.join(parentdir,"lib","file_management")
+
 sys.path.insert(0,parentdir)
 
-from lib.file_management.file_management_lib import FileEditor, DirManagement, WorkEditor
+from lib.file_management.file_management_lib import FileEditor, DirManagement
 from lib.file_management import extract
 
 class TestExtract(unittest.TestCase):
