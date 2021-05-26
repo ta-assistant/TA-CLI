@@ -74,10 +74,8 @@ class WorkEditor(FileEditor):
 
     def write_work(self, path, stu_data: dict) -> bool:
         """add student data to work.json
-
         Args:
             stu_data (list): list of student data (should ordered)
-
         Returns:
             bool: if the stu_data does not match with draft.json return False else True
         """

@@ -17,7 +17,7 @@ class TestWorkEditor(unittest.TestCase):
         init draft.json into list of key
         """
         self.we = WorkEditor()
-        self.draft = {"workDraft":{
+        self.draft = {
     "fileDraft": "{student_id}_{name}_{ex}.zip",
     "outputDraft": [
       "student_id",
@@ -27,7 +27,7 @@ class TestWorkEditor(unittest.TestCase):
       "score2",
       "comment"
     ]
-  }}
+  }
         DirManagement.create_dir(os.path.join(currentdir,"ta"))
         return super().setUp()
 
@@ -50,10 +50,14 @@ class TestWorkEditor(unittest.TestCase):
         self.we.add_workid(currentdir,123456)
         self.assertEqual(self.we.read_work(currentdir),{'workId': '123456', 'workDraft': "N/A", 'scores': []})
         self.we.add_draft(currentdir,self.draft)
-        self.assertEqual(self.we.read_work(currentdir),{'workId': '123456', 'workDraft': {'workDraft': {'fileDraft': '{student_id}_{name}_{ex}.zip', 'outputDraft': ['student_id', 
-'name', 'ex', 'score1', 'score2', 'comment']}}, 'scores': []})
+        print(self.we.read_work(currentdir),"hi")
+        self.assertEqual(self.we.read_work(currentdir),{'workId': '123456', 'workDraft':{'fileDraft': '{student_id}_{name}_{ex}.zip', 'outputDraft': ['student_id', 
+'name', 'ex', 'score1', 'score2', 'comment']}, 'scores': []})
+        
         stu_data = {'student_id': '6310546066', 'name': 'vitvara', 'ex': 'ex1', 'score1': '12', 'score2': '13', 'comment': 'nice work'}
+        
         self.assertIsNone(self.we.write_work(currentdir,stu_data))
+        
         self.assertEqual(self.we.read_work(currentdir),{
   "workId": "123456",
     "workDraft": {

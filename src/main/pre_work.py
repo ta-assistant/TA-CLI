@@ -2,7 +2,11 @@ from lib.file_management.file_management_lib import WorkEditor
 import os
 import sys
 import inspect
+<<<<<<< HEAD
 from posix import PRIO_PGRP
+=======
+
+>>>>>>> master
 currentdir = os.path.dirname(os.path.abspath(
     inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
@@ -32,9 +36,12 @@ class Work(WorkEditor):
 
     @path.setter
     def path(self, value):
+<<<<<<< HEAD
         # if os.path.exists(value):
         #     print("Invalid path")
         # else:
+=======
+>>>>>>> master
         self.__path = value
 
     @workId.setter
@@ -74,4 +81,8 @@ class Work(WorkEditor):
         return super().add_draft(self.__path, self.__draft)
 
     def write_work(self, stu_data: dict) -> bool:
+<<<<<<< HEAD
         return super().write_work(self.__path, stu_data)
+=======
+        return super().write_work(self.__path, stu_data)
+>>>>>>> master
