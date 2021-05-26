@@ -20,9 +20,9 @@ def init_work_directory(path) -> bool:
         print(path+" is already a work directory")
     else:
         DirManagement().create_dir(ta_path)
-    data = 'prefix = '
+    data = "prefix = https://ta-api.sirateek.dev/"
     with open(os.path.join(ta_path, "config.txt"), "w") as create:
-        json.dump(data, create)
+        create.write(data)
         print("config.txt has been init.")
         create.close()
     print(f"{path} is ready")

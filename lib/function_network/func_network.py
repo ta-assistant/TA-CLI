@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-
+from configparser import ConfigParser
 
 class CallApi:
     def __init__(self, apikey, workID, path) -> None:
@@ -18,10 +18,10 @@ class CallApi:
         print()
     
     def readprefix(self):
-        p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        prefix = p.read().split()[2][0:-1]
-        p.close()
-        return prefix
+        config = ConfigParser() 
+        configFilePath = os.path.join(self.path,"ta","config.txt")
+        config.readfp(open(configFilePath))
+        return config.get("CONFIG","prefix")
 
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
