@@ -3,10 +3,10 @@ import os, sys, inspect, json
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from lib.file_management.function_network.func_network import SendData
-from lib.file_management.file_management_lib import FileEditor, DirManagement
+from lib.file_management.function_network.func_network import ReadFile
+from lib.file_management.file_management_lib import DirManagement
 
-class TestSendData(unittest.TestCase):
+class TestReadFile(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
@@ -35,20 +35,18 @@ class TestSendData(unittest.TestCase):
             create.close()
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(workdata, create)
-        self.post = SendData('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', parentdir)
-
+        self.fread = ReadFile()
         return super().setUp()
 
-    def testgetworkdraft(self):
+    def testfileread(self):
         """
-        return None
+        return str
         """
-        self.assertIsNone(self.post.getworkDraft())
-
+        self.assertIs(type(self.fread.fileread(parentdir, 'config.txt')), str)
+        self.assertIs(type(self.fread.fileread(parentdir, 'work.json')), str)
     def tearDown(self) -> None:
-        DirManagement.remove_dir(self.path)
+        DirManagement.remove_dir(os.path.join(parentdir,"ta"))
         return super().tearDown()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -1,13 +1,23 @@
 import requests
 import json
 import os
+from configparser import ConfigParser
 
-
-class CallApi:
+class ReadFile:
+    def fileread(self, path, filename):
+        if filename == 'config.txt':
+            config = ConfigParser() 
+            configFilePath = os.path.join(path ,'ta', filename)
+            config.read_file(open(configFilePath))
+            return config.get("CONFIG","prefix")
+        else:
+            with open(os.path.join(path, 'ta', filename)) as r:
+                return r.read()
+class CallApi(ReadFile):
     def __init__(self, apikey, workID, path) -> None:
         self.apikey = apikey
         self.path = path
-        self.prefix = self.readprefix()
+        self.prefix = self.fileread(self.path,'config.txt')
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
@@ -16,12 +26,7 @@ class CallApi:
         self.url = self.prefix+self.getapi
         self.createworkdraft()
         print()
-    
-    def readprefix(self):
-        p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        prefix = p.read().split()[2][0:-1]
-        p.close()
-        return prefix
+
 
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
@@ -40,13 +45,11 @@ class CallApi:
         print("workDraft.json file has been created")
 
 
-class SendData:
+class SendData(ReadFile):
     def __init__(self, apikey, workID, path) -> None:
         self.apikey = apikey
         self.path = path
-        p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        self.prefix = p.read().split()[2][0:-1]
-        p.close()
+        self.prefix = self.fileread(self.path, 'config.txt')
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
@@ -58,9 +61,8 @@ class SendData:
         
 
     def getworkDraft(self):
-        with open(os.path.join(self.path, 'ta', 'work.json')) as r:
-            workdraft = json.load(r)
-        send = requests.post(self.posturl, headers=self.hparameter, json=workdraft)
+        work = self.fileread(self.path, 'work.json')
+        send = requests.post(self.posturl, headers=self.hparameter, json=json.loads(work))
         if send.status_code == 200:
             print('Sending data success')
         else:
@@ -68,4 +70,3 @@ class SendData:
             print(send.json())
 
             
-
