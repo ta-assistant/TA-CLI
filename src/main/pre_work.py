@@ -40,9 +40,9 @@ class Work(WorkEditor):
     @draft.setter
     def draft(self, value):
         try:
-            draft = value["workDraft"]["fileDraft"]
-            draft = value["workDraft"]["outputDraft"]
-            self.__draft = value["workDraft"]
+            draft = value["fileDraft"]
+            draft = value["outputDraft"]
+            self.__draft = value
         except KeyError:
             print("Invalid draft.")
 

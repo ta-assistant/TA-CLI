@@ -8,20 +8,20 @@ class CallApi:
         self.apikey = apikey
         self.path = path
         self.prefix = self.readprefix()
-        self.hparameter = { 'Authorization': self.apikey,
-                'Content-Type': 'application/json',
-        }
+        self.hparameter = {'Authorization': self.apikey,
+                           'Content-Type': 'application/json',
+                           }
 
         self.getapi = f"v1/workManagement/{workID}/getWorkDraft"
         self.url = self.prefix+self.getapi
         self.createworkdraft()
         print()
-    
+
     def readprefix(self):
-        p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        prefix = p.read().split()[2][0:-1]
-        p.close()
-        return prefix
+        file = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
+        for line in file.splitlines():
+            if 'prefix =' in line:
+                return line.split('=', 1)[1]
 
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
@@ -32,7 +32,6 @@ class CallApi:
         else:
             print(self.res.status_code)
             print(self.res.json()['message'])
-
 
     def writejson(self, data) -> None:
         with open(os.path.join(self.path, 'ta', "draft.json"), "w") as create:
@@ -47,25 +46,21 @@ class SendData:
         p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
         self.prefix = p.read().split()[2][0:-1]
         p.close()
-        self.hparameter = { 'Authorization': self.apikey,
-                'Content-Type': 'application/json',
-        }
-
+        self.hparameter = {'Authorization': self.apikey,
+                           'Content-Type': 'application/json',
+                           }
 
         self.postapi = f"v1/workManagement/{workID}/submitScores"
         self.posturl = self.prefix+self.postapi
         self.getworkDraft()
-        
 
     def getworkDraft(self):
         with open(os.path.join(self.path, 'ta', 'work.json')) as r:
             workdraft = json.load(r)
-        send = requests.post(self.posturl, headers=self.hparameter, json=workdraft)
+        send = requests.post(
+            self.posturl, headers=self.hparameter, json=workdraft)
         if send.status_code == 200:
             print('Sending data success')
         else:
             print(send.status_code)
             print(send.json())
-
-            
-
