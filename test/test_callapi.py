@@ -11,9 +11,11 @@ class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
-        data = "prefix = https://ta-api.sirateek.dev/"
+        data = "[CONFIG]\nprefix = https://ta-api.sirateek.dev/"
         with open(os.path.join(self.path, "config.txt"), "w") as create:
-            json.dump(data, create)
+            create.write(data)
+            print("config.txt has been init.")
+            create.close()
         self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', 'testWork2', parentdir)
         return super().setUp()
 

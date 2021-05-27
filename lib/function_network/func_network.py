@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+from configparser import ConfigParser
 
 
 class CallApi:
@@ -18,10 +19,10 @@ class CallApi:
         print()
 
     def readprefix(self):
-        file = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        for line in file.splitlines():
-            if 'prefix =' in line:
-                return line.split('=', 1)[1]
+        config = ConfigParser()
+        configFilePath = os.path.join(self.path, "ta", "config.txt")
+        config.readfp(open(configFilePath))
+        return config.get("CONFIG", "prefix")
 
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
@@ -43,9 +44,10 @@ class SendData:
     def __init__(self, apikey, workID, path) -> None:
         self.apikey = apikey
         self.path = path
-        p = open(os.path.join(self.path, 'ta', 'config.txt'), "r")
-        self.prefix = p.read().split()[2][0:-1]
-        p.close()
+        config = ConfigParser()
+        configFilePath = os.path.join(self.path, "ta", "config.txt")
+        config.readfp(open(configFilePath))
+        self.prefix = config.get("CONFIG", "prefix")
         self.hparameter = {'Authorization': self.apikey,
                            'Content-Type': 'application/json',
                            }
