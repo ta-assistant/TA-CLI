@@ -5,7 +5,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 from lib.file_management.function_network.func_network import CallApi
-from lib.file_management.file_management_lib import FileEditor, DirManagement
+from lib.file_management.file_management_lib import DirManagement
 
 class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
