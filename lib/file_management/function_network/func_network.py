@@ -13,6 +13,8 @@ class ReadFile:
         else:
             with open(os.path.join(path, 'ta', filename)) as r:
                 return r.read()
+
+                
 class CallApi(ReadFile):
     def __init__(self, apikey, workID, path) -> None:
         self.apikey = apikey
