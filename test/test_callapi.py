@@ -21,11 +21,13 @@ class TestCallApi(unittest.TestCase):
         """
         self.assertIs(type(self.call.createworkdraft()), str)
 
+
     def TestWritejson(self):
         """
         print(str)
         """
         self.assertIs(type(self.call.writejson()), str)
+        
 
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)

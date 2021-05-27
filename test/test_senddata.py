@@ -41,6 +41,7 @@ class TestSendData(unittest.TestCase):
         """
         self.assertIsNone(self.post.getworkDraft())
 
+
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)
         return super().tearDown()

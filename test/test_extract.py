@@ -5,11 +5,11 @@ import json
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
-filemanagedir = os.path.join(parentdir,"lib","file_management")
-sys.path.insert(0,filemanagedir)
 
-from file_management_lib import FileEditor, DirManagement, WorkEditor
-import extract
+sys.path.insert(0,parentdir)
+
+from lib.file_management.file_management_lib import FileEditor, DirManagement
+from lib.file_management import extract
 
 class TestExtract(unittest.TestCase):
     def setUp(self) -> None:
@@ -50,7 +50,7 @@ class TestExtract(unittest.TestCase):
         return super().setUp()
 
     def test_extract(self):
-        extract.unzipfile(currentdir,"{student_id}_{name}_{ex}.zip")
+        extract.unzipfile(currentdir)
         listfile = os.listdir(currentdir)
         self.assertIn("631055555_hi_ex1",listfile)
     
