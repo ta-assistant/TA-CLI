@@ -3,8 +3,9 @@ import os, sys, inspect, json
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from lib.file_management.function_network.func_network import SendData
-from lib.file_management.file_management_lib import DirManagement
+from lib.function_network.func_network import SendData
+from lib.file_management.file_management_lib import FileEditor, DirManagement
+
 
 class TestSendData(unittest.TestCase):
     def setUp(self) -> None:
@@ -28,6 +29,7 @@ class TestSendData(unittest.TestCase):
             "comment": "good"
         }]
 }
+
         data = "[CONFIG]\nprefix = https://ta-api.sirateek.dev/"
         with open(os.path.join(self.path, "config.txt"), "w") as create:
             create.write(data)
@@ -44,6 +46,7 @@ class TestSendData(unittest.TestCase):
         return None
         """
         self.assertIsNone(self.post.getworkDraft())
+
 
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)

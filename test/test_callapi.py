@@ -4,8 +4,9 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-from lib.file_management.function_network.func_network import CallApi
-from lib.file_management.file_management_lib import DirManagement
+from lib.function_network.func_network import CallApi
+from lib.file_management.file_management_lib import FileEditor, DirManagement
+
 
 class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
@@ -25,11 +26,13 @@ class TestCallApi(unittest.TestCase):
         """
         self.assertIs(type(self.call.createworkdraft()), str)
 
+
     def TestWritejson(self):
         """
         print(str)
         """
         self.assertIs(type(self.call.writejson()), str)
+        
 
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)
