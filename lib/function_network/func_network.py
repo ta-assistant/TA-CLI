@@ -19,9 +19,10 @@ class Api:
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
-
         self.getapi = f"v1/workManagement/{self.workID}/getWorkDraft"
         self.url = self.prefix+self.getapi
+        self.postapi = f"v1/workManagement/{self.workID}/submitScores"
+        self.posturl = self.prefix+self.postapi
 
 class CallApi(Api):
     def __init__(self, apikey, path) -> None:
@@ -51,8 +52,6 @@ class CallApi(Api):
 class SendData(Api):
     def __init__(self, apikey, path) -> None:
         super().__init__(apikey, path)
-        self.postapi = f"v1/workManagement/{self.workID}/submitScores"
-        self.posturl = self.prefix+self.postapi
         self.getworkDraft()
         
 
