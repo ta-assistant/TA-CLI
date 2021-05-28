@@ -4,16 +4,21 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-from lib.file_management.function_network.func_network import CallApi, Writeconfig
+from lib.function_network.func_network import CallApi
 from lib.file_management.file_management_lib import DirManagement
 
 class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
-        Writeconfig('testWork2', parentdir)
-        self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', parentdir)
+        self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', 'testWork2',parentdir)
         return super().setUp()
+
+    def testwriteconfig(self):
+        """
+        return None
+        """
+        self.assertIsNone(self.call.writeworkid_path())
 
     def TestCreateWork(self):
         """

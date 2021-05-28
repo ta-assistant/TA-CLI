@@ -2,21 +2,7 @@ import requests
 import json
 import os
 from configparser import ConfigParser
-
-class Writeconfig:
-    def __init__(self, workID, path) -> None:
-        self.id = workID
-        self.basepath = path
-        self.writeworkid_path()
-        
-
-    def writeworkid_path(self):
-        with open(os.path.join(self.basepath, 'ta', 'config.txt'), "w") as wri:
-            wri.write("[CONFIG]\nprefix = https://ta-api.sirateek.dev/")
-            wri.write(f'\nworkID = {self.id}')
-            print("config.txt has been create")
-            wri.close()
-
+from lib.file_management.file_management_lib import WorkEditor
 
 class ReadFile:
     def fileread(self, path, filename):
@@ -25,16 +11,15 @@ class ReadFile:
             configFilePath = os.path.join(path ,'ta', filename)
             config.read_file(open(configFilePath))
             return config.get("CONFIG","prefix"), config.get("CONFIG","workID")
-        else:
-            with open(os.path.join(path, 'ta', filename)) as r:
-                return r.read()
 
 
 
 class CallApi(ReadFile):
-    def __init__(self, apikey, path) -> None:
+    def __init__(self, apikey, workid, path) -> None:
         self.apikey = apikey
         self.path = path
+        self.workID = workid
+        self.writeworkid_path()
         self.prefix, self.workid = self.fileread(os.path.join(self.path), 'config.txt')
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
@@ -45,6 +30,12 @@ class CallApi(ReadFile):
         self.createworkdraft()
         print()
 
+    def writeworkid_path(self):
+        with open(os.path.join(self.path, 'ta', 'config.txt'), "w") as wri:
+            wri.write("[CONFIG]\nprefix = https://ta-api.sirateek.dev/")
+            wri.write(f'\nworkID = {self.workID}')
+            print("config.txt has been create")
+            wri.close()
 
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
@@ -80,7 +71,7 @@ class SendData(ReadFile):
         
 
     def getworkDraft(self):
-        work = self.fileread(self.path, 'work.json')
+        work = WorkEditor.read_filework(self, self.path)
         send = requests.post(self.posturl, headers=self.hparameter, json=json.loads(work))
         if send.status_code == 200:
             print('Sending data success')

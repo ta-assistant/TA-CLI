@@ -3,7 +3,7 @@ import os, sys, inspect, json
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from lib.file_management.function_network.func_network import SendData, Writeconfig
+from lib.function_network.func_network import SendData
 from lib.file_management.file_management_lib import DirManagement
 
 class TestSendData(unittest.TestCase):
@@ -28,8 +28,11 @@ class TestSendData(unittest.TestCase):
             "comment": "good"
         }]
 }
-
-        Writeconfig('testWork2', parentdir)
+        with open(os.path.join(parentdir, 'ta', 'config.txt'), "w") as wri:
+            wri.write("[CONFIG]\nprefix = https://ta-api.sirateek.dev/")
+            wri.write(f'\nworkID = testWork2')
+            print("config.txt has been create")
+            wri.close()
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(workdata, create)
         self.post = SendData('K4nPEs7RhhCzcjdlvr3X==', parentdir)
