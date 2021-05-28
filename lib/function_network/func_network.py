@@ -1,22 +1,31 @@
-import configparser
 import requests
 import json
 import os
+import sys
+import inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0, parentdir)
 from lib.file_management.configeditor import ConfigEditor
 from lib.file_management.file_management_lib import WorkEditor
 
 
-class CallApi:
+
+class Api:
     def __init__(self, apikey, path) -> None:
         self.apikey = apikey
         self.path = path
-        self.prefix, self.workid = ConfigEditor.readconfig()
+        self.prefix, self.workID = ConfigEditor.readconfig(self)
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
 
-        self.getapi = f"v1/workManagement/{self.workid}/getWorkDraft"
+        self.getapi = f"v1/workManagement/{self.workID}/getWorkDraft"
         self.url = self.prefix+self.getapi
+
+class CallApi(Api):
+    def __init__(self, apikey, path) -> None:
+        super().__init__(apikey, path)
         self.createworkdraft()
         print()
 
@@ -39,16 +48,9 @@ class CallApi:
 
     
 
-class SendData:
+class SendData(Api):
     def __init__(self, apikey, path) -> None:
-        self.apikey = apikey
-        self.path = path
-        self.prefix, self.workID = ConfigEditor.readconfig(self)
-        self.hparameter = { 'Authorization': self.apikey,
-                'Content-Type': 'application/json',
-        }
-
-
+        super().__init__(apikey, path)
         self.postapi = f"v1/workManagement/{self.workID}/submitScores"
         self.posturl = self.prefix+self.postapi
         self.getworkDraft()
@@ -62,4 +64,4 @@ class SendData:
         else:
             print(send.status_code)
             print(send.json())
-
+            
