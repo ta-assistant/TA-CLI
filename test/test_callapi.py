@@ -11,14 +11,8 @@ class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
-        self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', 'testWork2',parentdir)
+        self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', parentdir)
         return super().setUp()
-
-    def testwriteconfig(self):
-        """
-        return None
-        """
-        self.assertIsNone(self.call.writeworkid_path())
 
     def TestCreateWork(self):
         """
