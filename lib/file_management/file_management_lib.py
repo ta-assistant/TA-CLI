@@ -118,3 +118,10 @@ class WorkEditor(FileEditor):
             return data
         else:
             return {}
+<<<<<<< HEAD
+=======
+
+    def read_filework(self, path):
+        with open(os.path.join(path, 'ta', 'work.json')) as r:
+                return r.read()
+>>>>>>> master

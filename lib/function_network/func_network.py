@@ -1,28 +1,35 @@
+from lib.file_management.file_management_lib import WorkEditor
+from lib.file_management.configeditor import ConfigEditor
 import requests
 import json
 import os
-from configparser import ConfigParser
+import sys
+import inspect
+currentdir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0, parentdir)
 
 
-class CallApi:
-    def __init__(self, apikey, workID, path) -> None:
+class Api:
+    def __init__(self, apikey, path) -> None:
         self.apikey = apikey
         self.path = path
-        self.prefix = self.readprefix()
+        self.prefix, self.workID = ConfigEditor.readconfig(self)
         self.hparameter = {'Authorization': self.apikey,
                            'Content-Type': 'application/json',
                            }
-
-        self.getapi = f"v1/workManagement/{workID}/getWorkDraft"
+        self.getapi = f"v1/workManagement/{self.workID}/getWorkDraft"
         self.url = self.prefix+self.getapi
+        self.postapi = f"v1/workManagement/{self.workID}/submitScores"
+        self.posturl = self.prefix+self.postapi
+
+
+class CallApi(Api):
+    def __init__(self, apikey, path) -> None:
+        super().__init__(apikey, path)
         self.createworkdraft()
         print()
-
-    def readprefix(self):
-        config = ConfigParser()
-        configFilePath = os.path.join(self.path, "ta", "config.txt")
-        config.readfp(open(configFilePath))
-        return config.get("CONFIG", "prefix")
 
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
@@ -40,27 +47,15 @@ class CallApi:
         print("workDraft.json file has been created")
 
 
-class SendData:
-    def __init__(self, apikey, workID, path) -> None:
-        self.apikey = apikey
-        self.path = path
-        config = ConfigParser()
-        configFilePath = os.path.join(self.path, "ta", "config.txt")
-        config.readfp(open(configFilePath))
-        self.prefix = config.get("CONFIG", "prefix")
-        self.hparameter = {'Authorization': self.apikey,
-                           'Content-Type': 'application/json',
-                           }
-
-        self.postapi = f"v1/workManagement/{workID}/submitScores"
-        self.posturl = self.prefix+self.postapi
+class SendData(Api):
+    def __init__(self, apikey, path) -> None:
+        super().__init__(apikey, path)
         self.getworkDraft()
 
     def getworkDraft(self):
-        with open(os.path.join(self.path, 'ta', 'work.json')) as r:
-            workdraft = json.load(r)
+        work = WorkEditor.read_filework(self, self.path)
         send = requests.post(
-            self.posturl, headers=self.hparameter, json=workdraft)
+            self.posturl, headers=self.hparameter, json=json.loads(work))
         if send.status_code == 200:
             print('Sending data success')
         else:
