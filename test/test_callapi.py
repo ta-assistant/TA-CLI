@@ -1,5 +1,5 @@
 import unittest
-import os, sys, inspect, json
+import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
@@ -14,7 +14,7 @@ class TestCallApi(unittest.TestCase):
         data = {"prefix" : "https://ta-api.sirateek.dev/",
                 "workID" : 'testWork2'}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:
-            json.dump(data, wri)
+            json.dump(data, wri)r
         self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', parentdir)
         return super().setUp()
 

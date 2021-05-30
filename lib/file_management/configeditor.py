@@ -1,7 +1,5 @@
-import configparser
 import os
 import json
-from configparser import ConfigParser
 
 class ConfigEditor:
     def __init__(self, workID, path) -> None:
