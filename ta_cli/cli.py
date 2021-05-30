@@ -31,11 +31,12 @@ def cli(init, start, fetch):
                 draft = json.load(file)
                 file.close()
             with open(os.path.join(current_dir, "ta", "config.json")) as file:
-                workID = None
+                config = json.load(file)
+                file.close()
         work = Work()
         work.draft = draft
         work.path = current_dir
-        work.workId = workID
+        work.workId = config["workID"]
         if work.property_is_ready():
             work.create()
         unzipfile(current_dir)
@@ -43,7 +44,7 @@ def cli(init, start, fetch):
         command = f"code {current_dir}"
         os.system(command)
         for file in list_file:
-            if "." in file:
+            if "." in file or file == "ta":
                 continue
             student = StudentData(
                 path=work.path, filename=file, draft=work.draft)
