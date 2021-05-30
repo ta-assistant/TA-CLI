@@ -28,11 +28,10 @@ class TestSendData(unittest.TestCase):
             "comment": "good"
         }]
 }
-        with open(os.path.join(parentdir, 'ta', 'config.txt'), "w") as wri:
-            wri.write("[CONFIG]\nprefix = https://ta-api.sirateek.dev/")
-            wri.write(f'\nworkID = testWork2')
-            print("config.txt has been create")
-            wri.close()
+        data = {"prefix" : "https://ta-api.sirateek.dev/",
+                "workID" : 'testWork2'}
+        with open(os.path.join(self.path, 'config.json'), "w") as wri:
+            json.dump(data, wri)
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(workdata, create)
         self.post = SendData('K4nPEs7RhhCzcjdlvr3X==', parentdir)
