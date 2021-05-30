@@ -27,8 +27,8 @@ class Work(WorkEditor):
     @property
     def draft(self):
         return self.__draft
-    # setter
 
+    # setter
     @path.setter
     def path(self, value):
         self.__path = value
