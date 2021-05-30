@@ -1,16 +1,16 @@
 import os
 import json
 
+
 class ConfigEditor:
     def __init__(self, workID, path) -> None:
         self.id = workID
         self.path = path
         self.writeconfig()
-        
 
     def writeconfig(self) -> None:
-        data = {"prefix" : "https://ta-api.sirateek.dev/",
-                "workID" : self.id}
+        data = {"prefix": "https://ta-api.sirateek.dev/",
+                "workID": self.id}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:
             json.dump(data, wri)
         print('confix.json has been create')

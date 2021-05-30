@@ -24,17 +24,20 @@ def cli(init, start, fetch):
         if make.init_work_directory(current_dir):
             config = ConfigEditor(workID, current_dir)
             call_api = CallApi(apikey, current_dir)
-            if check_draft(current_dir):
-                with open(os.path.join(current_dir, "ta", "draft.json")) as file:
-                    draft = json.load(file)
-                    file.close()
-            work = Work()
-            work.draft = draft
-            work.path = current_dir
-            work.workId = workID
-            if work.property_is_ready():
-                work.create()
+
     if start:
+        if check_draft(current_dir):
+            with open(os.path.join(current_dir, "ta", "draft.json")) as file:
+                draft = json.load(file)
+                file.close()
+            with open(os.path.join(current_dir, "ta", "config.json")) as file:
+                workID = None
+        work = Work()
+        work.draft = draft
+        work.path = current_dir
+        work.workId = workID
+        if work.property_is_ready():
+            work.create()
         unzipfile(current_dir)
         list_file = os.listdir(current_dir)
         command = f"code {current_dir}"
