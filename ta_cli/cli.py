@@ -13,6 +13,13 @@ from lib.function_network.func_network import CallApi
 from lib.file_management.configeditor import ConfigEditor
 
 
+def read_json(path, filename):
+    with open(os.path.join(path, "ta", filename)) as file:
+        res = json.load(file)
+        file.close()
+    return res
+
+
 @click.command()
 @click.option("--init", nargs=2, type=str, help="Init TA's work directory")
 @click.option("--start", is_flag=True, help="Start")
@@ -27,16 +34,18 @@ def cli(init, start, fetch):
 
     if start:
         if check_draft(current_dir):
-            with open(os.path.join(current_dir, "ta", "draft.json")) as file:
-                draft = json.load(file)
-                file.close()
-            with open(os.path.join(current_dir, "ta", "config.json")) as file:
-                config = json.load(file)
-                file.close()
+            # with open(os.path.join(current_dir, "ta", "draft.json")) as file:
+            #     draft = json.load(file)
+            #     file.close()
+            # with open(os.path.join(current_dir, "ta", "config.json")) as file:
+            #     config = json.load(file)
+            #     file.close()
+            draft = read_json(current_dir, "draft.json")
+            workID = read_json(current_dir, "config.json")["workID"]
         work = Work()
         work.draft = draft
         work.path = current_dir
-        work.workId = config["workID"]
+        work.workId = workID
         if work.property_is_ready():
             work.create()
         unzipfile(current_dir)
