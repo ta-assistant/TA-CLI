@@ -24,7 +24,8 @@ def read_json(path, filename):
 @click.option("--init", nargs=2, type=str, help="Init TA's work directory")
 @click.option("--start", is_flag=True, help="Start")
 @click.option("--fetch", is_flag=True, help="Fetch draft.json")
-def cli(init, start, fetch):
+@click.option("--submit", is_flag=True, help="Submit work.json")
+def cli(init, start, fetch, submit):
     current_dir = os.getcwd()
     if init:
         apikey, workID = init
@@ -34,12 +35,6 @@ def cli(init, start, fetch):
 
     if start:
         if check_draft(current_dir):
-            # with open(os.path.join(current_dir, "ta", "draft.json")) as file:
-            #     draft = json.load(file)
-            #     file.close()
-            # with open(os.path.join(current_dir, "ta", "config.json")) as file:
-            #     config = json.load(file)
-            #     file.close()
             draft = read_json(current_dir, "draft.json")
             workID = read_json(current_dir, "config.json")["workID"]
         work = Work()
@@ -50,12 +45,16 @@ def cli(init, start, fetch):
             work.create()
         unzipfile(current_dir)
         list_file = os.listdir(current_dir)
-        command = f"code {current_dir}"
-        os.system(command)
+        # click.echo(list_file)
         for file in list_file:
             if "." in file or file == "ta":
                 continue
+            # click.echo(file)
+            os.system(f"code {file}")
             student = StudentData(
                 path=work.path, filename=file, draft=work.draft)
             student.prepare_student_data()
             work.write_work(student.ask())
+
+    if submit:
+        pass
