@@ -9,7 +9,7 @@ from src.main.draft_check import check_draft
 from src.main.student_data import StudentData
 from src.main.pre_work import Work
 from lib.file_management.extract import unzipfile
-from lib.function_network.func_network import CallApi
+from lib.function_network.func_network import CallApi, SendData
 from lib.file_management.configeditor import ConfigEditor
 
 
@@ -24,14 +24,14 @@ def read_json(path, filename):
 @click.option("--init", nargs=2, type=str, help="Init TA's work directory")
 @click.option("--start", is_flag=True, help="Start")
 @click.option("--fetch", is_flag=True, help="Fetch draft.json")
-@click.option("--submit", is_flag=True, help="Submit work.json")
+@click.option("--submit", nargs=1, type=str, help="Submit work.json")
 def cli(init, start, fetch, submit):
     current_dir = os.getcwd()
     if init:
         apikey, workID = init
         if make.init_work_directory(current_dir):
-            config = ConfigEditor(workID, current_dir)
-            call_api = CallApi(apikey, current_dir)
+            ConfigEditor(workID, current_dir)
+            CallApi(apikey, current_dir)
 
     if start:
         if check_draft(current_dir):
@@ -57,4 +57,5 @@ def cli(init, start, fetch, submit):
             work.write_work(student.ask())
 
     if submit:
-        pass
+        apikey = submit
+        SendData(apikey, current_dir)
