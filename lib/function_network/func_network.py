@@ -68,4 +68,3 @@ class SendData(Api):
             print(send.status_code)
             print(send.json())
 
-            
