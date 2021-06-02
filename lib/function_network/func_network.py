@@ -64,7 +64,10 @@ class SendData(Api):
         send = requests.post(self.posturl, headers=self.hparameter, json=json.loads(work))
         if send.status_code == 200:
             print('Sending data success')
-        else:
+        elif send.status_code != 500 and send.status_code != 503 and send.status_code != 501 and send.status_code != 502:
             print(send.status_code)
             print(send.json())
-
+        else:
+            print(send.status_code)
+            print('!!!SERVER HAVE ISSUE!!!')
+            print("PLEASE TRY AGAIN LATER")
