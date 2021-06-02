@@ -21,7 +21,7 @@ class ConfigEditor:
     def ishaveconfig(self):
         check = os.path.isfile(os.path.join(self.path, 'ta', 'config.json'))
         if check == True:
-            self.checkdata(self.id)
+            self.checkdata()
         else:
             self.writeconfig()
             
@@ -30,8 +30,5 @@ class ConfigEditor:
         if data['workID'] == '':
             self.writeconfig()
         else:
-            pass
+            return 
         
-if __name__ == '__main__':
-    a = ConfigEditor('testWork2', r'C:\vs\ta\TA-CLI\testypath')
-    a.ishaveconfig()

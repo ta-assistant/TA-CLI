@@ -69,5 +69,3 @@ class SendData(Api):
             print(send.json())
 
             
-if __name__ == '__main__':
-    SendData(r'C:\vs\ta\TA-CLI\testypath')
