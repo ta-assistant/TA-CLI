@@ -3,17 +3,19 @@ import os
 
 class SaveApiKey:
 
-    def __init__(self, path) -> None:
-        self.path = path
-
     def save(self, apikey):
-        data = {'apikey' : apikey}
-        os.mkdir(os.path.join(self.path, 'key'))
-        with open(os.path.join(self.path, 'key', 'apik.json'), "w") as wri:
-            json.dump(data, wri)
+        if os.path.exists(os.path.join(os.path.expanduser("~"), 'key')):
+            data = {'apikey' : apikey}
+            with open(os.path.join(os.path.expanduser("~"), 'key', 'apik.json'), "w") as wri:
+                json.dump(data, wri)
+        else:
+            os.mkdir(os.path.join(os.path.expanduser("~"), 'key'))
+            data = {'apikey' : apikey}
+            with open(os.path.join(os.path.expanduser("~"), 'key', 'apik.json'), "w") as wri:
+                json.dump(data, wri)
 
     def readapikey(self):
-        with open(os.path.join(self.path, 'key', "apik.json"), "r") as r:
+        with open(os.path.join(os.path.expanduser("~"), 'key', "apik.json"), "r") as r:
             data = json.load(r)
         return data
 

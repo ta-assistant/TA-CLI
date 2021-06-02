@@ -8,7 +8,8 @@ class ConfigEditor:
 
     def writeconfig(self) -> None:
         data = {"prefix" : "https://ta-api.sirateek.dev/",
-                "workID" : self.id}
+                "workID" : self.id,
+                "apikeydir" : os.path.join(os.path.expanduser("~"), 'key')}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:
             json.dump(data, wri)
         print('confix.json has been create')

@@ -9,10 +9,11 @@ from lib.file_management.file_management_lib import DirManagement
 
 class TestSendData(unittest.TestCase):
     def setUp(self) -> None:
-        self.path = os.path.join(parentdir,"ta")
+        self.path = os.path.join(os.path.expanduser("~") ,"key")
         DirManagement.create_dir(self.path)
-        self.key = SaveApiKey(parentdir)
+        self.key = SaveApiKey()
         self.key.save('K4nPEs7RhhCzcjdlvr3X==')
+        return super().setUp()
 
     def testsave(self):
         """
