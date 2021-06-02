@@ -32,3 +32,6 @@ class ConfigEditor:
         else:
             pass
         
+if __name__ == '__main__':
+    a = ConfigEditor('testWork2', r'C:\vs\ta\TA-CLI\testypath')
+    a.ishaveconfig()

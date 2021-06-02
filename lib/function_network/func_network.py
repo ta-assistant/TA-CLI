@@ -8,14 +8,15 @@ parentdir = os.path.dirname(os.path.dirname(currentdir))
 sys.path.insert(0, parentdir)
 from lib.file_management.configeditor import ConfigEditor
 from lib.file_management.file_management_lib import WorkEditor
+from lib.file_management.createapikeyfile import SaveApiKey
 
 
 
 class Api:
-    def __init__(self, apikey, path) -> None:
-        self.apikey = apikey
+    def __init__(self, path) -> None:
         self.path = path
-        self.data = ConfigEditor.ishaveconfig(self)
+        self.apikey = SaveApiKey.readapikey(self)['apikey']
+        self.data = ConfigEditor.readconfig(self)
         self.prefix = self.data['prefix']
         self.workID = self.data['workID']
         self.hparameter = { 'Authorization': self.apikey,
@@ -27,8 +28,8 @@ class Api:
         self.posturl = self.prefix+self.postapi
 
 class CallApi(Api):
-    def __init__(self, apikey, path) -> None:
-        super().__init__(apikey, path)
+    def __init__(self, path) -> None:
+        super().__init__(path)
         self.createworkdraft()
         print()
 
@@ -53,8 +54,8 @@ class CallApi(Api):
 
 
 class SendData(Api):
-    def __init__(self, apikey, path) -> None:
-        super().__init__(apikey, path)
+    def __init__(self, path) -> None:
+        super().__init__(path)
         self.getworkDraft()
         
 
@@ -69,4 +70,4 @@ class SendData(Api):
 
             
 if __name__ == '__main__':
-    CallApi('K4nPEs7RhhCzcjdlvr3X==', r'C:\vs\ta\TA-CLI\testypath')
+    SendData(r'C:\vs\ta\TA-CLI\testypath')
