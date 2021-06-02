@@ -15,7 +15,9 @@ class Api:
     def __init__(self, apikey, path) -> None:
         self.apikey = apikey
         self.path = path
-        self.prefix, self.workID = ConfigEditor.readconfig(self)
+        self.data = ConfigEditor.ishaveconfig(self)
+        self.prefix = self.data['prefix']
+        self.workID = self.data['workID']
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
@@ -37,9 +39,11 @@ class CallApi(Api):
             print('Success to access')
             self.data = self.res.json()['workDraft']
             self.writejson(self.data)
+            return True
         else:
             print(self.res.status_code)
             print(self.res.json()['message'])
+            return False
 
 
     def writejson(self, data) -> None:
@@ -47,7 +51,6 @@ class CallApi(Api):
             json.dump(data, create)
         print("workDraft.json file has been created")
 
-    
 
 class SendData(Api):
     def __init__(self, apikey, path) -> None:
@@ -65,3 +68,5 @@ class SendData(Api):
             print(send.json())
 
             
+if __name__ == '__main__':
+    CallApi('K4nPEs7RhhCzcjdlvr3X==', r'C:\vs\ta\TA-CLI\testypath')
