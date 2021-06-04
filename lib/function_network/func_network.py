@@ -8,14 +8,17 @@ parentdir = os.path.dirname(os.path.dirname(currentdir))
 sys.path.insert(0, parentdir)
 from lib.file_management.configeditor import ConfigEditor
 from lib.file_management.file_management_lib import WorkEditor
+from lib.file_management.createapikeyfile import SaveApiKey
 
 
 
 class Api:
-    def __init__(self, apikey, path) -> None:
-        self.apikey = apikey
+    def __init__(self, path) -> None:
         self.path = path
-        self.prefix, self.workID = ConfigEditor.readconfig(self)
+        self.apikey = SaveApiKey.readapikey(self)
+        self.data = ConfigEditor.readconfig(self)
+        self.prefix = self.data['prefix']
+        self.workID = self.data['workID']
         self.hparameter = { 'Authorization': self.apikey,
                 'Content-Type': 'application/json',
         }
@@ -25,10 +28,9 @@ class Api:
         self.posturl = self.prefix+self.postapi
 
 class CallApi(Api):
-    def __init__(self, apikey, path) -> None:
-        super().__init__(apikey, path)
+    def __init__(self, path) -> None:
+        super().__init__(path)
         self.createworkdraft()
-        print()
 
 
     def createworkdraft(self):
@@ -37,21 +39,23 @@ class CallApi(Api):
             print('Success to access')
             self.data = self.res.json()['workDraft']
             self.writejson(self.data)
+            return True
         else:
             print(self.res.status_code)
             print(self.res.json()['message'])
+            return False
 
 
     def writejson(self, data) -> None:
-        with open(os.path.join(self.path, 'ta', "draft.json"), "w") as create:
+        draft_path = os.path.join(self.path, 'ta', "draft.json")
+        with open(draft_path, "w") as create:
             json.dump(data, create)
-        print("workDraft.json file has been created")
+        print(f"{draft_path} has been created")
 
-    
 
 class SendData(Api):
-    def __init__(self, apikey, path) -> None:
-        super().__init__(apikey, path)
+    def __init__(self, path) -> None:
+        super().__init__(path)
         self.getworkDraft()
         
 
@@ -60,8 +64,10 @@ class SendData(Api):
         send = requests.post(self.posturl, headers=self.hparameter, json=json.loads(work))
         if send.status_code == 200:
             print('Sending data success')
-        else:
+        elif send.status_code != 500 and send.status_code != 503 and send.status_code != 501 and send.status_code != 502:
             print(send.status_code)
             print(send.json())
-
-            
+        else:
+            print(send.status_code)
+            print('!!!SERVER HAVE ISSUE!!!')
+            print("PLEASE TRY AGAIN LATER")
