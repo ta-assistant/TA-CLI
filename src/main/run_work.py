@@ -2,12 +2,21 @@ import os, json
 from src.main.pre_work import Work
 from lib.file_management.extract import unzipfile
 from src.main.student_data import StudentData
-
-def run_work(path,workID,draft):
+from lib.file_management.configeditor import ConfigEditor
+def run_work(path):
+    if not os.path.exists(os.path.join(path,"ta","draft.json")):
+        print("draft.json not exists.")
+        return False
+    if not os.path.exists(os.path.join(path,"ta","config.json")):
+        print("config.json not exists.")
+        return False
+    with open(os.path.join(path,"ta","draft.json"),"r") as draftfile:
+        draft = json.load(draftfile)
+        draftfile.close()
     work = Work()
     work.draft = draft
     work.path = path
-    work.workId = workID
+    work.workId = ConfigEditor(path=path).readconfig()
     if work.property_is_ready():
             work.create()
     else:
