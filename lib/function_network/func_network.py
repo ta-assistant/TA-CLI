@@ -15,7 +15,7 @@ from lib.file_management.createapikeyfile import SaveApiKey
 class Api:
     def __init__(self, path) -> None:
         self.path = path
-        self.apikey = SaveApiKey.readapikey(self)['apikey']
+        self.apikey = SaveApiKey.readapikey(self)
         self.data = ConfigEditor.readconfig(self)
         self.prefix = self.data['prefix']
         self.workID = self.data['workID']

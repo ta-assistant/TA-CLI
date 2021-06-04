@@ -17,5 +17,5 @@ class SaveApiKey:
     def readapikey(self):
         with open(os.path.join(os.path.expanduser("~"), 'key', "apik.json"), "r") as r:
             data = json.load(r)
-        return data
+        return data['apikey']
 
