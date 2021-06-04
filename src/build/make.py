@@ -2,7 +2,6 @@ import os,sys,inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 sys.path.insert(0,parentdir)
-import json
 from lib.file_management.file_management_lib import DirManagement
 from lib.file_management.configeditor import ConfigEditor
 from lib.function_network.func_network import CallApi
@@ -19,7 +18,7 @@ def init_work_directory(path,workid) -> bool:
     if os.path.exists(config_path):
         print("config.json already exists.")
     else:
-        ConfigEditor(path,workid).writeconfig()
+        ConfigEditor(workid,path).writeconfig()
     if os.path.exists(draft_path):
         print("draft.json already exists.")
     else:

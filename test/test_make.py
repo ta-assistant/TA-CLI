@@ -6,20 +6,17 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 import json
 from src.build.make import init_work_directory, reset
-from lib.file_management.file_management_lib import DirManagement
-from unittest.mock import patch
 
 
 
 class TestMake(unittest.TestCase):
-    @patch("src.build.make.create_draft",return_value='yes')
-    def test_init_make(self,input):
+    def test_init_make(self):
         """
         call init_work_directory to set test to work dir
         Args:
             input (str): "yes"
         """
-        self.assertTrue(init_work_directory(currentdir))
+        self.assertIsNone(init_work_directory(currentdir,'testWork2'))
         
 
     def tearDown(self) -> None:
