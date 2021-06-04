@@ -6,7 +6,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0,parentdir)
 import json
 from src.build.make import init_work_directory, reset
-
+from lib.file_management.createapikeyfile import SaveApiKey
 
 
 class TestMake(unittest.TestCase):
@@ -16,6 +16,7 @@ class TestMake(unittest.TestCase):
         Args:
             input (str): "yes"
         """
+        SaveApiKey().save('K4nPEs7RhhCzcjdlvr3X==')
         self.assertIsNone(init_work_directory(currentdir,'testWork2'))
         
 
