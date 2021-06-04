@@ -47,9 +47,10 @@ class CallApi(Api):
 
 
     def writejson(self, data) -> None:
-        with open(os.path.join(self.path, 'ta', "draft.json"), "w") as create:
+        draft_path = os.path.join(self.path, 'ta', "draft.json")
+        with open(draft_path, "w") as create:
             json.dump(data, create)
-        print("workDraft.json file has been created")
+        print(f"{draft_path} has been created")
 
 
 class SendData(Api):
