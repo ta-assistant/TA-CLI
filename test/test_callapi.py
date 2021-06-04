@@ -22,7 +22,7 @@ class TestCallApi(unittest.TestCase):
         """
         print(str)
         """
-        self.assertIs(type(self.call.createworkdraft()), str)
+        self.assertTrue(self.call.createworkdraft())
 
 
     def TestWritejson(self):
