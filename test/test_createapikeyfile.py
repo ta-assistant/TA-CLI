@@ -25,7 +25,7 @@ class TestSendData(unittest.TestCase):
         """
         return ...
         """
-        self.assertIs(type(self.key.readapikey()), dict)
+        self.assertIs(type(self.key.readapikey()), str)
 
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)
