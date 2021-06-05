@@ -62,6 +62,12 @@ class StudentData:
             prework[key] = value
         self.pre_data = prework
 
+    def check_work_score(self,work_score):
+        for i in work_score:
+            if i["ID"] == self.pre_data["ID"]:
+                return False
+        return True  
+          
     def prepare_student_data(self) -> dict:
         """make that studect_data(dict) ready for the next step by get the output draft 
         and set it into student_data and have its value is "N/"A

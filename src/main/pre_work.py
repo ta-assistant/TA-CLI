@@ -31,7 +31,10 @@ class Work(WorkEditor):
     # setter
     @path.setter
     def path(self, value):
-        self.__path = value
+        if os.path.exists(str(value)):
+            self.__path = value
+        else:
+            print("Invalid Path")
 
     @workId.setter
     def workId(self, value):
@@ -40,9 +43,12 @@ class Work(WorkEditor):
     @draft.setter
     def draft(self, value):
         try:
-            draft = value["fileDraft"]
-            draft = value["outputDraft"]
-            self.__draft = value
+            filedraft = value["fileDraft"]
+            outputdraft = value["outputDraft"]
+            if "ID" not in outputdraft | "score" not in outputdraft:
+                print("Invalid draft")
+            else:
+                self.__draft = value
         except KeyError:
             print("Invalid draft.")
 

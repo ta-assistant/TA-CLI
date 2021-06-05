@@ -5,6 +5,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 from lib.function_network.func_network import SendData
 from lib.file_management.file_management_lib import DirManagement
+from lib.file_management.createapikeyfile import SaveApiKey
 
 class TestSendData(unittest.TestCase):
     def setUp(self) -> None:
@@ -34,7 +35,8 @@ class TestSendData(unittest.TestCase):
             json.dump(data, wri)
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(workdata, create)
-        self.post = SendData('K4nPEs7RhhCzcjdlvr3X==', parentdir)
+        SaveApiKey().save('K4nPEs7RhhCzcjdlvr3X==')
+        self.post = SendData(parentdir)
         return super().setUp()
 
     def testgetworkdraft(self):

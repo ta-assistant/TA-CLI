@@ -17,25 +17,32 @@ class TestMake(unittest.TestCase):
 sys.path.insert(0,parentdir)
 import json
 from src.build.make import init_work_directory, reset
-from lib.file_management.file_management_lib import DirManagement
-from unittest.mock import patch
-
+from lib.file_management.createapikeyfile import SaveApiKey
 
 
 class TestMake(unittest.TestCase):
+<<<<<<< HEAD
     @patch("src.build.make.create_draft",return_value='yes')
 >>>>>>> master
     def test_init_make(self,input):
+=======
+    def test_init_make(self):
+>>>>>>> master
         """
         call init_work_directory to set test to work dir
         Args:
             input (str): "yes"
         """
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.assertTrue(make.init_work_directory(currentdir))
         self.assertFalse(make.init_work_directory(currentdir))
 =======
         self.assertTrue(init_work_directory(currentdir))
+=======
+        SaveApiKey().save('K4nPEs7RhhCzcjdlvr3X==')
+        self.assertIsNone(init_work_directory(currentdir,'testWork2'))
+>>>>>>> master
         
 >>>>>>> master
 
