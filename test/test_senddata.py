@@ -35,7 +35,6 @@ class TestSendData(unittest.TestCase):
             json.dump(data, wri)
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(workdata, create)
-        SaveApiKey().save('K4nPEs7RhhCzcjdlvr3X==')
         self.post = SendData(parentdir)
         return super().setUp()
 
@@ -43,6 +42,7 @@ class TestSendData(unittest.TestCase):
         """
         return None
         """
+        SaveApiKey().save('K4nPEs7RhhCzcjdlvr3X==')
         self.assertIsNone(self.post.getworkDraft())
 
 
