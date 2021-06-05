@@ -30,17 +30,17 @@ def cli():
 @click.argument("apikey", type=str)
 def login(apikey):
     """Login"""
-    SaveApiKey.save(apikey)
+    SaveApiKey().save(apikey)
 
 
 @cli.command()
-@click.argument("workID", type=str)
-def init(apikey, workID):
+@click.argument("work_id", type=str)
+def init(work_id):
     """Init TA's work directory
     Args:
         workID (str): Work's ID
     """
-    make.init_work_directory(current_dir, apikey)
+    make.init_work_directory(current_dir, work_id)
 
 
 @cli.command()
@@ -58,7 +58,6 @@ def fetch():
 @cli.command()
 def submit():
     """Submit"""
-    apikey = None
     SendData(current_dir)
 
 
