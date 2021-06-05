@@ -14,7 +14,7 @@ class ConfigEditor:
             json.dump(data, wri)
         print('confix.json has been create')
 
-    def readconfig(self) -> tuple:
+    def readconfig(self) -> dict:
         with open(os.path.join(self.path, 'ta', "config.json"), "r") as r:
             data = json.load(r)
         return data
