@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 
+
 class SaveApiKey:
 
     def save(self, apikey):
@@ -47,7 +48,3 @@ class SaveApiKey:
         else:
             print("Deletion of the directory %s success" % os.path.join(os.path.expanduser("~"), 'key'))
 
-
-if __name__ == '__main__':
-    a = SaveApiKey()
-    a.save('K4nPEs7RhhCzcjdlvr3X==')
