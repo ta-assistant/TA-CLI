@@ -28,9 +28,8 @@ def cli():
 
 
 @cli.command()
-@click.option("--username", prompt="Username\n")
-@click.option("--password", prompt="Password\n", hide_input=True)
-def login(username, password):
+@click.argument("apikey", type=str)
+def login(apikey):
     """Login"""
     pass
 
@@ -40,7 +39,6 @@ def login(username, password):
 @click.argument("workID", type=str)
 def init(apikey, workID):
     """Init TA's work directory
-
     Args:
         apikey (str): Api key
         workID (str): Work's ID
