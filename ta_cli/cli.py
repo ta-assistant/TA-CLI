@@ -4,13 +4,12 @@ import sys
 import json
 
 from click.decorators import command
+from src.main.run_work import run_work
 from src.build import make
-from src.main.draft_check import check_draft
-from src.main.student_data import StudentData
-from src.main.pre_work import Work
 from lib.file_management.extract import unzipfile
 from lib.function_network.func_network import CallApi, SendData
 from lib.file_management.configeditor import ConfigEditor
+from lib.file_management.createapikeyfile import SaveApiKey
 
 current_dir = os.getcwd()
 
@@ -31,47 +30,23 @@ def cli():
 @click.argument("apikey", type=str)
 def login(apikey):
     """Login"""
-    pass
+    SaveApiKey.save(apikey)
 
 
 @cli.command()
-@click.argument("apikey", type=str)
 @click.argument("workID", type=str)
 def init(apikey, workID):
     """Init TA's work directory
     Args:
-        apikey (str): Api key
         workID (str): Work's ID
     """
-    if make.init_work_directory(current_dir):
-        ConfigEditor(workID, current_dir)
-        CallApi(apikey, current_dir)
+    make.init_work_directory(current_dir, apikey)
 
 
 @cli.command()
 def start():
     """Start working on TA directory"""
-    if check_draft(current_dir):
-        draft = read_json(current_dir, "draft.json")
-        workID = read_json(current_dir, "config.json")["workID"]
-    work = Work()
-    work.draft = draft
-    work.path = current_dir
-    work.workId = workID
-    if work.property_is_ready():
-        work.create()
-    unzipfile(current_dir)
-    list_file = os.listdir(current_dir)
-    # click.echo(list_file)
-    for file in list_file:
-        if "." in file or file == "ta":
-            continue
-        # click.echo(file)
-        os.system(f"code {file}")
-        student = StudentData(
-            path=work.path, filename=file, draft=work.draft)
-        student.prepare_student_data()
-        work.write_work(student.ask())
+    run_work(current_dir)
 
 
 @cli.command()
@@ -81,10 +56,10 @@ def fetch():
 
 
 @cli.command()
-@click.argument("apikey", type=str)
-def submit(apikey):
+def submit():
     """Submit"""
-    SendData(apikey, current_dir)
+    apikey = None
+    SendData(current_dir)
 
 
 # @click.command()
