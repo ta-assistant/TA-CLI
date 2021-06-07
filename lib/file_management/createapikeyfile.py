@@ -14,7 +14,7 @@ class SaveApiKey:
                     self.writeapikey(apikey)
                     print(os.path.join(os.path.expanduser("~"), 'key')+" has been written.")
                 elif choose == 'n' or choose == 'N':
-                    print('Decline to login again')
+                    print('Decline to login')
                 else:
                     print('!!!Invaild Answer!!!')
             else:
