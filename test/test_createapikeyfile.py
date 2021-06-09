@@ -27,6 +27,7 @@ class TestSendData(unittest.TestCase):
         self.key.save('K4nPEs7RhhCzcjdlvr3X==')
         self.assertIs(type(self.key.readapikey()), str)
 
+
     def testwriteapikey(self):
         """
         return None
@@ -37,7 +38,9 @@ class TestSendData(unittest.TestCase):
         """
         return boolean
         """
-        self.assertIs(type(self.key.exsitapikey()), bool)
+        self.assertFalse(self.key.exsitapikey())
+        self.key.save('K4nPEs7RhhCzcjdlvr3X==')
+        self.assertTrue(self.key.exsitapikey())
 
     def testremoveapikey(self):
         """

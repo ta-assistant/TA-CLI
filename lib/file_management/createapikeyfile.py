@@ -38,7 +38,7 @@ class SaveApiKey:
             wri.close()
 
     def exsitapikey(self):
-        if os.path.exists(os.path.join(os.path.expanduser("~"), 'key')):
+        if os.path.exists(os.path.join(os.path.expanduser("~"), 'key', 'taconfig.json')):
             return True
         else:
             return False
@@ -50,3 +50,4 @@ class SaveApiKey:
             print("Deletion of the directory %s failed" % os.path.join(os.path.expanduser("~"), 'key'))
         else:
             print("Deletion of the directory %s success" % os.path.join(os.path.expanduser("~"), 'key'))
+
