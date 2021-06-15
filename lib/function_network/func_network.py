@@ -40,9 +40,14 @@ class CallApi(Api):
             self.data = self.res.json()['workDraft']
             self.writejson(self.data)
             return True
+        elif self.res.status_code != 500 and self.res.status_code != 503 and self.res.status_code != 501 and self.res.status_code != 502:
+            print(self.res.status_code)
+            print(self.res.json())
+            return False
         else:
             print(self.res.status_code)
-            print(self.res.json()['message'])
+            print('!!!SERVER HAVE ISSUE!!!')
+            print("PLEASE TRY AGAIN LATER")
             return False
 
 
