@@ -1,4 +1,3 @@
-from typing_extensions import Required
 import click
 import os
 import sys
@@ -39,7 +38,7 @@ def cli():
 
 
 @cli.command()
-@click.option("--apikey", prompt=True, type=str)
+@click.option("--apikey", required=True, type=str)
 def login(apikey):
     """Login"""
     SaveApiKey().save(apikey)
