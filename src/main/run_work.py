@@ -6,7 +6,7 @@ from src.main.student_data import StudentData
 from lib.file_management.configeditor import ConfigEditor
 
 
-def run_work(path,openvs=True,onebyone=False):
+def run_work(path, openvs=True, onebyone=False):
     if not os.path.exists(os.path.join(path, "ta", "draft.json")):
         print("draft.json not exists.")
         if not os.path.exists(os.path.join(path, "ta", "config.json")):
@@ -32,15 +32,15 @@ def run_work(path,openvs=True,onebyone=False):
         return False
 
     unzipfile(path)
-    list_file = os.listdir(os.path.join(path,"ta","extract"))
-    extractpath = os.path.join("ta","extract")
+    list_file = os.listdir(os.path.join(path, "ta", "extract"))
+    extractpath = os.path.join("ta", "extract")
     if openvs and not onebyone:
         os.system(f"code {extractpath}")
     for file in list_file:
         if "." in file or file == "ta":
             continue
         if not openvs and onebyone:
-            extractpath = os.path.join("ta","extract",file)
+            extractpath = os.path.join("ta", "extract", file)
             os.system(f"code {extractpath}")
         student = StudentData(
             path=work.path, filename=file, draft=work.draft)
