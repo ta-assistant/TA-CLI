@@ -44,7 +44,7 @@ def init(work_id):
 
 
 @cli.command()
-def start():
+def start(VSCODE,ONEBYONE):
     """Start working on TA directory"""
     run_work(current_dir)
 

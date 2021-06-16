@@ -28,7 +28,7 @@ def unzipfile(path: str):
     for filename in progressBar(listfile,prefix = 'Unzip progress:', suffix = 'complete ', length = 20):
         if ".zip" in filename:
             name = os.path.join(path, f"{filename}")
-            folder = os.path.join(path, "ta","extract",f"{filename}")
+            folder = os.path.join(path, "ta","extract",f"{filename}")[:-3]
             with zipfile.ZipFile(name) as my_zip:
                 try:
                     create_dir(folder,out=False)
