@@ -58,7 +58,7 @@ def init(work_id):
 def start():
     """Start working on TA directory"""
     openvs = ask_user("Do you want to open vscode?(y/n): ")
-    fbf = ask_user("Folder by folder?(y/n): ")
+    fbf = ask_user("Folder by folder?(y/n): ") if openvs else False
     run_work(current_dir, openvs, fbf)
 
 
