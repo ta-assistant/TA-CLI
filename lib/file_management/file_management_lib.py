@@ -27,16 +27,17 @@ class FileEditor:
 
 class DirManagement:
     @staticmethod
-    def create_dir(path: str) -> None:
+    def create_dir(path: str, out=True) -> None:
         try:
             os.mkdir(path)
         except OSError:
-            print("Creation of the directory %s failed" % path)
+            if out:
+                print("Creation of the directory %s failed" % path)
             return False
         else:
-            print("Successfully created the directory %s " % path)
+            if out:
+                print("Successfully created the directory %s " % path)
             return True
-
     @staticmethod
     def remove_dir(path: str) -> None:
         try:
