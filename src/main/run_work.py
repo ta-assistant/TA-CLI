@@ -34,12 +34,12 @@ def run_work(path,openvs=True,onebyone=False):
     unzipfile(path)
     list_file = os.listdir(os.path.join(path,"ta","extract"))
     extractpath = os.path.join("ta","extract")
-    if openvs and not openall:
+    if openvs and not onebyone:
         os.system(f"code {extractpath}")
     for file in list_file:
         if "." in file or file == "ta":
             continue
-        if not openvs and openall:
+        if not openvs and onebyone:
             extractpath = os.path.join("ta","extract",file)
             os.system(f"code {extractpath}")
         student = StudentData(
