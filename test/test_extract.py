@@ -52,7 +52,7 @@ class TestExtract(unittest.TestCase):
     def test_extract(self):
         extract.unzipfile(currentdir)
         listfile = os.listdir(currentdir)
-        self.assertIn("631055555_hi_ex1",listfile)
+        self.assertIn("631055555_hi_ex1.zip",listfile)
     
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path_ta)
