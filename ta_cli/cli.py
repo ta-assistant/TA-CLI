@@ -39,7 +39,7 @@ def cli():
 
 
 @cli.command()
-@click.option("--apikey", required=True, type=str)
+@click.option("--apikey", prompt=True, type=str)
 def login(apikey):
     """Login"""
     SaveApiKey().save(apikey)
