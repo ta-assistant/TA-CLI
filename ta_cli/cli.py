@@ -1,3 +1,4 @@
+from typing_extensions import Required
 import click
 import os
 import sys
@@ -21,13 +22,24 @@ def read_json(path, filename):
     return res
 
 
+def ask_user(msg):
+    while True:
+        res = input(msg)
+        if res.lower() == "y":
+            return True
+        elif res.lower() == "n":
+            return False
+        else:
+            click.echo("Invalid input")
+
+
 @click.group()
 def cli():
     pass
 
 
 @cli.command()
-@click.argument("apikey", type=str)
+@click.option("--apikey", required=True, type=str)
 def login(apikey):
     """Login"""
     SaveApiKey().save(apikey)
@@ -46,6 +58,8 @@ def init(work_id):
 @cli.command()
 def start():
     """Start working on TA directory"""
+    openvs = ask_user("Do you want to open vscode?(y/n): ")
+    fbf = ask_user("Folder by folder?(y/n): ")
     run_work(current_dir)
 
 
