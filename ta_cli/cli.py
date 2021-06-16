@@ -56,11 +56,11 @@ def init(work_id):
 
 
 @cli.command()
-def start(VSCODE,ONEBYONE):
+def start():
     """Start working on TA directory"""
     openvs = ask_user("Do you want to open vscode?(y/n): ")
     fbf = ask_user("Folder by folder?(y/n): ")
-    run_work(current_dir)
+    run_work(current_dir, openvs, fbf)
 
 
 @cli.command()
