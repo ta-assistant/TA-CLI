@@ -27,7 +27,8 @@ class TestSendData(unittest.TestCase):
         self.key.save('K4nPEs7RhhCzcjdlvr3X==')
         self.assertIs(type(self.key.readapikey()), str)
 
-    def testriteapikey(self):
+
+    def testwriteapikey(self):
         """
         return None
         """
