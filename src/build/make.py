@@ -1,6 +1,7 @@
 from lib.function_network.func_network import CallApi
 from lib.file_management.configeditor import ConfigEditor
 from lib.file_management.file_management_lib import DirManagement
+from lib.file_management.createapikeyfile import SaveApiKey
 import os
 import sys
 import inspect
@@ -25,6 +26,8 @@ def init_work_directory(path, workid) -> bool:
         ConfigEditor(workid, path).writeconfig()
     if os.path.exists(draft_path):
         print("draft.json already exists.")
+    elif not SaveApiKey().exsitapikey():
+        print("## API-key not exists ##")
     else:
         CallApi(path)
     if os.path.exists(draft_path) and os.path.exists(config_path) and os.path.exists(ta_path):
