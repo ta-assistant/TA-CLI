@@ -45,13 +45,13 @@ def login(apikey):
 
 
 @cli.command()
-@click.argument("work_id", type=str)
-def init(work_id):
+@click.option("--workid", required=True, type=str)
+def init(workid):
     """Init TA's work directory
     Args:
         workID (str): Work's ID
     """
-    make.init_work_directory(current_dir, work_id)
+    make.init_work_directory(current_dir, workid)
 
 
 @cli.command()
