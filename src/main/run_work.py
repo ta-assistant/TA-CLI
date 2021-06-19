@@ -39,9 +39,6 @@ def run_work(path, openvs=True, onebyone=False):
     for file in list_file:
         if "." in file or file == "ta":
             continue
-        if not openvs and onebyone:
-            extractpath = os.path.join("ta", "extract", file)
-            os.system(f"code {extractpath}")
         student = StudentData(
             path=work.path, filename=file, draft=work.draft)
         with open(os.path.join(path, "ta", "work.json"), "r") as workfile:
@@ -49,5 +46,8 @@ def run_work(path, openvs=True, onebyone=False):
             workfile.close
         student.prepare_student_data()
         if student.check_work_score(scores):
+            if openvs and onebyone:
+                extractpath = os.path.join("ta", "extract", file)
+                os.system(f"code {extractpath}")
             work.write_work(student.ask())
     return True

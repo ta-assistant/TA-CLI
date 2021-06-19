@@ -89,7 +89,8 @@ class WorkEditor(FileEditor):
                   os.path.join(path, "ta", "work.json"))
             file.close()
 
-    def add_workid(self, path, workId):
+    def add_workid(self, path, config):
+        workId= config["workID"]
         if self.check_exits_work(path):
             with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)
@@ -98,7 +99,7 @@ class WorkEditor(FileEditor):
                 data["workId"] = str(workId)
                 json.dump(data, file)
                 file.close()
-            print(f"Your workId is {workId}")
+            print(f"Your workId is \'{workId}\'")
 
     def add_draft(self, path, draft):
         if self.check_exits_work(path):

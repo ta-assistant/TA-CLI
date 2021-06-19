@@ -36,7 +36,9 @@ class CallApi(Api):
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
         if self.res.status_code == 200:
-            print('Success to access')
+            massage = self.res.json()["message"]
+            print(f"[ Call API ]")
+            for i in self.res.json().items():print("  *",i[0],":",i[1])
             self.data = self.res.json()['workDraft']
             self.writejson(self.data)
             return True
@@ -67,11 +69,10 @@ class SendData(Api):
         send = requests.post(
             self.posturl, headers=self.hparameter, json=json.loads(work))
         if send.status_code == 200:
-            print('Sending data success')
+            for i in send.json().items():print(i[0],":",i[1])
         elif send.status_code != 500 and send.status_code != 503 and send.status_code != 501 and send.status_code != 502:
-            print(send.status_code)
-            print(send.json())
+            for i in send.json().items():print(i[0],":",i[1])
         else:
-            print(send.status_code)
+            for i in send.json().items():print(i[0],":",i[1])
             print('!!!SERVER HAVE ISSUE!!!')
             print("PLEASE TRY AGAIN LATER")

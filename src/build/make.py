@@ -24,9 +24,7 @@ def init_work_directory(path, workid) -> bool:
         print("config.json already exists.")
     else:
         ConfigEditor(workid, path).writeconfig()
-    if os.path.exists(draft_path):
-        print("draft.json already exists.")
-    elif not SaveApiKey().exsitapikey():
+    if not SaveApiKey().exsitapikey():
         print("## API-key not exists ##")
     else:
         CallApi(path)
