@@ -4,20 +4,27 @@ from src.main.pre_work import Work
 from lib.file_management.extract import unzipfile
 from src.main.student_data import StudentData
 from lib.file_management.configeditor import ConfigEditor
-
+from lib.function_network.func_network import CallApi
 
 def run_work(path, openvs=True, onebyone=False):
-    if not os.path.exists(os.path.join(path, "ta", "draft.json")):
-        print("draft.json not exists.")
-        if not os.path.exists(os.path.join(path, "ta", "config.json")):
-            print("config.json not exists.")
-        return False
     if not os.path.exists(os.path.join(path, "ta", "config.json")):
         print("config.json not exists.")
         return False
-    with open(os.path.join(path, "ta", "draft.json"), "r") as draftfile:
-        draft = json.load(draftfile)
-        draftfile.close()
+    if not os.path.exists(os.path.join(path, "ta", "draft.json")):
+        print("draft.json not exists.")
+        CallApi(path).createworkdraft()
+    else:
+        print("Do you want to use draft from draft.json or fetch from the server")
+        while True:
+            user_in = input("(R)ead from file or (F)etch from server: ")
+            if user_in.lower() in "RrFf":
+                break
+        if user_in.lower() == "f":
+            draft = CallApi(path).fetch()
+        else:
+            with open(os.path.join(path, "ta", "draft.json"), "r") as draftfile:
+                draft = json.load(draftfile)
+                draftfile.close()
     work = Work()
     work.draft = draft
     work.path = path

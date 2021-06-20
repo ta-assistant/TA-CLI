@@ -27,7 +27,7 @@ def init_work_directory(path, workid) -> bool:
     if not SaveApiKey().exsitapikey():
         print("## API-key not exists ##")
     else:
-        CallApi(path)
+        CallApi(path).createworkdraft()
     if os.path.exists(draft_path) and os.path.exists(config_path) and os.path.exists(ta_path):
         print(f"{path} is ready")
     else:

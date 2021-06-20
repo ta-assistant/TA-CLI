@@ -31,8 +31,24 @@ class Api:
 class CallApi(Api):
     def __init__(self, path) -> None:
         super().__init__(path)
-        self.createworkdraft()
+        
 
+    def fetch(self):
+        self.res = requests.get(self.url, headers=self.hparameter)
+        if self.res.status_code == 200:
+            massage = self.res.json()["message"]
+            print(f"[ Call API ]")
+            for i in self.res.json().items():print("  *",i[0],":",i[1])
+            self.data = self.res.json()['workDraft']
+            return self.data
+        elif self.res.status_code != 500 and self.res.status_code != 503 and self.res.status_code != 501 and self.res.status_code != 502:
+            print(self.res.status_code)
+            print(self.res.json())
+        else:
+            print(self.res.status_code)
+            print('!!!SERVER HAVE ISSUE!!!')
+            print("PLEASE TRY AGAIN LATER")
+            
     def createworkdraft(self):
         self.res = requests.get(self.url, headers=self.hparameter)
         if self.res.status_code == 200:
