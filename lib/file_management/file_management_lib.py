@@ -110,7 +110,7 @@ class WorkEditor(FileEditor):
                 data["workDraft"] = draft
                 json.dump(data, file)
                 file.close()
-            print("draft has been written to twork.json")
+            print("draft has been written to work.json")
 
     def read_work(self, path) -> dict:
         if self.check_exits_work(path):

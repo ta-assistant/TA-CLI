@@ -30,12 +30,13 @@ def unzipfile(path: str):
             if i != "ta":
                 validfile.append(i)
     if len(validfile) != 0:
-        print("Valid file: (not include on scoring process)")
-        for i in validfile: print("*",i)
+        print("Valid file: (not include in scoring process)")
+        for i in validfile: print(" *",i)
         if len(listfile) == 0:
             return False
     create_dir = DirManagement().create_dir
     out= " "*100
+    count = 0
     for filename in progressBar(listfile,prefix = 'Unzip progress:', suffix = 'complete ', length = 20):
         if ".zip" in filename:
             name = os.path.join(path, f"{filename}")
@@ -47,7 +48,9 @@ def unzipfile(path: str):
                     create_dir(folder,out=False)
                     my_zip.extractall(folder)
                     my_zip.close()
+                    count += 1
                 except (IOError, zipfile.BadZipfile) as e:
                     print(f"\rBad zip file given as {name}.{out}\n")
                     shutil.rmtree(folder)
+    print(f"{count} file has been extracted")
     return True
