@@ -47,6 +47,7 @@ def run_work(path, openvs=True, onebyone=False):
             break
     if user_in.lower() == "f":
         draft = CallApi(path).fetch()
+        print(draft)
     else:
         with open(os.path.join(path, "ta", "draft.json"), "r") as draftfile:
             draft = json.load(draftfile)
@@ -64,7 +65,9 @@ def run_work(path, openvs=True, onebyone=False):
         print(work.workId)
         return False
 
-    unzipfile(path)
+    if not unzipfile(path,draft["fileDraft"]):
+        print("[*] all file aren't follow the draft")
+        return False
     print("[/] finish")
 
     list_file = os.listdir(os.path.join(path, "ta", "extract"))

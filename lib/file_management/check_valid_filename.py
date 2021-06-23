@@ -22,10 +22,7 @@ def check_draft_file(draft):
     return key
 
 
-def check_file_name(path,filename):
-    draftfile = open(os.path.join(path,"ta","draft.json"),"r")
-    draft = json.load(draftfile)["fileDraft"]
-    draftfile.close()
+def check_file_name(path,filename,draft):
     extension = check_extension(draft)
     if extension not in filename:
         return False

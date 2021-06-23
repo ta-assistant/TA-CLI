@@ -9,7 +9,7 @@ class ConfigEditor:
 
     def writeconfig(self) -> None:
         data = {"prefix": "https://ta-api.sirateek.dev/",
-                "workID": self.id,
+                "workId": self.id,
                 "apikeydir": os.path.join(os.path.expanduser("~"), 'key')}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:
             json.dump(data, wri)
@@ -28,7 +28,7 @@ class ConfigEditor:
 
     def checkdata(self):
         data = self.readconfig()
-        if data['workID'] == '':
+        if data['workId'] == '':
             self.writeconfig()
         else:
             return

@@ -18,7 +18,7 @@ class Api:
         self.apikey = SaveApiKey.readapikey(self)
         self.data = ConfigEditor.readconfig(self)
         self.prefix = self.data['prefix']
-        self.workID = self.data['workID']
+        self.workID = self.data['workId']
         self.hparameter = {'Authorization': self.apikey,
                            'Content-Type': 'application/json',
                            }
@@ -37,6 +37,7 @@ class CallApi(Api):
         out = "  API Request \n\n"
         for i in self.res.json().items():out += f"  * {i[0]} : {i[1]} \n"
         return out
+
     def fetch(self):
         self.res = requests.get(self.url, headers=self.hparameter)
         if self.res.status_code == 200:

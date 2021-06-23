@@ -15,7 +15,7 @@ import shutil
 import os
 import time
     
-def unzipfile(path: str):
+def unzipfile(path: str,draft):
     """
     'path: (str)' is directory name that you want this function to extract files and create folders in this
     You should to change backslash to sla for prevebt backslash error
@@ -24,7 +24,7 @@ def unzipfile(path: str):
     listfile = os.listdir(path)
     validfile = []
     for i in listfile[::]:
-        if not check_file_name(path,i):
+        if not check_file_name(path,i,draft):
             listfile.remove(i)
             if i != "ta":
                 validfile.append(i)

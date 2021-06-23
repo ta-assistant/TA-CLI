@@ -90,7 +90,7 @@ class WorkEditor(FileEditor):
             file.close()
 
     def add_workid(self, path, config):
-        workId= config["workID"]
+        workId = config["workId"]
         if self.check_exits_work(path):
             with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)

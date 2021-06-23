@@ -47,7 +47,7 @@ class TestWorkEditor(unittest.TestCase):
         """
         self.assertTrue(self.we.create_file_work(currentdir))
         self.assertFalse(self.we.create_file_work(currentdir))
-        self.we.add_workid(currentdir,"123456")
+        self.we.add_workid(currentdir,{'workId': '123456', 'workDraft': "N/A", 'scores': []})
         self.assertEqual(self.we.read_work(currentdir),{'workId': '123456', 'workDraft': "N/A", 'scores': []})
         self.we.add_draft(currentdir,self.draft)
         print(self.we.read_work(currentdir),"hi")
@@ -59,7 +59,7 @@ class TestWorkEditor(unittest.TestCase):
         self.assertIsNone(self.we.write_work(currentdir,stu_data))
         
         self.assertEqual(self.we.read_work(currentdir),{
-  "workId": "123456",
+  "workID": "123456",
     "workDraft": {
       "fileDraft": "{student_id}_{name}_{ex}.zip",
       "outputDraft": [
