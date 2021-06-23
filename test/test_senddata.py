@@ -30,7 +30,7 @@ class TestSendData(unittest.TestCase):
         }]
 }
         data = {"prefix" : "https://ta-api.sirateek.dev/",
-                "workID" : 'testWork2'}
+                "workId" : 'testWork2'}
         with open(os.path.join(self.path, 'config.json'), "w") as wri:
             json.dump(data, wri)
         with open(os.path.join(self.path, "work.json"), "w") as create:
