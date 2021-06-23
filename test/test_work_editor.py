@@ -59,7 +59,7 @@ class TestWorkEditor(unittest.TestCase):
         self.assertIsNone(self.we.write_work(currentdir,stu_data))
         
         self.assertEqual(self.we.read_work(currentdir),{
-  "workID": "123456",
+  "workId": "123456",
     "workDraft": {
       "fileDraft": "{student_id}_{name}_{ex}.zip",
       "outputDraft": [
