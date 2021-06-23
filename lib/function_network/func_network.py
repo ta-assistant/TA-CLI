@@ -27,18 +27,20 @@ class Api:
         self.postapi = f"v1/workManagement/{self.workID}/submitScores"
         self.posturl = self.prefix+self.postapi
 
+    
 
 class CallApi(Api):
     def __init__(self, path) -> None:
         super().__init__(path)
         
-
+    def api_massage(self):
+        out = "  API Request \n\n"
+        for i in self.res.json().items():out += f"  * {i[0]} : {i[1]} \n"
+        return out
     def fetch(self):
         self.res = requests.get(self.url, headers=self.hparameter)
         if self.res.status_code == 200:
             massage = self.res.json()["message"]
-            print(f"[ Call API ]")
-            for i in self.res.json().items():print("  *",i[0],":",i[1])
             self.data = self.res.json()['workDraft']
             return self.data
         elif self.res.status_code != 500 and self.res.status_code != 503 and self.res.status_code != 501 and self.res.status_code != 502:
@@ -53,8 +55,6 @@ class CallApi(Api):
         self.res = requests.get(self.url, headers=self.hparameter)
         if self.res.status_code == 200:
             massage = self.res.json()["message"]
-            print(f"[ Call API ]")
-            for i in self.res.json().items():print("  *",i[0],":",i[1])
             self.data = self.res.json()['workDraft']
             self.writejson(self.data)
             return True
@@ -72,8 +72,6 @@ class CallApi(Api):
         draft_path = os.path.join(self.path, 'ta', "draft.json")
         with open(draft_path, "w") as create:
             json.dump(data, create)
-        print(f"{draft_path} has been created")
-
 
 class SendData(Api):
     def __init__(self, path) -> None:
@@ -89,6 +87,6 @@ class SendData(Api):
         elif send.status_code != 500 and send.status_code != 503 and send.status_code != 501 and send.status_code != 502:
             for i in send.json().items():print(i[0],":",i[1])
         else:
-            for i in send.json().items():print(i[0],":",i[1])
+            
             print('!!!SERVER HAVE ISSUE!!!')
             print("PLEASE TRY AGAIN LATER")

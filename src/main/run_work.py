@@ -5,26 +5,52 @@ from lib.file_management.extract import unzipfile
 from src.main.student_data import StudentData
 from lib.file_management.configeditor import ConfigEditor
 from lib.function_network.func_network import CallApi
+from lib.file_management.createapikeyfile import SaveApiKey
+from lib.cli_displayed.dis_cli import display_typo
+
+def check_config(path):
+    if not os.path.exists(os.path.join(path, "ta", "config.json")):
+        return False
+    else:
+        return True
+
+
+def check_draft(path):
+    if not os.path.exists(os.path.join(path, "ta", "draft.json")) and not SaveApiKey().exsitapikey():
+        return False
+    else:
+        return True
+
+
+def check_state(config_state,draft_state,path):
+    if config_state and draft_state:
+        return True
+    else:
+        display_typo(1,(config_state and draft_state),"Property is not ready please try again",
+                    optional_massage=f"CONFIG : {config_state} / DRAFT : {draft_state} / API-KEY : {SaveApiKey().exsitapikey()}")
+        print("[*]")
+        return False
+    
 
 def run_work(path, openvs=True, onebyone=False):
-    if not os.path.exists(os.path.join(path, "ta", "config.json")):
-        print("config.json not exists.")
+    print("[*] starting...")
+    config_state = check_config(path)
+    draft_state = check_draft(path)
+    display_typo(1,config_state,"checking config.json")
+    display_typo(1,draft_state,"checking draft.json")
+    if not check_state(config_state, draft_state, path):
         return False
-    if not os.path.exists(os.path.join(path, "ta", "draft.json")):
-        print("draft.json not exists.")
-        CallApi(path).createworkdraft()
+    print("Do you want to use draft from draft.json or fetch from the server")
+    while True:
+        user_in = input("(R)ead from file or (F)etch from server: ")
+        if user_in.lower() in "RrFf":
+            break
+    if user_in.lower() == "f":
+        draft = CallApi(path).fetch()
     else:
-        print("Do you want to use draft from draft.json or fetch from the server")
-        while True:
-            user_in = input("(R)ead from file or (F)etch from server: ")
-            if user_in.lower() in "RrFf":
-                break
-        if user_in.lower() == "f":
-            draft = CallApi(path).fetch()
-        else:
-            with open(os.path.join(path, "ta", "draft.json"), "r") as draftfile:
-                draft = json.load(draftfile)
-                draftfile.close()
+        with open(os.path.join(path, "ta", "draft.json"), "r") as draftfile:
+            draft = json.load(draftfile)
+            draftfile.close()
     work = Work()
     work.draft = draft
     work.path = path
@@ -39,6 +65,8 @@ def run_work(path, openvs=True, onebyone=False):
         return False
 
     unzipfile(path)
+    print("[/] finish")
+
     list_file = os.listdir(os.path.join(path, "ta", "extract"))
     extractpath = os.path.join("ta", "extract")
     if openvs and not onebyone:
