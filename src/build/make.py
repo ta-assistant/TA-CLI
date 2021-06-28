@@ -52,21 +52,25 @@ def fetch_api_massage(apiobj):
 def init_work_directory(path, workid) -> bool:
     config_path = os.path.join(path, "ta", "config.json")
     ta_path = os.path.join(path, "ta")
-    print(f"[*] {path} makeing work directory")
     draft_path = os.path.join(path, "ta", "draft.json")
+
+    keystate = check_api_key(path)
+
+    print(f"[*] {path} makeing work directory")
     display_typo(1,create_ta_dir(path),f"Creating workDirectory {path}",
                 optional_massage="Skipped. Already exists",when=False)
     display_typo(1,check_config(workid, path),"Creating `config.json`",
                 optional_massage="Skipped. Already exists",when=False)
-    keystate = check_api_key(path)
     display_typo(1,keystate,"Checking API-KEY",
                 optional_massage="API-KEY doesn't exists",when=False)
+
     if keystate:
         callapi_obj = CallApi(path)
         apistate = fetch_draft(callapi_obj)
         display_typo(1,apistate,"fetching draft.json ...")
         display_typo(2,apistate,fetch_api_massage(callapi_obj))
     print(" |")
+    
     if os.path.exists(draft_path) and os.path.exists(config_path) and os.path.exists(ta_path):
         print(f"[/] {path} is ready")
         return True
