@@ -69,11 +69,12 @@ def init_work_directory(path, workid) -> bool:
     print(" |")
     if os.path.exists(draft_path) and os.path.exists(config_path) and os.path.exists(ta_path):
         print(f"[/] {path} is ready")
+        return True
     else:
         print("[x] Something is missing please try again.\n")
         print(
             f"draft.json: {os.path.exists(draft_path)}\nconfig.json: {os.path.exists(config_path)}\nta directory: {os.path.exists(ta_path)}")
-
+        return False
 
 def reset(path):
     ta_path = os.path.join(path, "ta")
