@@ -62,13 +62,11 @@ class WorkEditor(FileEditor):
         if os.path.exists(os.path.join(path, "ta", "work.json")):
             return True
         else:
-            print(os.path.join(path, "ta", "work.json")+" doesn't exits")
             return False
 
     def create_file_work(self, path) -> bool:
         if not self.check_exits_work(path):
             self.init_work(path)
-            print(os.path.join(path, "ta", "work.json")+" created")
             return True
         else:
             return False

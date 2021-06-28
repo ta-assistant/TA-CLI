@@ -64,7 +64,10 @@ def add_data_to_work(path,draft):
     work.path = path
     work.workId = ConfigEditor(path=path).readconfig()
     if work.property_is_ready():
-        work.create()
+        work_state = os.path.join(path, "ta", "work.json")
+        if work.create():
+            print(f" |-[/] {work_state} created")
+        
     else:
         print("property is not ready")
         print(work.draft)
@@ -108,7 +111,6 @@ def scoring(path,work,openvs,onebyone):
             continue
         student_checking(path,work,file,openvs,onebyone)
         
-
 
 def run_work(path, openvs=True, onebyone=False):
     print("[*] starting...")
