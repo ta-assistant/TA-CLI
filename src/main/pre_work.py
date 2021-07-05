@@ -62,9 +62,9 @@ class Work(WorkEditor):
         return True
 
     def create(self):
-        self.create_file_work()
         self.add_draft()
         self.add_workid()
+        return self.create_file_work()
 
     def create_file_work(self):
         return super().create_file_work(self.__path)

@@ -10,13 +10,12 @@ import zipfile
 from lib.file_management.file_management_lib import DirManagement, WorkEditor, FileEditor
 from lib.file_management.loadin_bar import progressBar
 from lib.file_management.check_valid_filename import check_file_name
-import inspect
 import sys
 import shutil
 import os
-
-
-def unzipfile(path: str):
+import time
+    
+def unzipfile(path: str,draft):
     """
     'path: (str)' is directory name that you want this function to extract files and create folders in this
     You should to change backslash to sla for prevebt backslash error
@@ -25,13 +24,13 @@ def unzipfile(path: str):
     listfile = os.listdir(path)
     validfile = []
     for i in listfile[::]:
-        if not check_file_name(path,i):
+        if not check_file_name(path,i,draft):
             listfile.remove(i)
             if i != "ta":
                 validfile.append(i)
     if len(validfile) != 0:
-        print("Valid file: (not include in scoring process)")
-        for i in validfile: print(" *",i)
+        print(" |-[x] Valid file: (not include in scoring process)")
+        for i in validfile: print(" |   |-[*]",i)
         if len(listfile) == 0:
             return False
     create_dir = DirManagement().create_dir
@@ -52,5 +51,7 @@ def unzipfile(path: str):
                 except (IOError, zipfile.BadZipfile) as e:
                     print(f"\rBad zip file given as {name}.{out}\n")
                     shutil.rmtree(folder)
-    print(f"{count} file has been extracted")
+    print("     "*20,end="\r")
+    print(" |")
+    print(f" |-[/] {count} file has been extracted")
     return True

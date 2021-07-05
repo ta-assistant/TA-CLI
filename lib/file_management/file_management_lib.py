@@ -62,13 +62,11 @@ class WorkEditor(FileEditor):
         if os.path.exists(os.path.join(path, "ta", "work.json")):
             return True
         else:
-            print(os.path.join(path, "ta", "work.json")+" doesn't exits")
             return False
 
     def create_file_work(self, path) -> bool:
         if not self.check_exits_work(path):
             self.init_work(path)
-            print(os.path.join(path, "ta", "work.json")+" created")
             return True
         else:
             return False
@@ -90,7 +88,7 @@ class WorkEditor(FileEditor):
             file.close()
 
     def add_workid(self, path, config):
-        workId= config["workID"]
+        workId = config["workId"]
         if self.check_exits_work(path):
             with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)
@@ -99,7 +97,7 @@ class WorkEditor(FileEditor):
                 data["workId"] = str(workId)
                 json.dump(data, file)
                 file.close()
-            print(f"Your workId is \'{workId}\'")
+            print(f" |-[*] Your workId is \'{workId}\'")
 
     def add_draft(self, path, draft):
         if self.check_exits_work(path):
@@ -110,7 +108,7 @@ class WorkEditor(FileEditor):
                 data["workDraft"] = draft
                 json.dump(data, file)
                 file.close()
-            print("draft has been written to work.json")
+            print(" |-[*] draft has been written to work.json")
 
     def read_work(self, path) -> dict:
         if self.check_exits_work(path):
