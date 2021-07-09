@@ -97,10 +97,18 @@ class StudentData:
         """
         for i in post_student_data:
             if post_student_data[i] == "N/A":
-                data_input = inask(f"Enter {i}: ")
-                if data_input == "-99":
-                    continue
-                post_student_data[i] = data_input
+                while True:
+                    data_input = inask(f"Enter {i}: ")
+                    if data_input == "-99":
+                        break
+                    if i == "score":
+                        try:
+                            data_input = float(data_input)
+                        except ValueError:
+                            print("Value Error: please enter a numeric score.")
+                            continue
+                    post_student_data[i] = data_input
+                    break
         return post_student_data
 
     def ask(self) -> data_input:
