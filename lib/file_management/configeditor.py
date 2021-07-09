@@ -8,7 +8,7 @@ class ConfigEditor:
         self.path = path
 
     def writeconfig(self) -> None:
-        data = {"prefix": "https://ta-api.sirateek.dev/",
+        data = {"prefix": "https://ta-api-beta-httnhj5xcq-uc.a.run.app/",
                 "workId": self.id,
                 "apikeydir": os.path.join(os.path.expanduser("~"), 'key')}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:

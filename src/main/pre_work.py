@@ -45,7 +45,7 @@ class Work(WorkEditor):
         try:
             filedraft = value["fileDraft"]
             outputdraft = value["outputDraft"]
-            if "ID" not in outputdraft or "score" not in outputdraft:
+            if "studentId" not in outputdraft or "score" not in outputdraft:
                 print("Invalid draft")
             else:
                 self.__draft = value
