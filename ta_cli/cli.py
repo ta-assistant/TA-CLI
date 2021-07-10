@@ -71,4 +71,7 @@ def fetch():
 @cli.command()
 def submit():
     """Submit"""
-    SendData(current_dir)
+    if os.path.exists(os.path.join(current_dir,"ta","work.json")):
+        SendData(current_dir)
+    else:
+        print("You don't have work.json to submit")
