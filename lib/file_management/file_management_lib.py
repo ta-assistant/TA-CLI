@@ -64,9 +64,11 @@ class WorkEditor(FileEditor):
         else:
             return False
 
-    def create_file_work(self, path) -> bool:
+    def create_file_work(self, path, config, draft) -> bool:
         if not self.check_exits_work(path):
             self.init_work(path)
+            self.add_workid(path, config)
+            self.add_draft(path, draft)
             return True
         else:
             return False
