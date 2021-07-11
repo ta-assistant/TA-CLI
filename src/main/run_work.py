@@ -66,9 +66,9 @@ def add_data_to_work(path,draft):
     work.path = path
     work.workId = ConfigEditor(path=path).readconfig()
     if work.property_is_ready():
-        work_state = os.path.join(path, "ta", "work.json")
+        work_path = os.path.join(path, "ta", "work.json")
         if work.create():
-            print(f" |-[/] {work_state} created")
+            print(f" |-[/] {work_path} created")
         
     else:
         print("property is not ready")
