@@ -62,15 +62,20 @@ class WorkEditor(FileEditor):
         if os.path.exists(os.path.join(path, "ta", "work.json")):
             return True
         else:
-            print(os.path.join(path, "ta", "work.json")+" doesn't exits")
             return False
 
-    def create_file_work(self, path) -> bool:
+    def create_file_work(self, path, workId, draft) -> bool:
         if not self.check_exits_work(path):
             self.init_work(path)
-            print(os.path.join(path, "ta", "work.json")+" created")
+            self.add_workid(path, workId)
+            self.add_draft(path, draft)
             return True
         else:
+            if self.check_work_draft(path,draft):
+                while True:
+                    if not os.path.exists(os.path.join(path,"ta","work.json")):
+                        self.create_file_work()
+                        break
             return False
 
     def write_work(self, path, stu_data: dict) -> bool:
@@ -98,7 +103,7 @@ class WorkEditor(FileEditor):
                 data["workId"] = str(workId)
                 json.dump(data, file)
                 file.close()
-            print(f"Your workId is {workId}")
+            print(f" |-[*] Your workId is \'{workId}\'")
 
     def add_draft(self, path, draft):
         if self.check_exits_work(path):
@@ -109,7 +114,7 @@ class WorkEditor(FileEditor):
                 data["workDraft"] = draft
                 json.dump(data, file)
                 file.close()
-            print("Sucessfully add draft")
+            print(" |-[*] draft has been written to work.json")
 
     def read_work(self, path) -> dict:
         if self.check_exits_work(path):
@@ -122,4 +127,16 @@ class WorkEditor(FileEditor):
 
     def read_filework(self, path):
         with open(os.path.join(path, 'ta', 'work.json')) as r:
-            return r.read()
+            return json.load(r)
+    
+    def check_work_draft(self,path,draft):
+        workDraft = self.read_filework(path)
+        if draft == workDraft["workDraft"]:
+            return False
+        else:
+            os.remove(os.path.join(path,"ta","work.json"))
+            return True
+            
+
+            
+            

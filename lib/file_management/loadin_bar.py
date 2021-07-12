@@ -26,14 +26,4 @@ def progressBar(iterable, prefix = '', suffix = '', decimals = 1, length = 100, 
         yield item
         printProgressBar(i + 1,item)
     # Print New Line on Complete
-    print()
-
-# import time
-
-# # A List of Items
-# items = list(["2","3","4","5"])
-
-# # A Nicer, Single-Call Usage
-# for item in progressBar(items, prefix = 'Progress:', suffix = 'Complete', length = 50):
-#     # Do stuff...
-#     time.sleep(1)
+    
