@@ -64,12 +64,13 @@ def add_data_to_work(path,draft):
     work = Work()
     work.draft = draft
     work.path = path
-    work.workId = ConfigEditor(path=path).readconfig()
+    work.workId = ConfigEditor(path=path).readconfig()["workId"]
     if work.property_is_ready():
         work_path = os.path.join(path, "ta", "work.json")
         if work.create():
             print(f" |-[/] {work_path} created")
-        
+        else:
+            print(f" |-[X] {work_path} already exists")
     else:
         print("property is not ready")
         print(work.draft)
