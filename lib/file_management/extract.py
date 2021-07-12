@@ -14,7 +14,21 @@ import sys
 import shutil
 import os
 import time
-    
+
+
+def move_stu_file(path,filename):
+    count = 0
+    for char in filename[::-1]:
+        count += 1
+        if char == ".":
+            dirname = filename[:-count]
+            break
+    if os.path.exists(os.path.join(path,"ta","Assignment",dirname,filename)):
+        return False
+    DirManagement().create_dir(os.path.join(path,"ta","Assignment",dirname),out=False)
+    shutil.copyfile(os.path.join(path,filename),os.path.join(path,"ta","Assignment",dirname,filename))
+    return True
+
 def unzipfile(path: str,draft):
     """
     'path: (str)' is directory name that you want this function to extract files and create folders in this
@@ -36,10 +50,11 @@ def unzipfile(path: str,draft):
     create_dir = DirManagement().create_dir
     out= " "*100
     count = 0
-    for filename in progressBar(listfile,prefix = 'Unzip progress:', suffix = 'complete ', length = 20):
+    create_dir(os.path.join(path,"ta","Assignment"),out=False)
+    for filename in progressBar(listfile,prefix = 'progress:', suffix = 'complete ', length = 20):
+        name = os.path.join(path, f"{filename}")
+        folder = os.path.join(path, "ta","Assignment",f"{filename}")[:-3]
         if ".zip" in filename:
-            name = os.path.join(path, f"{filename}")
-            folder = os.path.join(path, "ta","extract",f"{filename}")[:-3]
             if os.path.exists(folder):
                 continue
             with zipfile.ZipFile(name) as my_zip:
@@ -51,7 +66,11 @@ def unzipfile(path: str,draft):
                 except (IOError, zipfile.BadZipfile) as e:
                     print(f"\rBad zip file given as {name}.{out}\n")
                     shutil.rmtree(folder)
+        else:
+            if move_stu_file(path,filename):
+                count += 1
+
     print("     "*20,end="\r")
     print(" |")
-    print(f" |-[/] {count} file has been extracted")
+    print(f" |-[/] {count} file has processed")
     return True
