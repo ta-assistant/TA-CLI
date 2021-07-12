@@ -98,16 +98,16 @@ def student_checking(path,work,file,openvs,onebyone):
 def did_student_checked(work,file,student,scores,openvs,onebyone):
     if student.check_work_score(scores):
         if openvs and onebyone:
-            extractpath = os.path.join("ta", "extract", file)
-            os.system(f"code {extractpath}")
+            assignmentpath = os.path.join("ta", "Assignment", file)
+            os.system(f"code {assignmentpath}")
         work.write_work(student.ask())
 
 
 def scoring(path,work,openvs,onebyone):
-    list_file = os.listdir(os.path.join(path, "ta", "extract"))
-    extractpath = os.path.join("ta", "extract")
+    list_file = os.listdir(os.path.join(path, "ta", "Assignment"))
+    assignmentpath = os.path.join("ta", "Assignment")
     if openvs and not onebyone:
-        os.system(f"code {extractpath}")
+        os.system(f"code {assignmentpath}")
     for file in list_file:
         if "." in file or file == "ta":
             continue
