@@ -1,6 +1,6 @@
 import os
 import json
-import pandas as pd
+# import pandas as pd
 from datetime import datetime
 from src.main.pre_work import Work
 from lib.file_management.extract import unzipfile
@@ -9,6 +9,7 @@ from lib.file_management.configeditor import ConfigEditor
 from lib.function_network.func_network import CallApi
 from lib.file_management.createapikeyfile import SaveApiKey
 from lib.cli_displayed.dis_cli import display_typo
+
 
 def check_config(path):
     if not os.path.exists(os.path.join(path, "ta", "config.json")):
@@ -24,21 +25,21 @@ def check_draft(path):
         return True
 
 
-def check_state(config_state,draft_state,path):
+def check_state(config_state, draft_state, path):
     if config_state and draft_state:
         return True
     else:
-        display_typo(1,(config_state and draft_state),"Property is not ready please try again",
-                    optional_massage=f"CONFIG : {config_state} / DRAFT : {draft_state} / API-KEY : {SaveApiKey().exsitapikey()}")
+        display_typo(1, (config_state and draft_state), "Property is not ready please try again",
+                     optional_massage=f"CONFIG : {config_state} / DRAFT : {draft_state} / API-KEY : {SaveApiKey().exsitapikey()}")
         print("[*]")
         return False
-    
+
 
 def preparework(path):
     config_state = check_config(path)
     draft_state = check_draft(path)
-    display_typo(1,config_state,"checking config.json")
-    display_typo(1,draft_state,"checking draft.json")
+    display_typo(1, config_state, "checking config.json")
+    display_typo(1, draft_state, "checking draft.json")
 
     if not check_state(config_state, draft_state, path):
         return False
@@ -60,7 +61,8 @@ def draft_config(path):
             draftfile.close()
     return draft
 
-def add_data_to_work(path,draft):
+
+def add_data_to_work(path, draft):
     work = Work()
     work.draft = draft
     work.path = path
@@ -80,23 +82,24 @@ def add_data_to_work(path,draft):
     return True, work
 
 
-def unzip_homework(path,draft):
-    if not unzipfile(path,draft["fileDraft"]):
+def unzip_homework(path, draft):
+    if not unzipfile(path, draft["fileDraft"]):
         print("[*] all file aren't follow the draft")
         return False
     print("[/] finish")
     return True
 
-def student_checking(path,work,file,openvs,onebyone):
+
+def student_checking(path, work, file, openvs, onebyone):
     student = StudentData(path=work.path, filename=file, draft=work.draft)
     with open(os.path.join(path, "ta", "work.json"), "r") as workfile:
         scores = json.load(workfile)["scores"]
         workfile.close
     student.prepare_student_data()
-    did_student_checked(work,file,student,scores,openvs,onebyone)
+    did_student_checked(work, file, student, scores, openvs, onebyone)
 
 
-def did_student_checked(work,file,student,scores,openvs,onebyone):
+def did_student_checked(work, file, student, scores, openvs, onebyone):
     if student.check_work_score(scores):
         if openvs and onebyone:
             assignmentpath = os.path.join("ta", "Assignment", file)
@@ -104,7 +107,7 @@ def did_student_checked(work,file,student,scores,openvs,onebyone):
         work.write_work(student.ask())
 
 
-def scoring(path,work,openvs,onebyone):
+def scoring(path, work, openvs, onebyone):
     list_file = os.listdir(os.path.join(path, "ta", "Assignment"))
     assignmentpath = os.path.join("ta", "Assignment")
     if openvs and not onebyone:
@@ -112,18 +115,18 @@ def scoring(path,work,openvs,onebyone):
     for file in list_file:
         if "." in file or file == "ta":
             continue
-        student_checking(path,work,file,openvs,onebyone)
-        
+        student_checking(path, work, file, openvs, onebyone)
+
 
 def run_work(path, openvs=True, onebyone=False):
     print("[*] starting...")
     if not preparework(path):
         return False
     draft = draft_config(path)
-    workstate, work = add_data_to_work(path,draft)
+    workstate, work = add_data_to_work(path, draft)
     if not workstate:
         return False
-    if not unzip_homework(path,draft):
+    if not unzip_homework(path, draft):
         return False
-    scoring(path,work,openvs,onebyone)
+    scoring(path, work, openvs, onebyone)
     return True
