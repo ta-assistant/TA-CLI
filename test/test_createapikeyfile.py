@@ -38,7 +38,7 @@ class TestSendData(unittest.TestCase):
         """
         return boolean
         """
-        self.assertFalse(self.key.exsitapikey())
+        self.assertTrue(self.key.exsitapikey())
 
     def testremoveapikey(self):
         """
