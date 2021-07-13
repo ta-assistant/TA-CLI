@@ -15,8 +15,20 @@ class TestCallApi(unittest.TestCase):
                 "workID" : 'testWork2'}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:
             json.dump(data, wri)
-        self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', parentdir)
+        self.call = CallApi(parentdir)
         return super().setUp()
+
+    def Testapimassage(self):
+        """
+        return str
+        """
+        self.assertIs(type(self.call.api_massage()), str)
+
+    def Testfetch(self):
+        """
+        return str
+        """
+        self.assertIs(type(self.call.fetch()), str)
 
     def TestCreateWork(self):
         """

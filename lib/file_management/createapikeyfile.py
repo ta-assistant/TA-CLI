@@ -22,7 +22,7 @@ class SaveApiKey:
                 print(os.path.join(os.path.expanduser("~"), 'key', 'taconfig.json')+" has been written.")
         else:
             os.mkdir(os.path.join(os.path.expanduser("~"), 'key'))
-            print(os.path.join(os.path.expanduser("~"), 'key')+'has been created')
+            print(os.path.join(os.path.expanduser("~"), 'key')+' has been created')
             self.writeapikey(apikey)
             print(os.path.join(os.path.expanduser("~"), 'key', 'taconfig.json')+" has been created.")
 
