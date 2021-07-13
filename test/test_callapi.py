@@ -20,19 +20,19 @@ class TestCallApi(unittest.TestCase):
         self.call = CallApi(parentdir)
         return super().setUp()
 
-    def Testapimassage(self):
+    def Test_apimassage(self):
         """
         return str
         """
         self.assertIs(type(self.call.api_massage()), str)
 
-    def Testfetch(self):
+    def Test_fetch(self):
         """
         return str
         """
         self.assertIs(type(self.call.fetch()), str)
 
-    def TestCreateWork(self):
+    def Test_CreateWork(self):
         """
         print(str)
         """

@@ -36,26 +36,26 @@ class TestSendData(unittest.TestCase):
         self.con.writeconfig()
         return super().setUp()
 
-    def testwriteconfig(self):
+    def test_writeconfig(self):
         """
         return None
         """
         self.assertIsNone(self.con.writeconfig())
 
 
-    def testreadconfig(self):
+    def test_readconfig(self):
         """
         return str
         """
         self.assertIs(type(self.con.readconfig()), dict)
 
-    def testishaveconfig(self):
+    def test_ishaveconfig(self):
         """
         return None
         """
         self.assertIsNone(self.con.ishaveconfig())
 
-    def testcheckdata(self):
+    def test_checkdata(self):
         """
         return None
         """

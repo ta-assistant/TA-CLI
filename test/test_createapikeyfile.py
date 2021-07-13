@@ -14,13 +14,13 @@ class TestSendData(unittest.TestCase):
         self.key = SaveApiKey()
         return super().setUp()
 
-    def testsave(self):
+    def test_save(self):
         """
         return None
         """
         self.assertIsNone(self.key.save('K4nPEs7RhhCzcjdlvr3X=='))
 
-    def testreadapikey(self):
+    def test_readapikey(self):
         """
         return ...
         """
@@ -28,19 +28,19 @@ class TestSendData(unittest.TestCase):
         self.assertIs(type(self.key.readapikey()), str)
 
 
-    def testwriteapikey(self):
+    def test_writeapikey(self):
         """
         return None
         """
         self.assertIsNone(self.key.writeapikey('K4nPEs7RhhCzcjdlvr3X=='))
 
-    def testexistapikey(self):
+    def test_existapikey(self):
         """
         return boolean
         """
         self.assertTrue(self.key.exsitapikey())
 
-    def testremoveapikey(self):
+    def test_removeapikey(self):
         """
         return None
         """

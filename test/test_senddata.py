@@ -42,7 +42,7 @@ class TestSendData(unittest.TestCase):
         self.post = SendData(parentdir)
         return super().setUp()
 
-    def testgetworkdraft(self):
+    def test_getworkdraft(self):
         """
         return None
         """
