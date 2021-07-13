@@ -103,7 +103,7 @@ class StudentData:
                     if i == "scoreTimestamp":
                         post_student_data[i] = int(round(time.time() * 1000))
                         break
-                    data_input = inask(f"Enter {i}: ")
+                    data_input = input(f"Enter {i}: ")
                     if data_input == "-99":
                         break
                     if i == "score":

@@ -18,14 +18,14 @@ class TestCallApi(unittest.TestCase):
         self.call = CallApi('K4nPEs7RhhCzcjdlvr3X==', parentdir)
         return super().setUp()
 
-    def TestCreateWork(self):
+    def test_CreateWork(self):
         """
         print(str)
         """
         self.assertTrue(self.call.createworkdraft())
 
 
-    def TestWritejson(self):
+    def test_Writejson(self):
         """
         print(str)
         """
