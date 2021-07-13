@@ -21,7 +21,7 @@ class Api:
         self.apikey = SaveApiKey.readapikey(self)
         self.data = ConfigEditor.readconfig(self)
         self.prefix = self.data['prefix']
-        self.workID = self.data['workID']
+        self.workID = self.data['workId']
         self.hparameter = {'Authorization': self.apikey,
                            'Content-Type': 'application/json',
                            }
