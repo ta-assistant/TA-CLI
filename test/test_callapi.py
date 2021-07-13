@@ -12,7 +12,7 @@ class TestCallApi(unittest.TestCase):
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
         self.data = {"prefix" : "https://ta-api.sirateek.dev/",
-                "workID" : 'testWork2'}
+                "workId" : 'testWork2'}
         with open(os.path.join(self.path, 'config.json'), "w") as wri:
             json.dump(self.data, wri)
         SaveApiKey().removeapikey()
