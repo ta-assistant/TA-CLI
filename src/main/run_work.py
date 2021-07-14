@@ -76,7 +76,7 @@ def add_data_to_work(path, draft):
     else:
         print("property is not ready")
         print(work.draft)
-        print(work.path)
+        print(work.path) 
         print(work.workId)
         return False, None
     return True, work
@@ -104,7 +104,7 @@ def did_student_checked(path,work, file, student, scores, openvs, onebyone):
         if openvs and onebyone:
             assignmentpath = os.path.join(path,"ta", "Assignment", file)
             print(assignmentpath)
-            os.system(f"code {assignmentpath}")
+            os.system(f"code \"{assignmentpath}\"")
         work.write_work(student.ask())
 
 
@@ -112,7 +112,7 @@ def scoring(path, work, openvs, onebyone):
     list_file = os.listdir(os.path.join(path, "ta", "Assignment"))
     assignmentpath = os.path.join("ta", "Assignment")
     if openvs and not onebyone:
-        os.system(f"code {assignmentpath}")
+        os.system(f"code \"{assignmentpath}\"")
     for file in list_file:
         if "." in file or file == "ta":
             continue
