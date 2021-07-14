@@ -57,8 +57,9 @@ def unzipfile(path: str,draft):
         for char in filename[::-1]:
             countname += 1
             if char == ".":
-                dirname = filename[:-count]
+                dirname = filename[:-countname]
                 break
+        
         folder = os.path.join(path, "ta","Assignment",f"{dirname}")
         if ".zip" in filename:
             if os.path.exists(folder):
