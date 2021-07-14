@@ -96,13 +96,14 @@ def student_checking(path, work, file, openvs, onebyone):
         scores = json.load(workfile)["scores"]
         workfile.close
     student.prepare_student_data()
-    did_student_checked(work, file, student, scores, openvs, onebyone)
+    did_student_checked(path,work, file, student, scores, openvs, onebyone)
 
 
-def did_student_checked(work, file, student, scores, openvs, onebyone):
+def did_student_checked(path,work, file, student, scores, openvs, onebyone):
     if student.check_work_score(scores):
         if openvs and onebyone:
-            assignmentpath = os.path.join("ta", "Assignment", file)
+            assignmentpath = os.path.join(path,"ta", "Assignment", file)
+            print(assignmentpath)
             os.system(f"code {assignmentpath}")
         work.write_work(student.ask())
 
