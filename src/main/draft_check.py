@@ -1,5 +1,6 @@
 import os
 
+
 def check_draft(path: str) -> bool:
     """
     check draft.json that exist or not
@@ -8,7 +9,7 @@ def check_draft(path: str) -> bool:
     Returns:
         bool: if draft.json exists return true else false
     """
-    path_draft = os.path.join(path,"ta","draft.json")
+    path_draft = os.path.join(path, "ta", "draft.json")
     if os.path.exists(path_draft):
         return True
     else:

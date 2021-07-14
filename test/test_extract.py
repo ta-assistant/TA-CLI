@@ -18,7 +18,7 @@ class TestExtract(unittest.TestCase):
 
         FileEditor.create_file(self.path_ta,"draft.json")
         path_draft = os.path.join(self.path_ta,"draft.json")
-        draft = {
+        self.draft = {
             "fileDraft": "{student_id}_{name}_{ex}.zip",
             "outputDraft": [
             "student_id",
@@ -30,7 +30,7 @@ class TestExtract(unittest.TestCase):
             ]
         }
         with open(path_draft,"r+") as file:
-            json.dump(draft,file)
+            json.dump(self.draft,file)
             file.close()
 
         create_file = FileEditor().create_file
@@ -50,9 +50,9 @@ class TestExtract(unittest.TestCase):
         return super().setUp()
 
     def test_extract(self):
-        extract.unzipfile(currentdir)
+        extract.unzipfile(currentdir,self.draft["fileDraft"])
         listfile = os.listdir(currentdir)
-        self.assertIn("631055555_hi_ex1",listfile)
+        self.assertIn("631055555_hi_ex1.zip",listfile)
     
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path_ta)

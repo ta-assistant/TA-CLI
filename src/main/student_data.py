@@ -3,6 +3,7 @@ from lib.file_management.file_management_lib import FileEditor, DirManagement, W
 import os
 import sys
 import inspect
+import time
 currentdir = os.path.dirname(os.path.abspath(
     inspect.getfile(inspect.currentframe())))
 sys.path.insert(0, currentdir)
@@ -64,7 +65,7 @@ class StudentData:
 
     def check_work_score(self,work_score):
         for i in work_score:
-            if i["ID"] == self.pre_data["ID"]:
+            if i["studentId"] == self.pre_data["studentId"]:
                 return False
         return True  
           
@@ -76,6 +77,7 @@ class StudentData:
         """
         self._filename_pre_data()
         empty_student = {}
+        empty_student["scoreTimestamp"] = "N/A"
         for i in self.draft_out:
             empty_student[i] = "N/A"
         for i in self.pre_data:
@@ -95,12 +97,24 @@ class StudentData:
         Returns:
             dict: student data that ready to write
         """
-        for i in post_student_data:
+        for i in post_student_data:  
             if post_student_data[i] == "N/A":
-                data_input = inask(f"Enter {i}: ")
-                if data_input == "-99":
-                    continue
-                post_student_data[i] = data_input
+                while True:
+                    if i == "scoreTimestamp":
+                        post_student_data[i] = int(round(time.time() * 1000))
+                        break
+                    data_input = input(f"Enter {i}: ")
+                    if data_input == "-99":
+                        break
+                    if i == "score":
+                        try:
+                            data_input = float(data_input)
+                        except ValueError:
+                            print("Value Error: please enter a numeric score.")
+                            continue
+                    post_student_data[i] = data_input
+                    break
+                    
         return post_student_data
 
     def ask(self) -> data_input:

@@ -13,40 +13,41 @@ class TestSendData(unittest.TestCase):
         DirManagement.create_dir(self.path)
         workdata = {
     "workDraft": {
-        "outputDraft": [
-            "ID",
-            "param1",
-            "param2",
-            "comment"
-        ],
-        "fileDraft": "{ID}_test.py"
+        "outputDraft": ["studentId", 
+            "param1", 
+            "param2", 
+            "comment", 
+            "score", 
+            "scoreTimestamp"], 
+        "fileDraft": "{studentId}_test.zip"
     },
     "scores": [
         {
-            "ID": "6310545000",
+            "studentId": "6310545000",
             "param1": "100",
             "param2": "print('hello')",
-            "comment": "good"
+            "comment": "good",
+            "score": "10",
+            "scoreTimestamp": "100"
         }]
-}
+}    
         data = {"prefix" : "https://ta-api.sirateek.dev/",
-                "workID" : 'testWork2'}
+                "workId" : 'testWork2'}
         with open(os.path.join(self.path, 'config.json'), "w") as wri:
-            json.dump(data, wri)
+            json.dump(data, wri) 
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(workdata, create)
         SaveApiKey().removeapikey()
-        SaveApiKey().save('K4nPEs7RhhCzcjdlvr3X==')
+        SaveApiKey().save('testKey')
         self.post = SendData(parentdir)
         return super().setUp()
 
-    def testgetworkdraft(self):
+    def test_getworkdraft(self):
         """
         return None
         """
-        self.assertIsNone(self.post.getworkDraft())
+        self.assertFalse(self.post.getworkDraft())
         
-
 
     def tearDown(self) -> None:
         SaveApiKey().removeapikey()
