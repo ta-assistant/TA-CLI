@@ -53,7 +53,13 @@ def unzipfile(path: str,draft):
     create_dir(os.path.join(path,"ta","Assignment"),out=False)
     for filename in progressBar(listfile,prefix = 'progress:', suffix = 'complete ', length = 20):
         name = os.path.join(path, f"{filename}")
-        folder = os.path.join(path, "ta","Assignment",f"{filename}")[:-3]
+        countname = 0
+        for char in filename[::-1]:
+            countname += 1
+            if char == ".":
+                dirname = filename[:-count]
+                break
+        folder = os.path.join(path, "ta","Assignment",f"{dirname}")
         if ".zip" in filename:
             if os.path.exists(folder):
                 continue
