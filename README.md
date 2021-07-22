@@ -32,7 +32,6 @@ ssh
 
 https 
 > $ git clone https://github.com/ta-assistant/TA-CLI.git
-
 and you need to goto TA-CLI directory to install CLI.
 
 
@@ -45,7 +44,8 @@ install CLI ( for more infomation -> [CLI](https://github.com/ta-assistant/TA-CL
 ```bash
 $ pip install --editable .
 ```
-
+> If you use Window os you need to open terminal as adminstrator
+> 
 Now you have completed the installation process.
 
 ## Getting start
