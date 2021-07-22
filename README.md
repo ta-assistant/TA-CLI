@@ -1,4 +1,4 @@
-Client 1.0.0
+Client version 1.0.0
 <h1 align="center"> Admin-CLI </h1>
 
 <p align="center">This program is about checking students work in ta's computer and send students score to server by CLI</p>
@@ -10,6 +10,11 @@ Client 1.0.0
   - [Login](#login)
   - [Init work directory](#init-work-directory)
   - [Start checking work](#start-checking-work)
+* [TA item](#ta-item)
+  - [API-KEY](#api-key)
+  - [workId](#workid)
+* [ETC](#etc)
+  - [Custom your own draft](#custom-your-own-draft)
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
@@ -20,7 +25,7 @@ $ pip install requests
 $ pip install -U click
 
 Let's start the installation process first you need to install library that we mention 
-then we will clone this github into your local computer
+then we will clone this repository into your local computer
 
 ssh 
 > $ git clone git@github.com:ta-assistant/TA-CLI.git
@@ -67,7 +72,7 @@ now your apikey will kept in your User directory
 ```
 So now you have apikey that in your computer next if you want to check students work you must create new directory that have students work in it when you use our command you must use it in that directory path. In this example I will call it work_directory.
 #### Init work directory
-let's start. I will assume that you already have lot of students work files in your work directory. then type command (this command you need to have work id if you don't know what is work id -> [work_id])
+let's start. I will assume that you already have lot of students work files in your work directory. then type command (this command you need to have work id if you don't know what is work id -> [work_id](#workid))
 ```bash
 $ ta init --workid `work id`
 ```
@@ -152,3 +157,46 @@ when check is done and you want to sent it to the server use command ta submit
 ```
 ta submit
 ```
+> !!! ALL COMMENT IS USE ON WORK DIRECTORY PATH!!!
+## TA item
+you need to have 2 thing to start the work
+- apikey
+- workid
+
+### API-KEY
+Apikey is use to indentify user when they send to the server that they have permission to check that work or not
+
+> Where can I get an apikey?
+
+apikey come from our server if you don't have it you need to contact our server manager
+
+> If you do not have apikey can you start working process.
+
+No you can't.
+
+### WORKID
+Workid is use for telling server that what work we are reviewing. So the draft will depent on workid
+
+You can get workid from our website or if you can't find it you can contact server manager
+
+## ETC
+You can custom you own draft but if it not follow draft on server you can't submit it
+```{"outputDraft": ["studentId","score"], "fileDraft": "{studentId}_something.zip"}```
+#### Custom your own draft
+draft is requried on fileDraft is `studentId` and in outputDraft is `score` if you don't have two property in your draft the program wont run
+
+Let's get start on fileDraft
+
+filedraft is a draft for checking student file that is valid or not you need to write in `{}`
+
+outputDraft is a draft for you to put data in it but if the fileDraft already have it. The program will automatic put the data in it.
+outputDraft you need to write in form of string `"studentId"`
+
+then if you done with custom your draft when you use command `ta start`
+in this line you need to choose R/r to read from your draft, you can also fetch draft from the server your draft will not be delete but work.json will be reset.
+```
+(R)ead from file or (F)etch from server: r
+```
+____
+Contributions, issues, and feature requests are welcome!
+Give a ⭐️ if you like this project!
