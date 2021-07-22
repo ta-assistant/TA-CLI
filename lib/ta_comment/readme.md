@@ -9,7 +9,7 @@ do exactly like github. Then we have to change somthing to make it compatible wi
 
 ## Examples of use
 ### how to write comment
-```
+```python
 #>>> :start:
 
 ### YOUR CODE ###
@@ -18,7 +18,7 @@ do exactly like github. Then we have to change somthing to make it compatible wi
 ```
 
 ### how to read comment
-```
+```python
 from ta_comment.main import ta_comment
 print(ta_comment(workpath)
 ```
