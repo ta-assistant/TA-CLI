@@ -20,10 +20,12 @@ Client version 1.0.0
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
 
 ### library we use that are not in python standard library
+```
 $ pip install requests
-
+```
+```
 $ pip install -U click
-
+```
 Let's start the installation process first you need to install library that we mention 
 then we will clone this repository into your local computer
 
