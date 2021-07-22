@@ -3,6 +3,13 @@ Client 1.0.0
 
 <p align="center">This program is about checking students work in ta's computer and send students score to server by CLI</p>
 
+## Documentation
+* [Installation](#installation)
+* [Getting start](#getting-start)
+  - [Available Commands](#available-commands)
+  - [Login](#login)
+  - [Init work directory](#init-work-directory)
+  - [Start checking work](#start-checking-work)
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
@@ -36,13 +43,14 @@ $ pip install --editable .
 
 Now you have completed the installation process.
 
-## How to use
+## Getting start
 #### Available Commands
   1. init    [Init TA's work directory Args: workID (str): Work's ID]
   2. login   [Login]
   3. start   [Start working on TA directory]
   4. submit  [Submit]
 
+#### Login
 first let login we login with apikey that you need to ask server manager to get it then assume that your apikey is `1234567890`
 then type command ta login --apikey 1234567890
 ```bash
@@ -58,7 +66,7 @@ now your apikey will kept in your User directory
 ~/user/key/taconfig
 ```
 So now you have apikey that in your computer next if you want to check students work you must create new directory that have students work in it when you use our command you must use it in that directory path. In this example I will call it work_directory.
-
+#### Init work directory
 let's start. I will assume that you already have lot of students work files in your work directory. then type command (this command you need to have work id if you don't know what is work id -> [work_id])
 ```bash
 $ ta init --workid `work id`
@@ -96,7 +104,7 @@ $ ./work_directory
             └── config.json
              
 ```
-
+#### Start checking work
 if everything is ready now you can use `ta start` ( if something is't ready ta start will send you what is missing )
 ```
 ta start
