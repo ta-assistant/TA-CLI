@@ -21,6 +21,3 @@ def ta_comment(path):
     print(traceback)      
     return json.dumps(container,indent=3)
 
-
-with open('readme.txt', 'w') as f:
-    f.write(ta_comment("test1"))
