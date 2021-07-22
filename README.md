@@ -23,9 +23,6 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
 ```
 $ pip install requests
 ```
-```
-$ pip install -U click
-```
 Let's start the installation process first you need to install library that we mention 
 then we will clone this repository into your local computer
 
