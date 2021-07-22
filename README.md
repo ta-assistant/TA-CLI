@@ -1,7 +1,6 @@
 Client 1.0.0
 <h1 align="center"> Admin-CLI </h1>
 
-
 <p align="center">This program is about checking students work in ta's computer and send students score to server by CLI</p>
 
 ## Installation
@@ -38,7 +37,7 @@ $ pip install --editable .
 Now you have completed the installation process.
 
 ## How to use
-Nowaday we have 4 command that can use.
+#### Available Commands
   1. init    [Init TA's work directory Args: workID (str): Work's ID]
   2. login   [Login]
   3. start   [Start working on TA directory]
