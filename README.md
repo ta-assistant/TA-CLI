@@ -19,7 +19,7 @@ Client version 1.0.0
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
 
-### library we use that are not in python standard library
+### Library we use that are not in python standard library
 ```
 $ pip install requests
 ```
