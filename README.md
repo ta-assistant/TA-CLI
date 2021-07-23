@@ -49,7 +49,7 @@ Now you have completed the installation process.
 
 ## Getting start
 #### Available Commands
-  1. init    [Init TA's work directory Args: workID (str): Work's ID]
+  1. init    [Init TA's work directory Args: workId (str): Work's ID]
   2. login   [Login]
   3. start   [Start working on TA directory]
   4. submit  [Submit]
@@ -71,9 +71,9 @@ now your apikey will kept in your User directory
 ```
 So now you have apikey that in your computer next if you want to check students work you must create new directory that have students work in it when you use our command you must use it in that directory path. In this example I will call it work_directory.
 #### Init work directory
-let's start. I will assume that you already have lot of students work files in your work directory. then type command (this command you need to have work id if you don't know what is work id -> [work_id](#workid))
+let's start. I will assume that you already have lot of students work files in your work directory. then type command (this command you need to have work id if you don't know what is workId -> [workId](#workid))
 ```bash
-$ ta init --workid `work id`
+$ ta init --workid `workId`
 ```
 if everything successful, you will receive this message.
 ```
@@ -160,9 +160,9 @@ ta submit
 ## TA item
 you need to have 2 thing to start the work
 - apikey
-- workid
+- workId
 
-### API-KEY
+### apikey
 Apikey is use to indentify user when they send to the server that they have permission to check that work or not
 
 > Where can I get an apikey?
@@ -173,10 +173,10 @@ apikey come from our server if you don't have it you need to contact our server 
 
 No you can't.
 
-### WORKID
-Workid is use for telling server that what work we are reviewing. So the draft will depent on workid
+### workId
+workId is use for telling server that what work we are reviewing. So the draft will depent on workId
 
-You can get workid from our website or if you can't find it you can contact server manager
+You can get workId from our website or if you can't find it you can contact server manager
 
 ## ETC
 You can custom you own draft but if it not follow draft on server you can't submit it
