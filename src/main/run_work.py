@@ -7,7 +7,7 @@ from src.main.student_data import StudentData
 
 from lib.file_management import unzipfile, ConfigEditor, SaveApiKey
 from lib.function_network import CallApi
-from lib.cli_displayed.dis_cli import display_typo
+from lib.cli_displayed import display_typo
 
 
 def check_config(path):
