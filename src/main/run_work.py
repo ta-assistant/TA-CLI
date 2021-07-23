@@ -1,13 +1,12 @@
 import os
 import json
-# import pandas as pd
 from datetime import datetime
+
 from src.main.pre_work import Work
-from lib.file_management.extract import unzipfile
 from src.main.student_data import StudentData
-from lib.file_management.configeditor import ConfigEditor
-from lib.function_network.func_network import CallApi
-from lib.file_management.createapikeyfile import SaveApiKey
+
+from lib.file_management import unzipfile, ConfigEditor, SaveApiKey
+from lib.function_network import CallApi
 from lib.cli_displayed.dis_cli import display_typo
 
 
