@@ -7,9 +7,25 @@ unzipfile(path: str)
 
 from typing import Counter
 import zipfile
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> parent of e11f13e (update file_management_lib.py)
 from lib.file_management.file_management_lib import DirManagement, WorkEditor, FileEditor
 from lib.file_management.loadin_bar import progressBar
 from lib.file_management.check_valid_filename import check_file_name
+import sys
+>>>>>>> parent of e11f13e (update file_management_lib.py)
+import shutil
+import os
+
+=======
+>>>>>>> parent of 44819ff (add __init__.py to all lib)
+from .file_management_lib import DirManagement
+from .loadin_bar import progressBar
+from .check_valid_filename import check_file_name
 import sys
 import shutil
 import os
