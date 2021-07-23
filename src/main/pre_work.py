@@ -1,4 +1,4 @@
-from lib.file_management.file_management_lib import WorkEditor
+from lib.file_management import WorkEditor
 import os
 import sys
 import inspect

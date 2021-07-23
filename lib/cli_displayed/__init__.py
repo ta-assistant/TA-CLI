@@ -1,1 +1,1 @@
-from dis_cli import *
+from .dis_cli import *
