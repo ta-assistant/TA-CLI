@@ -1,7 +1,7 @@
 Client version 1.0.0
 <h1 align="center"> Admin-CLI </h1>
 
-<p align="center">This program is about checking students work in ta's computer and send students score to server by CLI</p>
+<p align="center">This program is about checking students work in your computer and send students score to server by CLI</p>
 
 ## Documentation
 * [Installation](#installation)
@@ -133,7 +133,7 @@ Do you want to use draft from draft.json or fetch from the server
 ```
 > (R)ead from file or (F)etch from server: r
 > 
-> in this line you can choose read or fetch upto you
+> in this line you can choose read or fetch up to you
 fetch is for fetching updated draft form server
 read is for reading draft.json from ta directory
 
