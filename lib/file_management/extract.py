@@ -7,52 +7,16 @@ unzipfile(path: str)
 
 from typing import Counter
 import zipfile
+from lib.file_management.file_management_lib import DirManagement, WorkEditor, FileEditor
+from lib.file_management.loadin_bar import progressBar
+from lib.file_management.check_valid_filename import check_file_name
+import sys
 import shutil
 import os
-
-from .file_management_lib import DirManagement
-from .loadin_bar import progressBar
+import time
 
 
-# private
-
-def _check_extension(draft):
-    remainder = ""
-    for i in draft[::-1]:
-        if i == ".":
-            extension = (remainder + i)[::-1]
-            break
-        remainder += i
-    return extension
-
-    
-def _check_draft_file(draft):
-    key = []
-    for i in draft:
-        if i == "{":
-            remainder = ""
-        elif i == "}":
-            key.append(remainder)
-        else:
-            remainder += i
-    return key
-
-
-def _check_file_name(path,filename,draft):
-    extension = _check_extension(draft)
-    if extension not in filename:
-        return False
-    list_filename = filename[:-len(extension)].split("_")
-    list_draft = _check_draft_file(draft)
-    for key,value in zip(list_draft,list_filename):
-        if key == "ID":
-            try:
-                int(value)
-            except ValueError:
-                return False
-    return True
-    
-def _move_stu_file(path,filename):
+def move_stu_file(path,filename):
     count = 0
     for char in filename[::-1]:
         count += 1
@@ -65,9 +29,6 @@ def _move_stu_file(path,filename):
     shutil.copyfile(os.path.join(path,filename),os.path.join(path,"ta","Assignment",dirname,filename))
     return True
 
-
-# public
-
 def unzipfile(path: str,draft):
     """
     'path: (str)' is directory name that you want this function to extract files and create folders in this
@@ -77,7 +38,7 @@ def unzipfile(path: str,draft):
     listfile = os.listdir(path)
     validfile = []
     for i in listfile[::]:
-        if not _check_file_name(path,i,draft):
+        if not check_file_name(path,i,draft):
             listfile.remove(i)
             if i != "ta":
                 validfile.append(i)
@@ -113,7 +74,7 @@ def unzipfile(path: str,draft):
                     print(f"\rBad zip file given as {name}.{out}\n")
                     shutil.rmtree(folder)
         else:
-            if _move_stu_file(path,filename):
+            if move_stu_file(path,filename):
                 count += 1
 
     print("     "*20,end="\r")
