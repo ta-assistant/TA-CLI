@@ -1,6 +1,8 @@
+from lib.function_network.func_network import CallApi
+from lib.file_management.configeditor import ConfigEditor
+from lib.file_management.file_management_lib import DirManagement
+from lib.file_management.createapikeyfile import SaveApiKey
 from lib.cli_displayed.dis_cli import display_typo
-from lib.file_management import  ConfigEditor, DirManagement
-from lib.function_network import CallApi, SaveApiKey
 import os
 import sys
 import inspect
