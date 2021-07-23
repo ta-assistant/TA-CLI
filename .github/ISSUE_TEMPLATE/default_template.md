@@ -1,14 +1,3 @@
----
-name: Default template
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
----
-
-
-
 ### Subject of the issue
 Describe your issue here.
 
