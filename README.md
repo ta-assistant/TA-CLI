@@ -92,7 +92,7 @@ if everything successful, you will receive this message.
  |
 [/] ~\Users\dir\work_directory is ready
 ```
-if you don't know what workDraft for -> [work draft]
+if you don't know what workDraft for -> [work draft](#work-draft)
 
 now you will have
 ```bash
