@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 ---
 name: Default template
 about: Create a report to help us improve
@@ -9,7 +7,6 @@ assignees: ''
 
 ---
 
->>>>>>> 300720ad3af7bf061c34987ea90f9f0de10ca5aa
 ### Subject of the issue
 Describe your issue here.
 
