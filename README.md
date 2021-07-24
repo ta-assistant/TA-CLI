@@ -68,7 +68,7 @@ Now, your API-key will be kept in your user directory
 ```bash
 ~/user/key/taconfig
 ```
-So now you have apikey that in your computer next if you want to check students work you must create new directory that have students work in it when you use our command you must use it in that directory path. In this example I will call it work_directory.
+So now you have an apikey that is on your computer. If you want to check students' work, you must create a new directory that has students' work in it. When you use our command, you must use it in that directory path. In this example, I will call it "work_directory".
 #### Init work directory
 Let's start. I will assume that you already have a lot of students' work files in your work directory. Then we are going to use the command (for this command you need to have a work id). If you don't know what a work id is -> [work_id](#workid)
 ```bash
