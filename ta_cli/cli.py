@@ -76,8 +76,9 @@ def submit():
 
 @cli.command()
 def reset():
+    """Delete ta folder"""
     if os.path.exists(os.path.join(current_dir, "ta")):
         make.reset(current_dir)
-        """Delete ta folder"""
+        
     else:
         print("You don't have ta directory.")
