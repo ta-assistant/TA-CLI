@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 ---
 name: Default template
 about: Create a report to help us improve
