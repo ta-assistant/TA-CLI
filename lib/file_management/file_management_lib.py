@@ -10,7 +10,7 @@ class DirManagement:
     ===============================================
 
     it make to handle OSError
-    
+
     Notes
     -----
     All method is a static method you can call with out `()`
@@ -95,28 +95,38 @@ class WorkEditor:
 
     def _init_work(self, path) -> None:
         with open(os.path.join(path, "ta", "work.json"), 'w') as outfile:
+            # init work.json
             json.dump({"workId": "N/A", "workDraft": "N/A",
                        "scores": []}, outfile)
             outfile.close()
 
     def _check_exits_work(self, path):
+        # check that work.json is exists or not
         if os.path.exists(os.path.join(path, "ta", "work.json")):
             return True
         else:
             return False
 
     def _add_workid(self, path, workId):
+        # check that work.json is exists or not
         if self._check_exits_work(path):
+
+            # load data on work.json keep in var data
             with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)
                 file.close()
+
+            # write workid in it
             with open(os.path.join(path, "ta", "work.json"), "w") as file:
                 data["workId"] = str(workId)
                 json.dump(data, file)
                 file.close()
+
+            # displayed
             print(f" |-[*] Your workId is \'{workId}\'")
 
     def _add_draft(self, path, draft):
+        # check that work.json is exists or not
         if self._check_exits_work(path):
             with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)
@@ -176,6 +186,7 @@ class WorkEditor:
         ... False
         """
         if not self._check_exits_work(path):
+            # createing work.json and adding workid and draft into file
             self._init_work(path)
             self._add_workid(path, workId)
             self._add_draft(path, draft)
@@ -233,11 +244,16 @@ class WorkEditor:
         }
 
         """
+        # write data to work.json
         with open(os.path.join(path, "ta", "work.json"), "r+") as file:
             data = json.load(file)
             data["scores"].append(stu_data)
             file.seek(0)
+
+            # change dict to json and write it in work.json
             json.dump(data, file, indent=2)
+
+            # message out
             print(str(stu_data) + " has been written down in " +
                   os.path.join(path, "ta", "work.json"))
             file.close()
