@@ -23,8 +23,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
 ```
 $ pip install requests
 ```
-Let's start the installation process first you need to install library that we mention 
-then we will clone this repository into your local computer
+To start the installation process. First, you need to install the library that we mentioned, then we will clone this github onto your local computer.
 
 ssh 
 > $ git clone git@github.com:ta-assistant/TA-CLI.git
@@ -55,27 +54,27 @@ Now you have completed the installation process.
   4. submit  [Submit]
 
 #### Login
-first let login we login with apikey that you need to ask server manager to get it then assume that your apikey is `1234567890`
-then type command ta login --apikey 1234567890
+We will need an API-key, which you need to get from the server manager. Let's assume that our API-key is '123456789'
+then use the command "ta login --apikey 123456789"
 ```bash
 $ ta login --apikey `yourapikey`
 ```
-then you should get this massage
+If everything is working fine, then you should get this massage.
 ```bash
 ~\User\key has been created
 ~\User\key\taconfig.json has been created.
 ```
-now your apikey will kept in your User directory
+Now, your API-key will be kept in your user directory
 ```bash
 ~/user/key/taconfig
 ```
 So now you have apikey that in your computer next if you want to check students work you must create new directory that have students work in it when you use our command you must use it in that directory path. In this example I will call it work_directory.
 #### Init work directory
-let's start. I will assume that you already have lot of students work files in your work directory. then type command (this command you need to have work id if you don't know what is workId -> [workId](#workid))
+Let's start. I will assume that you already have a lot of students' work files in your work directory. Then we are going to use the command (for this command you need to have a work id). If you don't know what a work id is -> [work_id](#workid)
 ```bash
 $ ta init --workid `workId`
 ```
-if everything successful, you will receive this message.
+If everything successful, you will receive this message.
 ```
 [*] ~\Users\dir\work_directory makeing work directory
  |-[/] Creating workDirectory ~\Users\dir\work_directory
@@ -109,7 +108,7 @@ $ ./work_directory
              
 ```
 #### Start checking work
-if everything is ready now you can use `ta start` ( if something is't ready ta start will send you what is missing )
+If everything is ready, now you can use ta start ( if something isn't ready ta start will send you what is missing )
 ```
 ta start
 ```
@@ -117,7 +116,7 @@ then you will receive this message
 ```
 Do you want to open vscode?(y/n): n
 ```
-in this example I choose no but you can choose yes if you want to open student work by vscode.
+In this example I choose no but you can choose yes if you want to open student work by vscode.
 ```
 [*] starting...
  |-[/] checking config.json
@@ -152,7 +151,7 @@ Enter score: 10
 {'scoreTimestamp': 1626962297679, 'studentId': 'stu1', 'param1': 'test', 'param2': 'test', 'comment': 'test', 'score': 10.0} 
 has been written down in ~\Users\dir\work_directory\ta\work.json
 ```
-when check is done and you want to sent it to the server use command ta submit
+When the checking is done and you want to send it to the server, use the command ta submit
 ```
 ta submit
 ```
