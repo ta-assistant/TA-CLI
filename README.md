@@ -1,4 +1,4 @@
-Client version 1.0.0
+Client version 0.0.1
 <h1 align="center"> Admin-CLI </h1>
 
 <p align="center">This program is about checking students work in your computer and send students score to server by CLI</p>
