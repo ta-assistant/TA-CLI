@@ -72,3 +72,9 @@ def submit():
         SendData(current_dir)
     else:
         print("You don't have work.json to submit")
+@cli.command()
+def reset():
+    if os.path.exists(os.path.join(current_dir,"ta")):
+        make.reset(current_dir)
+    else:
+        print("You don't have ta directory.")

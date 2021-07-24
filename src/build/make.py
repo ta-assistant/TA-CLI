@@ -8,6 +8,7 @@ from lib.function_network import CallApi, SaveApiKey
 
 
 # private
+
 def _create_ta_dir(path):
     ta_path = os.path.join(path, "ta")
     if os.path.exists(ta_path):
@@ -19,7 +20,8 @@ def _create_ta_dir(path):
 
 def _check_config(workid, path):
     config_path = os.path.join(path, "ta", "config.json")
-    if os.path.exists(config_path):
+    draft_path = os.path.join(path, "ta", "draft.json")
+    if os.path.exists(config_path) and os.path.exists(draft_path):
         return False
     else:
         ConfigEditor(workid, path).writeconfig()
@@ -44,17 +46,23 @@ def _fetch_api_massage(apiobj):
 
 
 # public
+
 def init_work_directory(path, workid) -> bool:
     config_path = os.path.join(path, "ta", "config.json")
     ta_path = os.path.join(path, "ta")
     draft_path = os.path.join(path, "ta", "draft.json")
 
     keystate = _check_api_key(path)
-
+    
     print(f"[*] {path} makeing work directory")
     display_typo(1,_create_ta_dir(path),f"Creating workDirectory {path}",
                 optional_massage="Skipped. Already exists",when=False)
-    display_typo(1,_check_config(workid, path),"Creating `config.json`",
+    configstate = _check_config(workid, path)
+    if not configstate:
+        print("[x] Initialize Error")
+        print("     <Please delete a ta directory or `ta reset` and try again.>")
+        return False
+    display_typo(1,configstate,"Creating `config.json`",
                 optional_massage="Skipped. Already exists",when=False)
     display_typo(1,keystate,"Checking API-KEY",
                 optional_massage="API-KEY doesn't exists",when=False)
