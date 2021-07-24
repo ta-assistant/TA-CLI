@@ -1,33 +1,39 @@
 import json
 import os
 import shutil
-
-
-class FileEditor:
-    @staticmethod
-    def create_file(path: str, filename: str) -> None:
-        file_path = os.path.join(path, filename)
-        with open(file_path, 'w') as fp:
-            pass
-
-    @staticmethod
-    def delete_file(path: str, filename: str) -> bool:
-        file_path = os.path.join(path, filename)
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            return True
-        else:
-            print("The "+file_path+" does not exist")
-            return False
-
-    @staticmethod
-    def read_file(path: str, filename: str) -> None:
-        pass
-
+    
 
 class DirManagement:
+    """
+    DirManagement
+    create and remove directory
+    ===============================================
+    it make to handle OSError
+    Notes
+    -----
+    All method is a static method you can call with out `()`
+    """
     @staticmethod
     def create_dir(path: str, out=True) -> None:
+        """
+        Args:
+            path: str
+                path of working work directory
+
+            out: boolean
+                select that you want to get a message or not
+        Return: boolean
+            If it can create directory it will return True, else is return False
+
+        example
+        -------
+        < Assume you have a setup as /root/dir1 >
+        >>> create_dir("/root/dir1/dir2")
+        ... Successfully created the directory /root/dir1/dir2
+        >>> create_dir("/root/dir1/dir2")
+        ... Creation of the directory /root/dir1/dir2 failed
+        
+        """
         try:
             os.mkdir(path)
         except OSError:
@@ -38,8 +44,24 @@ class DirManagement:
             if out:
                 print("Successfully created the directory %s " % path)
             return True
+
     @staticmethod
     def remove_dir(path: str) -> None:
+        """
+        Args:
+            path: str
+                path of working work directory
+        Return: boolean
+            If it can delete directory it will return True, else is return False
+
+        example
+        -------
+        < Assume you have a setup as /root/dir1/dir2">
+        >>> remove_dir("/root/dir1/dir2")
+        ... Successfully delete the directory /root/dir1/dir2/dir3
+        >>> remove_dir("/root/dir1/dir2")
+        ... Deletion of the directory /root/dir1/dir2/dir3 failed
+        """
         try:
             shutil.rmtree(path)
         except OSError:
@@ -50,40 +72,157 @@ class DirManagement:
             return True
 
 
-class WorkEditor(FileEditor):
-    def init_work(self, path) -> None:
-        self.create_file(os.path.join(path, "ta"), "work.json")
+class WorkEditor:
+    """
+    WorkEditor
+    ==========
+
+    Manage data in work.json
+    - change draft
+        - reset scores.
+    - change workId
+    """
+    # private
+
+    def _init_work(self, path) -> None:
         with open(os.path.join(path, "ta", "work.json"), 'w') as outfile:
             json.dump({"workId": "N/A", "workDraft": "N/A",
                        "scores": []}, outfile)
             outfile.close()
 
-    def check_exits_work(self, path):
+    def _check_exits_work(self, path):
         if os.path.exists(os.path.join(path, "ta", "work.json")):
             return True
         else:
             return False
 
+    def _add_workid(self, path, workId):
+        if self._check_exits_work(path):
+            with open(os.path.join(path, "ta", "work.json"), "r") as file:
+                data = json.load(file)
+                file.close()
+            with open(os.path.join(path, "ta", "work.json"), "w") as file:
+                data["workId"] = str(workId)
+                json.dump(data, file)
+                file.close()
+            print(f" |-[*] Your workId is \'{workId}\'")
+
+    def _add_draft(self, path, draft):
+        if self._check_exits_work(path):
+            with open(os.path.join(path, "ta", "work.json"), "r") as file:
+                data = json.load(file)
+                file.close()
+            with open(os.path.join(path, "ta", "work.json"), "w") as file:
+                data["workDraft"] = draft
+                json.dump(data, file)
+                file.close()
+            print(" |-[*] draft has been written to work.json")
+
+    def _read_filework(self, path):
+        with open(os.path.join(path, 'ta', 'work.json')) as r:
+            return json.load(r)
+    
+    def _check_work_draft(self,path,draft):
+        workDraft = self._read_filework(path)
+        if draft == workDraft["workDraft"]:
+            return False
+        else:
+            os.remove(os.path.join(path,"ta","work.json"))
+            return True
+
+    # public
+
     def create_file_work(self, path, workId, draft) -> bool:
-        if not self.check_exits_work(path):
-            self.init_work(path)
-            self.add_workid(path, workId)
-            self.add_draft(path, draft)
+        """
+        Create work.json and add draft and workid into it
+
+        parameter
+        ---------
+        path: string
+            work directory path
+        
+        workId: int
+            workid from SERVER
+
+        draft: dict(json)
+            draft that have fileDraft and outputdraft need to be form of json
+            ex. {"fileDraft": 
+                    "{studentId}_test.zip", 
+                "outputDraft": 
+                        ["studentId", "param1", "param2", "comment", "score", "scoreTimestamp"]}
+
+        Returns
+        -------
+        bool: Return true when everythin is ready and work.json hasn't been created and
+            false when property is not ready or it's already have work.json but draft in 
+            work.json not the same with draft on new parameter
+        
+        example
+        -------
+        >>> draft = {"fileDraft": "{studentId}_test.zip", "outputDraft": ["studentId", "param1", "param2", "comment", "score", "scoreTimestamp"]}
+        >>> create_file_work("/root/dir1/dir2","123456",draft) 
+        ... True
+        >>> new_draft = {"fileDraft": "{studentId}_test.zip", "outputDraft": ["studentId", "param3", "param4", "comment", "score", "scoreTimestamp"]}
+        >>> create_file_work("/root/dir1/dir2","123456",draft) 
+        ... False
+        """
+        if not self._check_exits_work(path):
+            self._init_work(path)
+            self._add_workid(path, workId)
+            self._add_draft(path, draft)
             return True
         else:
-            if self.check_work_draft(path,draft):
+            if self._check_work_draft(path,draft):
                 while True:
+                    # waiting for file to be deleted
                     if not os.path.exists(os.path.join(path,"ta","work.json")):
                         self.create_file_work()
                         break
             return False
 
-    def write_work(self, path, stu_data: dict) -> bool:
-        """add student data to work.json
-        Args:
-            stu_data (list): list of student data (should ordered)
-        Returns:
-            bool: if the stu_data does not match with draft.json return False else True
+    def write_work(self, path, stu_data: dict) -> None:
+        """
+        add student data to work.json
+
+        parameter
+        ---------
+        path: string
+            work directory path
+
+        stu_data: dict
+            list of student data (should ordered) and need to follow form in draft.json :)
+
+        example
+        -------
+        >>> stu_data = {"studentId":"123456789", "param1":"2", "param2":"3", "comment":"4", "score":5.0, "scoreTimestamp":555555555555}
+        >>> write_work("/root/dir1/dir2", stu_data: dict)
+        
+        $ cat ~/ta/work.json
+        {
+            "workId": "testWork2",
+            "workDraft": {
+                "fileDraft": "{studentId}_test.zip",
+                "outputDraft": [
+                "studentId",
+                "param1",
+                "param2",
+                "comment",
+                "score",
+                "scoreTimestamp"
+                ]
+            },
+            "scores": [
+                {
+                "scoreTimestamp": 555555555555,
+                "studentId": "123456789",
+                "param1":"2",
+                "param2":"3",
+                "comment":"4",
+                "score":5.0
+                }
+            ]
+        }
+
         """
         with open(os.path.join(path, "ta", "work.json"), "r+") as file:
             data = json.load(file)
@@ -94,48 +233,7 @@ class WorkEditor(FileEditor):
                   os.path.join(path, "ta", "work.json"))
             file.close()
 
-    def add_workid(self, path, workId):
-        if self.check_exits_work(path):
-            with open(os.path.join(path, "ta", "work.json"), "r") as file:
-                data = json.load(file)
-                file.close()
-            with open(os.path.join(path, "ta", "work.json"), "w") as file:
-                data["workId"] = str(workId)
-                json.dump(data, file)
-                file.close()
-            print(f" |-[*] Your workId is \'{workId}\'")
-
-    def add_draft(self, path, draft):
-        if self.check_exits_work(path):
-            with open(os.path.join(path, "ta", "work.json"), "r") as file:
-                data = json.load(file)
-                file.close()
-            with open(os.path.join(path, "ta", "work.json"), "w") as file:
-                data["workDraft"] = draft
-                json.dump(data, file)
-                file.close()
-            print(" |-[*] draft has been written to work.json")
-
-    def read_work(self, path) -> dict:
-        if self.check_exits_work(path):
-            with open(os.path.join(path, "ta", "work.json")) as file:
-                data = json.load(file)
-                file.close()
-            return data
-        else:
-            return {}
-
-    def read_filework(self, path):
-        with open(os.path.join(path, 'ta', 'work.json')) as r:
-            return json.load(r)
     
-    def check_work_draft(self,path,draft):
-        workDraft = self.read_filework(path)
-        if draft == workDraft["workDraft"]:
-            return False
-        else:
-            os.remove(os.path.join(path,"ta","work.json"))
-            return True
             
 
             

@@ -21,12 +21,6 @@ class TestFileEditor(unittest.TestCase):
         
         self.assertIsNone(self.file_editor.create_file(currentdir,"test.txt"))
 
-    def test_read_file(self):
-        """
-        pass
-        """
-
-        self.assertIsNone(self.file_editor.read_file(currentdir,"test.txt"))
 
     def test_delete_file(self):
         """
