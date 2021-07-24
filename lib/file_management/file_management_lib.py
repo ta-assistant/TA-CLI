@@ -8,7 +8,9 @@ class DirManagement:
     DirManagement
     create and remove directory
     ===============================================
+
     it make to handle OSError
+    
     Notes
     -----
     All method is a static method you can call with out `()`
@@ -16,13 +18,17 @@ class DirManagement:
     @staticmethod
     def create_dir(path: str, out=True) -> None:
         """
-        Args:
+        Parameter
+        ---------
             path: str
                 path of working work directory
 
             out: boolean
                 select that you want to get a message or not
-        Return: boolean
+
+        Returns
+        -------
+            boolean
             If it can create directory it will return True, else is return False
 
         example
@@ -48,10 +54,13 @@ class DirManagement:
     @staticmethod
     def remove_dir(path: str) -> None:
         """
-        Args:
+        Parameter
+        ---------
             path: str
                 path of working work directory
-        Return: boolean
+        Returns
+        -------
+            boolean
             If it can delete directory it will return True, else is return False
 
         example
