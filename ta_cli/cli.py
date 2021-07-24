@@ -68,13 +68,16 @@ def fetch():
 @cli.command()
 def submit():
     """Submit"""
-    if os.path.exists(os.path.join(current_dir,"ta","work.json")):
+    if os.path.exists(os.path.join(current_dir, "ta", "work.json")):
         SendData(current_dir)
     else:
         print("You don't have work.json to submit")
+
+
 @cli.command()
 def reset():
-    if os.path.exists(os.path.join(current_dir,"ta")):
+    if os.path.exists(os.path.join(current_dir, "ta")):
         make.reset(current_dir)
+        """Delete ta folder"""
     else:
         print("You don't have ta directory.")
