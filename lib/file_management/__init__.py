@@ -23,9 +23,6 @@ ConfigEditor
 SaveApiKey  
     [description]
 
-FileEditor
-    Read, Write, and Delete file this method can do it.
-
 DirManagement
     Create and Remove directory
 
