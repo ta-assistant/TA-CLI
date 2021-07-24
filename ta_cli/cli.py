@@ -1,15 +1,12 @@
 import click
 import os
-import sys
 import json
 
-from click.decorators import command
 from src.main.run_work import run_work
 from src.build import make
-from lib.file_management.extract import unzipfile
-from lib.function_network.func_network import CallApi, SendData
-from lib.file_management.configeditor import ConfigEditor
-from lib.file_management.createapikeyfile import SaveApiKey
+from lib.file_management import SaveApiKey
+from lib.function_network import SendData
+
 
 current_dir = os.getcwd()
 

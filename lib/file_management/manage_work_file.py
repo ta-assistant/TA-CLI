@@ -68,7 +68,7 @@ def _move_stu_file(path,filename):
 
 # public
 
-def unzipfile(path: str,draft):
+def manage_work_file(path: str, draft: dict) -> bool:
     """
     'path: (str)' is directory name that you want this function to extract files and create folders in this
     You should to change backslash to sla for prevebt backslash error

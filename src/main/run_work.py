@@ -5,7 +5,7 @@ from datetime import datetime
 from src.main.pre_work import Work
 from src.main.student_data import StudentData
 
-from lib.file_management import unzipfile, ConfigEditor, SaveApiKey
+from lib.file_management import manage_work_file, ConfigEditor, SaveApiKey
 from lib.function_network import CallApi
 from lib.cli_displayed import display_typo
 
@@ -82,7 +82,7 @@ def add_data_to_work(path, draft):
 
 
 def unzip_homework(path, draft):
-    if not unzipfile(path, draft["fileDraft"]):
+    if not manage_work_file(path, draft["fileDraft"]):
         print("[*] all file aren't follow the draft")
         return False
     print("[/] finish")

@@ -1,9 +1,11 @@
-from lib.cli_displayed import display_typo
-from lib.file_management import  ConfigEditor, DirManagement
-from lib.function_network import CallApi, SaveApiKey
 import os
 import sys
 import inspect
+
+from lib.cli_displayed import display_typo
+from lib.file_management import  ConfigEditor, DirManagement
+from lib.function_network import CallApi, SaveApiKey
+
 currentdir = os.path.dirname(os.path.abspath(
     inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
