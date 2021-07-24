@@ -6,14 +6,9 @@ from lib.cli_displayed import display_typo
 from lib.file_management import  ConfigEditor, DirManagement
 from lib.function_network import CallApi, SaveApiKey
 
-currentdir = os.path.dirname(os.path.abspath(
-    inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(os.path.dirname(currentdir))
-sys.path.insert(0, parentdir)
 
-
-
-def create_ta_dir(path):
+# private
+def _create_ta_dir(path):
     ta_path = os.path.join(path, "ta")
     if os.path.exists(ta_path):
         return False
@@ -22,7 +17,7 @@ def create_ta_dir(path):
         return True
 
 
-def check_config(workid, path):
+def _check_config(workid, path):
     config_path = os.path.join(path, "ta", "config.json")
     if os.path.exists(config_path):
         return False
@@ -31,7 +26,7 @@ def check_config(workid, path):
         return True
 
 
-def check_api_key(path):
+def _check_api_key(path):
     if SaveApiKey().exsitapikey():
         return True
     else:
@@ -39,36 +34,36 @@ def check_api_key(path):
 
 
 
-def fetch_draft(callapi_func):
+def _fetch_draft(callapi_func):
     return callapi_func.createworkdraft()
  
 
 
-def fetch_api_massage(apiobj):
+def _fetch_api_massage(apiobj):
     return apiobj.api_massage()
 
 
-
+# public
 def init_work_directory(path, workid) -> bool:
     config_path = os.path.join(path, "ta", "config.json")
     ta_path = os.path.join(path, "ta")
     draft_path = os.path.join(path, "ta", "draft.json")
 
-    keystate = check_api_key(path)
+    keystate = _check_api_key(path)
 
     print(f"[*] {path} makeing work directory")
-    display_typo(1,create_ta_dir(path),f"Creating workDirectory {path}",
+    display_typo(1,_create_ta_dir(path),f"Creating workDirectory {path}",
                 optional_massage="Skipped. Already exists",when=False)
-    display_typo(1,check_config(workid, path),"Creating `config.json`",
+    display_typo(1,_check_config(workid, path),"Creating `config.json`",
                 optional_massage="Skipped. Already exists",when=False)
     display_typo(1,keystate,"Checking API-KEY",
                 optional_massage="API-KEY doesn't exists",when=False)
 
     if keystate:
         callapi_obj = CallApi(path)
-        apistate = fetch_draft(callapi_obj)
+        apistate = _fetch_draft(callapi_obj)
         display_typo(1,apistate,"fetching draft.json ...")
-        display_typo(2,apistate,fetch_api_massage(callapi_obj))
+        display_typo(2,apistate,_fetch_api_massage(callapi_obj))
     print(" |")
     
     if os.path.exists(draft_path) and os.path.exists(config_path) and os.path.exists(ta_path):

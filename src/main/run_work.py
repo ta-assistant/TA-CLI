@@ -10,21 +10,23 @@ from lib.function_network import CallApi
 from lib.cli_displayed import display_typo
 
 
-def check_config(path):
+# private
+
+def _check_config(path):
     if not os.path.exists(os.path.join(path, "ta", "config.json")):
         return False
     else:
         return True
 
 
-def check_draft(path):
+def _check_draft(path):
     if not os.path.exists(os.path.join(path, "ta", "draft.json")) and not SaveApiKey().exsitapikey():
         return False
     else:
         return True
 
 
-def check_state(config_state, draft_state, path):
+def _check_state(config_state, draft_state, path):
     if config_state and draft_state:
         return True
     else:
@@ -34,18 +36,18 @@ def check_state(config_state, draft_state, path):
         return False
 
 
-def preparework(path):
-    config_state = check_config(path)
-    draft_state = check_draft(path)
+def _preparework(path):
+    config_state = _check_config(path)
+    draft_state = _check_draft(path)
     display_typo(1, config_state, "checking config.json")
     display_typo(1, draft_state, "checking draft.json")
 
-    if not check_state(config_state, draft_state, path):
+    if not _check_state(config_state, draft_state, path):
         return False
     return True
 
 
-def draft_config(path):
+def _draft_config(path):
     print("Do you want to use draft from draft.json or fetch from the server")
     while True:
         user_in = input("(R)ead from file or (F)etch from server: ")
@@ -61,7 +63,7 @@ def draft_config(path):
     return draft
 
 
-def add_data_to_work(path, draft):
+def _add_data_to_work(path, draft):
     work = Work()
     work.draft = draft
     work.path = path
@@ -81,7 +83,7 @@ def add_data_to_work(path, draft):
     return True, work
 
 
-def unzip_homework(path, draft):
+def _manage_work(path, draft):
     if not manage_work_file(path, draft["fileDraft"]):
         print("[*] all file aren't follow the draft")
         return False
@@ -89,16 +91,16 @@ def unzip_homework(path, draft):
     return True
 
 
-def student_checking(path, work, file, openvs, onebyone):
+def _student_checking(path, work, file, openvs, onebyone):
     student = StudentData(path=work.path, filename=file, draft=work.draft)
     with open(os.path.join(path, "ta", "work.json"), "r") as workfile:
         scores = json.load(workfile)["scores"]
         workfile.close
     student.prepare_student_data()
-    did_student_checked(path,work, file, student, scores, openvs, onebyone)
+    _did_student_checked(path,work, file, student, scores, openvs, onebyone)
 
 
-def did_student_checked(path,work, file, student, scores, openvs, onebyone):
+def _did_student_checked(path,work, file, student, scores, openvs, onebyone):
     if student.check_work_score(scores):
         if openvs and onebyone:
             assignmentpath = os.path.join(path,"ta", "Assignment", file)
@@ -107,7 +109,7 @@ def did_student_checked(path,work, file, student, scores, openvs, onebyone):
         work.write_work(student.ask())
 
 
-def scoring(path, work, openvs, onebyone):
+def _scoring(path, work, openvs, onebyone):
     list_file = os.listdir(os.path.join(path, "ta", "Assignment"))
     assignmentpath = os.path.join("ta", "Assignment")
     if openvs and not onebyone:
@@ -115,18 +117,19 @@ def scoring(path, work, openvs, onebyone):
     for file in list_file:
         if "." in file or file == "ta":
             continue
-        student_checking(path, work, file, openvs, onebyone)
+        _student_checking(path, work, file, openvs, onebyone)
 
+# public
 
 def run_work(path, openvs=True, onebyone=False):
     print("[*] starting...")
-    if not preparework(path):
+    if not _preparework(path):
         return False
-    draft = draft_config(path)
-    workstate, work = add_data_to_work(path, draft)
+    draft = _draft_config(path)
+    workstate, work = _add_data_to_work(path, draft)
     if not workstate:
         return False
-    if not unzip_homework(path, draft):
+    if not _manage_work(path, draft):
         return False
-    scoring(path, work, openvs, onebyone)
+    _scoring(path, work, openvs, onebyone)
     return True
