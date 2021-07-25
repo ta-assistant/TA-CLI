@@ -84,7 +84,7 @@ def _add_data_to_work(path, draft):
 
 
 def _manage_work(path, draft):
-    if not manage_work_file(path, draft["fileDraft"]):
+    if not manage_work_file(path, draft):
         print("[*] all file aren't follow the draft")
         return False
     print("[/] finish")
