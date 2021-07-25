@@ -18,13 +18,10 @@ WorkEditor
     Manage data in work.json
 
 ConfigEditor
-    [description]
+    Create, read and check exist file config.json
 
 SaveApiKey  
-    [description]
-
-FileEditor
-    Read, Write, and Delete file this method can do it.
+    Create, read, remove and check file taconfig.json
 
 DirManagement
     Create and Remove directory
