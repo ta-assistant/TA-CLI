@@ -16,7 +16,7 @@ class DirManagement:
     All method is a static method you can call with out `()`
     """
     @staticmethod
-    def create_dir(path: str, out=True) -> None:
+    def create_dir(path: str, out=True) :
         """
         Parameter
         ---------
@@ -52,7 +52,7 @@ class DirManagement:
             return True
 
     @staticmethod
-    def remove_dir(path: str) -> None:
+    def remove_dir(path: str):
         """
         Parameter
         ---------
@@ -151,7 +151,7 @@ class WorkEditor:
 
     # public
 
-    def create_file_work(self, path, workId, draft) -> bool:
+    def create_file_work(self, path, workId, draft):
         """
         Create work.json and add draft and workid into it
 
@@ -200,7 +200,7 @@ class WorkEditor:
                         break
             return False
 
-    def write_work(self, path, stu_data: dict) -> None:
+    def write_work(self, path, stu_data: dict) :
         """
         add student data to work.json
 
