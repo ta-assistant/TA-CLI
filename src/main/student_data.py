@@ -1,11 +1,5 @@
-import json
-import os
-import sys
-import inspect
 import time
-currentdir = os.path.dirname(os.path.abspath(
-    inspect.getfile(inspect.currentframe())))
-sys.path.insert(0, currentdir)
+
 
 
 def inask(question: str) -> str:
