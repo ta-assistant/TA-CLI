@@ -3,13 +3,13 @@ import json
 
 
 class ConfigEditor:
-    def __init__(self, workID=None, path=None) -> None:
+    def __init__(self, workID=None, path=None, prefix='https://ta-api.sirateek.dev/') -> None:
         self.id = workID
         self.path = path
+        self.pre = prefix
 
     def writeconfig(self) -> None:
-        data = {"prefix": "https://ta-api.sirateek.dev/",
-                "workId": self.id,
+        data = {"prefix": f"{self.prefix}",
                 "apikeydir": os.path.join(os.path.expanduser("~"), 'key')}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:
             json.dump(data, wri)
