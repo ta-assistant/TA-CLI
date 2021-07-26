@@ -18,7 +18,7 @@ from .loadin_bar import progressBar
 
 def _check_extension(draft):
     remainder = ""
-    for i in draft[::-1]:
+    for i in draft["fileDraft"][::-1]:
         # Find `.` on filename and extract the extension then return it.
         if i == ".":
             extension = (remainder + i)[::-1]
@@ -29,7 +29,7 @@ def _check_extension(draft):
 def _check_draft_file(draft):
     key = []
     # Loop find key
-    for i in draft:
+    for i in draft["fileDraft"]:
         # Reset remainder
         if i == "{":
             remainder = ""
@@ -41,14 +41,19 @@ def _check_draft_file(draft):
             remainder += i
     return key
 
-def _check_file_name(path,filename,draft):
+def _check_file_name(filename,draft):
+    # Get extension from draft
     extension = _check_extension(draft)
+    # Is filename's extension follow draft's extension?
     if extension not in filename:
         return False
+    # Remove extension from filename and split _ into a list
     list_filename = filename[:-len(extension)].split("_")
+    # Get key from draft
     list_draft = _check_draft_file(draft)
+    # A studentId need to be integer
     for key,value in zip(list_draft,list_filename):
-        if key == "ID":
+        if key == "studentId":
             try:
                 int(value)
             except ValueError:
@@ -56,23 +61,24 @@ def _check_file_name(path,filename,draft):
     return True
     
 def _move_stu_file(path,filename):
-    count = 0
-    for char in filename[::-1]:
-        count += 1
-        if char == ".":
-            dirname = filename[:-count]
-            break
+    # Remove filename extension
+    dirname = _remove_extension(filename)
+    # Check that filename is already moved or not
     if os.path.exists(os.path.join(path,"ta","Assignment",dirname,filename)):
         return False
+    # Create dir to keep a student file
     DirManagement().create_dir(os.path.join(path,"ta","Assignment",dirname),out=False)
+    # Copy and paste student file in Assuginment dir.
     shutil.copyfile(os.path.join(path,filename),os.path.join(path,"ta","Assignment",dirname,filename))
     return True
 
-def _check_valid_file_name(path,draft,listfile):
+def _check_valid_file_name(draft,listfile):
+    # Check that filename is folow draft or not
     validfile = []
     for i in listfile[::]:
-        if not _check_file_name(path,i,draft["fileDraft"]):
+        if not _check_file_name(i,draft):
             listfile.remove(i)
+            # Remove ta dir from list file
             if i != "ta":
                 validfile.append(i)
     return validfile
@@ -88,11 +94,13 @@ def _remove_extension(filename):
 
 def _unzip(folder,name):
     with zipfile.ZipFile(name) as my_zip:
+        # extract to Assignment dir
         try:
             DirManagement().create_dir(folder,out=False)
             my_zip.extractall(folder)
             my_zip.close()
             return 1
+        # Broken zip file
         except (IOError, zipfile.BadZipfile) as e:
             out= " "*100
             print(f"\rBad zip file given as {name}.{out}\n")
@@ -169,7 +177,7 @@ def manage_work_file(path: str, draft: dict):
     create_dir = DirManagement().create_dir
     listfile = os.listdir(path)
     
-    validfile = _check_valid_file_name(path,draft,listfile)
+    validfile = _check_valid_file_name(draft,listfile)
 
     # Have an invalid filename
     if len(validfile) != 0:
@@ -188,12 +196,12 @@ def manage_work_file(path: str, draft: dict):
     for filename in progressBar(listfile,prefix = 'progress:', suffix = 'complete ', length = 20):
         name = os.path.join(path, f"{filename}")
         dirname =  _remove_extension(filename)
-        folder = os.path.join(path, "ta","Assignment",f"{dirname}")
+        Assignment_folder = os.path.join(path, "ta","Assignment",f"{dirname}")
         # Unzip in Assignment directory
         if ".zip" in filename:
-            if os.path.exists(folder):
+            if os.path.exists(Assignment_folder):
                 continue
-            count +=  _unzip(folder,name)
+            count +=  _unzip(Assignment_folder,name)
 
         # Move file to Assignment directory
         else:
