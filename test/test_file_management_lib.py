@@ -6,31 +6,7 @@ parentdir = os.path.dirname(currentdir)
 filecurrent = os.path.join(parentdir, "function_network")
 sys.path.insert(0,filecurrent)
 
-from lib.file_management.file_management_lib import FileEditor, DirManagement
-
-
-class TestFileEditor(unittest.TestCase):
-    def setUp(self) -> None:
-        self.file_editor = FileEditor()
-        return super().setUp()
-    def test_create_file(self):
-        """
-        parameter: path: str, filename: str
-        return None
-        """
-        
-        self.assertIsNone(self.file_editor.create_file(currentdir,"test.txt"))
-
-
-    def test_delete_file(self):
-        """
-        parameter: path: str, filename: str
-        return bool -> if file has been delete return True else: False
-        """
-
-        self.assertTrue(self.file_editor.delete_file(currentdir,"test.txt"))
-        self.assertFalse(self.file_editor.delete_file(currentdir,"test.txt"))
-
+from lib.file_management.file_management_lib import DirManagement
 
 class TestDirManagement(unittest.TestCase):
     def test_create_dir(self):
