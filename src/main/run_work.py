@@ -1,13 +1,12 @@
 import os
 import json
-from datetime import datetime
 
 from src.main.pre_work import Work
 from src.main.student_data import StudentData
 
 from lib.file_management import manage_work_file, ConfigEditor, SaveApiKey
 from lib.function_network import CallApi
-from lib.cli_displayed import display_typo
+from lib.cli_displayed import display_status_symbol, display_set_up
 
 
 # private
@@ -19,30 +18,52 @@ def _check_config(path):
         return True
 
 
-def _check_draft(path):
-    if not os.path.exists(os.path.join(path, "ta", "draft.json")) and not SaveApiKey().exsitapikey():
+def _check_draft(path,draft_config):
+    if SaveApiKey().exsitapikey() and not os.path.exists(os.path.join(path, "ta", "draft.json")) and not draft_config:
+        return False
+    elif not SaveApiKey().exsitapikey() and not os.path.exists(os.path.join(path, "ta", "draft.json")):
         return False
     else:
         return True
 
 
-def _check_state(config_state, draft_state, path):
+def _check_state(config_state, draft_state):
     if config_state and draft_state:
         return True
     else:
-        display_typo(1, (config_state and draft_state), "Property is not ready please try again",
-                     optional_massage=f"CONFIG : {config_state} / DRAFT : {draft_state} / API-KEY : {SaveApiKey().exsitapikey()}")
-        print("[*]")
+        display_status_symbol(1, 2, "Error!!")
+        if config_state:
+            display_status_symbol(2, 0, "config.json")
+        else:
+            display_status_symbol(2, 1, "config.json not found")
+        if draft_state:
+            display_status_symbol(2, 0, "draft.json")
+        else:
+            display_status_symbol(2, 1, "draft.json not found")
+        
+        display_status_symbol(0, 2, "")
         return False
 
 
-def _preparework(path):
+def _preparework(path,draft_config):
     config_state = _check_config(path)
-    draft_state = _check_draft(path)
-    display_typo(1, config_state, "checking config.json")
-    display_typo(1, draft_state, "checking draft.json")
+    draft_state = _check_draft(path,draft_config)
 
-    if not _check_state(config_state, draft_state, path):
+    # Check that config.json is exists or not
+    
+    if config_state:
+        display_status_symbol(1,0,"Checking config.json")
+    else:
+        display_status_symbol(1,1,"Checking config.json")
+
+    # Check that draft.json is exists or not
+    
+    if draft_state:
+        display_status_symbol(1,0,"Checking draft.json")
+    else:
+        display_status_symbol(1,1,"Checking draft.json")
+
+    if not _check_state(config_state, draft_state):
         return False
     return True
 
@@ -54,26 +75,42 @@ def _draft_config(path):
         if user_in.lower() in "RrFf":
             break
     if user_in.lower() == "f":
+        return True
+    else:
+        return False
+
+def _display_draft(draft):
+    outputdraft = draft["outputDraft"]
+    filedraft = draft["fileDraft"]
+    display_status_symbol(2,2,f"fileDraft: {filedraft}")
+    display_status_symbol(2,2,f"outputDraft: {outputdraft}",True)
+
+def _get_draft(path,draft_config):
+    if draft_config:
         draft = CallApi(path).fetch()
-        print(draft)
+        display_status_symbol(1,2,"Choosen draft")
+        _display_draft(draft)
     else:
         with open(os.path.join(path, "ta", "draft.json"), "r") as draftfile:
             draft = json.load(draftfile)
             draftfile.close()
+        display_status_symbol(1,2,"Choosen draft")
+        _display_draft(draft)
+        
     return draft
 
 
-def _add_data_to_work(path, draft):
+def _add_data_to_work(path, draft, workId):
     work = Work()
     work.draft = draft
     work.path = path
-    work.workId = ConfigEditor(path=path).readconfig()["workId"]
+    work.workId = workId
     if work.property_is_ready():
         work_path = os.path.join(path, "ta", "work.json")
         if work.create():
-            print(f" |-[/] {work_path} created")
+            display_status_symbol(1, 0, f"{work_path} created")
         else:
-            print(f" |-[X] {work_path} already exists")
+            display_status_symbol(1, 2, f"{work_path} already exists")
     else:
         print("property is not ready")
         print(work.draft)
@@ -122,14 +159,19 @@ def _scoring(path, work, openvs, onebyone):
 # public
 
 def run_work(path, openvs=True, onebyone=False):
+    draft_config = _draft_config(path)
     print("[*] starting...")
-    if not _preparework(path):
+    if not _preparework(path,draft_config):
         return False
-    draft = _draft_config(path)
-    workstate, work = _add_data_to_work(path, draft)
+    draft = _get_draft(path,draft_config)
+    config = ConfigEditor(path=path).readconfig()
+    workId = config["workId"]
+    host = config["prefix"]
+    workstate, work = _add_data_to_work(path, draft, workId)
     if not workstate:
         return False
     if not _manage_work(path, draft):
         return False
+    display_set_up(draft,workId,host)
     _scoring(path, work, openvs, onebyone)
     return True

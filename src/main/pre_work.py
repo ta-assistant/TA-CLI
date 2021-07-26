@@ -1,4 +1,5 @@
 from lib.file_management import WorkEditor
+from lib.cli_displayed import display_status_symbol
 import os
 
 class Work(WorkEditor):
@@ -39,11 +40,11 @@ class Work(WorkEditor):
             filedraft = value["fileDraft"]
             outputdraft = value["outputDraft"]
             if "studentId" not in outputdraft or "score" not in outputdraft:
-                print("Invalid draft")
+                display_status_symbol(1,2,"Invalid draft")
             else:
                 self.__draft = value
         except KeyError:
-            print("Invalid draft.")
+            display_status_symbol(1,2,"Invalid draft")
 
     def property_is_ready(self):
         if self.__path == None:

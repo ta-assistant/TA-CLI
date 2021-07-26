@@ -2,7 +2,7 @@ import os
 import sys
 import inspect
 
-from lib.cli_displayed import display_typo
+from lib.cli_displayed import display_status_symbol
 from lib.file_management import  ConfigEditor, DirManagement
 from lib.function_network import CallApi, SaveApiKey
 

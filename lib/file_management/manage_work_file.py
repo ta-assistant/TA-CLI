@@ -12,7 +12,7 @@ import os
 
 from .file_management_lib import DirManagement
 from .loadin_bar import progressBar
-
+from lib.cli_displayed import display_status_symbol
 
 # private
 
@@ -210,6 +210,8 @@ def manage_work_file(path: str, draft: dict):
 
     # Displayed processed file
     print("     "*20,end="\r")
-    print(" |")
-    print(f" |-[/] {count} file has processed")
+    if count == 0:
+        display_status_symbol(1,1,f"{count} file has processed")
+    else:
+        display_status_symbol(1,0,f"{count} file has processed")
     return True
