@@ -19,6 +19,7 @@ from .loadin_bar import progressBar
 def _check_extension(draft):
     remainder = ""
     for i in draft[::-1]:
+        # Find `.` on filename and extract the extension then return it.
         if i == ".":
             extension = (remainder + i)[::-1]
             break
@@ -27,11 +28,15 @@ def _check_extension(draft):
 
 def _check_draft_file(draft):
     key = []
+    # Loop find key
     for i in draft:
+        # Reset remainder
         if i == "{":
             remainder = ""
+        # Append remainder to list(key)
         elif i == "}":
             key.append(remainder)
+        # Add keys letter to remainder
         else:
             remainder += i
     return key
@@ -166,29 +171,36 @@ def manage_work_file(path: str, draft: dict):
     
     validfile = _check_valid_file_name(path,draft,listfile)
 
+    # Have an invalid filename
     if len(validfile) != 0:
         print(" |-[x] Valid file: (not include in scoring process)")
+        # Displayed invalid filename
         for i in validfile: print(" |   |-[*]",i)
+        # No file are follow the draft
         if len(listfile) == 0:
             return False
 
-    
-    count = 0
+    # Create Assignment directory
     create_dir(os.path.join(path,"ta","Assignment"),out=False)
 
+    # Loop check file one by one
+    count = 0
     for filename in progressBar(listfile,prefix = 'progress:', suffix = 'complete ', length = 20):
         name = os.path.join(path, f"{filename}")
         dirname =  _remove_extension(filename)
         folder = os.path.join(path, "ta","Assignment",f"{dirname}")
-
+        # Unzip in Assignment directory
         if ".zip" in filename:
             if os.path.exists(folder):
                 continue
             count +=  _unzip(folder,name)
+
+        # Move file to Assignment directory
         else:
             if _move_stu_file(path,filename):
                 count += 1
 
+    # Displayed processed file
     print("     "*20,end="\r")
     print(" |")
     print(f" |-[/] {count} file has processed")
