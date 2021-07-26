@@ -138,7 +138,7 @@ class WorkEditor:
             print(" |-[*] draft has been written to work.json")
     
     def _check_work_draft(self,path,draft):
-        workDraft = self._read_filework(path)
+        workDraft = self.read_filework(path)
         if draft == workDraft["workDraft"]:
             return False
         else:
