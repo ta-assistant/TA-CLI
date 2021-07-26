@@ -12,11 +12,18 @@ class Api:
         self.prefix = self.data['prefix']
         self.workID = self.data['workId']
         self.hparameter = {'Authorization': self.apikey,
-                           'Content-Type': 'application/json',
+                           'Content-Type': 'application/json'
                            }
-        self.getapi = f"v1/workManagement/{self.workID}/getWorkDraft"
+        self.list_api = {"getworkdraft" : { "endpoint" : "v1/workManagement/{self.workID}/getWorkDraft",
+                                            "method" : "GET"
+                                            },
+                        "submitscore" : {   "endpoint" : "v1/workManagement/{self.workID}/submitScores",
+                                            "method" : "POST"
+                        }
+                        }
+        self.getapi = self.list_api['getworkdraft']['endpoind']
         self.url = self.prefix+self.getapi
-        self.postapi = f"v1/workManagement/{self.workID}/submitScores"
+        self.postapi = self.list_api['submitscore']['endpoind']
         self.posturl = self.prefix+self.postapi
 
     
