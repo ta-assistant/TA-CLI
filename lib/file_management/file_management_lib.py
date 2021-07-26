@@ -136,10 +136,6 @@ class WorkEditor:
                 json.dump(data, file)
                 file.close()
             print(" |-[*] draft has been written to work.json")
-
-    def _read_filework(self, path):
-        with open(os.path.join(path, 'ta', 'work.json')) as r:
-            return json.load(r)
     
     def _check_work_draft(self,path,draft):
         workDraft = self._read_filework(path)
@@ -150,6 +146,10 @@ class WorkEditor:
             return True
 
     # public
+
+    def read_filework(self, path):
+        with open(os.path.join(path, 'ta', 'work.json')) as r:
+            return json.load(r)
 
     def create_file_work(self, path, workId, draft):
         """
