@@ -54,10 +54,12 @@ def _display_check_config_status(workId, path):
     if _check_config(workId, path):
         display_status_symbol(1,0,f"Creating `config.json`")
     else:
-        oworkId = ConfigEditor(path=path).readconfig()["workId"]
-        if oworkId == workId:
+        # check that old_workid is the same with user input workid
+        old_workId = ConfigEditor(path=path).readconfig()["workId"]
+        if old_workId == workId:
             display_status_symbol(1,2,f"Creating `config.json`")
             display_status_symbol(2,2,f"Skipped. Already exists",end=True)
+        # if it not the same with user input workid rewrite new workid to config.json
         else:
             ConfigEditor(workId, path).writeconfig()
             display_status_symbol(1,1,f"Creating `config.json`")
