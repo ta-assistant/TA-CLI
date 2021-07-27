@@ -153,5 +153,74 @@ class TestDisplayApiStatusMessage(unittest.TestCase):
 """
         self.assertEqual(self._get_io_status_code_fail_end(False),expectAnswer1)
         self.assertEqual(self._get_io_status_code_fail_end(True),expectAnswer2)
+
+
+class TestDisplayConfiguration(unittest.TestCase):
+    def setUp(self) -> None:
+        # length of self.draft is 126
+        self.even_draft = {"fileDraft": "{studentId}_test.zip","outputDraft": ['studentId', 'param1', 'param2', 'comments', 'score', 'scoreTimestamp']}
+        # length of self.draft is 125
+        self.odd_draft = {"fileDraft": "{studentId}_test.zip","outputDraft": ['studentId', 'param1', 'param2', 'comment', 'score', 'scoreTimestamp']}
+        self.workId = 123456
+        self.ta_api = "https://ta-api.testserver.com/"
+        self.number_file = 50
+        return super().setUp()
+    
+    def _get_io_configuration_odd(self):
+        # create StringIO object
+        capturedOutput = io.StringIO()
+        # Redirect stdout
+        sys.stdout = capturedOutput
+        # call function
+        display_configuration(self.odd_draft,self.workId,self.ta_api,self.number_file)
+        # reset redirect.
+        sys.stdout = sys.__stdout__
+        return capturedOutput.getvalue()
+
+    def _get_io_configuration_even(self):
+        # create StringIO object
+        capturedOutput = io.StringIO()
+        # Redirect stdout
+        sys.stdout = capturedOutput
+        # call function
+        display_configuration(self.even_draft,self.workId,self.ta_api,self.number_file)
+        # reset redirect.
+        sys.stdout = sys.__stdout__
+        return capturedOutput.getvalue()
+
+    def test_longest_is_odd(self):
+        expectAnswer = """+--------------------------------------------------------------------------------------------+
+|                                      [ Configuration ]                                     |
++--------------------------------------------------------------------------------------------+
+|      ta-api      |                      https://ta-api.testserver.com/                     |
++--------------------------------------------------------------------------------------------+
+|      workId      |                                  123456                                 |
++--------------------------------------------------------------------------------------------+
+|    fileDraft     |                           {studentId}_test.zip                          |
++--------------------------------------------------------------------------------------------+
+|   outputDraft    | ['studentId', 'param1', 'param2', 'comment', 'score', 'scoreTimestamp'] |
++--------------------------------------------------------------------------------------------+
+| Number of files  |                                    50                                   |
++--------------------------------------------------------------------------------------------+
+"""
+        self.assertEqual(self._get_io_configuration_odd(),expectAnswer)
+    
+    def test_longest_is_even(self):
+        expectAnswer = """+---------------------------------------------------------------------------------------------+
+|                                      [ Configuration ]                                      |
++---------------------------------------------------------------------------------------------+
+|      ta-api      |                      https://ta-api.testserver.com/                      |
++---------------------------------------------------------------------------------------------+
+|      workId      |                                  123456                                  |
++---------------------------------------------------------------------------------------------+
+|    fileDraft     |                           {studentId}_test.zip                           |
++---------------------------------------------------------------------------------------------+
+|   outputDraft    | ['studentId', 'param1', 'param2', 'comments', 'score', 'scoreTimestamp'] |
++---------------------------------------------------------------------------------------------+
+| Number of files  |                                    50                                    |
++---------------------------------------------------------------------------------------------+
+"""
+        self.assertEqual(self._get_io_configuration_even(),expectAnswer)
+
 if __name__ == "__main__":
     unittest.main()

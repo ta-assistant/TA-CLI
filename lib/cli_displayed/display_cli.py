@@ -141,7 +141,7 @@ def display_configuration(draft,workId,ta_api,number_file):
     
     Example
     -------
-    >>> draft = {fileDraft: {studentId}_test.zip,outputDraft: ['studentId', 'param1', 'param2', 'comment', 'score', 'scoreTimestamp']}
+    >>> draft = {"fileDraft": "{studentId}_test.zip","outputDraft": ['studentId', 'param1', 'param2', 'comment', 'score', 'scoreTimestamp']}
     >>> workId = 123456
     >>> ta_api = "https://ta-api.testserver.com/"
     >>> number_file = 50
