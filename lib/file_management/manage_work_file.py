@@ -181,9 +181,15 @@ def manage_work_file(path: str, draft: dict):
 
     # Have an invalid filename
     if len(validfile) != 0:
-        print(" |-[x] Valid file: (not include in scoring process)")
+        display_status_symbol(1,1,"Valid file: (not include in scoring process)")
         # Displayed invalid filename
-        for i in validfile: print(" |   |-[*]",i)
+        count = 0
+        end = False
+        for i in validfile:
+            count += 1
+            if count == len(validfile):
+                end = True
+            display_status_symbol(2,2,i,end)
         # No file are follow the draft
         if len(listfile) == 0:
             return False

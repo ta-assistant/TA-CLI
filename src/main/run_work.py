@@ -6,7 +6,7 @@ from src.main.student_data import StudentData
 
 from lib.file_management import manage_work_file, ConfigEditor, SaveApiKey
 from lib.function_network import CallApi
-from lib.cli_displayed import display_status_symbol, display_set_up
+from lib.cli_displayed import display_status_symbol, display_configuration
 
 
 # private
@@ -112,19 +112,28 @@ def _add_data_to_work(path, draft, workId):
         else:
             display_status_symbol(1, 2, f"{work_path} already exists")
     else:
-        print("property is not ready")
-        print(work.draft)
-        print(work.path) 
-        print(work.workId)
+        display_status_symbol(1, 1, f"Error: Invalid component")
+        component = {"draft":work.draft,"path":work.path,"workId":work.workId}
+        count = 0
+        end = False
+        for k,i in component.items():
+            count += 1
+            if count == len(component):
+                end = True
+            if i == None:
+                display_status_symbol(2, 1, f"{k}",end)
+            else:
+                display_status_symbol(2, 0, f"{k}",end)
+        
         return False, None
     return True, work
 
 
 def _manage_work(path, draft):
     if not manage_work_file(path, draft):
-        print("[*] all file aren't follow the draft")
+        display_status_symbol(1, 1,"all file aren't follow the draft")
         return False
-    print("[/] finish")
+    display_status_symbol(0, 0,"Finish")
     return True
 
 
@@ -160,18 +169,22 @@ def _scoring(path, work, openvs, onebyone):
 
 def run_work(path, openvs=True, onebyone=False):
     draft_config = _draft_config(path)
-    print("[*] starting...")
+    display_status_symbol(0,2,"starting...")
     if not _preparework(path,draft_config):
         return False
     draft = _get_draft(path,draft_config)
     config = ConfigEditor(path=path).readconfig()
     workId = config["workId"]
-    host = config["prefix"]
+    ta_api = config["prefix"]
+    num_file = len(os.listdir(os.path.join(path, "ta", "Assignment")))
     workstate, work = _add_data_to_work(path, draft, workId)
     if not workstate:
+        display_status_symbol(0,1,"Failed")
         return False
     if not _manage_work(path, draft):
+        display_status_symbol(0,1,"Failed")
         return False
-    display_set_up(draft,workId,host)
+    display_configuration(draft,workId,ta_api,num_file)
+    print("If you want to stop the process press Ctrl^C\n")
     _scoring(path, work, openvs, onebyone)
     return True
