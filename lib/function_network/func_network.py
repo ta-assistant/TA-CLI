@@ -26,9 +26,7 @@ class CallApi(Api):
         super().__init__(path)
         
     def api_massage(self):
-        out = "  API Request \n\n"
-        for i in self.res.json().items():out += f"  * {i[0]} : {i[1]} \n"
-        return out
+        return self.res.json()
 
     def fetch(self):
         self.res = requests.get(self.url, headers=self.hparameter)

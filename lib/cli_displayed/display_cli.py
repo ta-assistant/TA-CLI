@@ -57,6 +57,43 @@ def display_status_symbol(order,symbol,massage,end=False):
     list_symbol = ["/", "x", "*"]
     print(_massage_func(list_symbol[symbol],massage,order,end))
 
+def display_api_status_message(json_message,order,end):
+    """
+    Display api status message
+
+    Parameter
+    ---------
+    json_message: dict
+        contained status code, message, requestId, and workDraft
+    order: int
+        Position of message
+            [0]
+                [1]
+                    [2]
+                        . . . 
+    end: boolean
+                >>> ├─
+                >>> ├─
+                >>> ├─
+          false  -> ├─
+          true  ->  └─
+    """
+    # Check request status
+    if json_message["statusCode"] != 200:
+        symbol = 1
+    else:
+        symbol = 0
+    
+    # display each message except workDraft
+    count = 0
+    end = False
+    for k,i in dict(json_message).items():
+        if k == "workDraft":
+            continue
+        count += 1
+        if count == len(dict(json_message)) -1: end = True
+        display_status_symbol(order,symbol,f"{k}:{i}",end)
+
 def display_configuration(draft,workId,ta_api,number_file):
     """
     Display the configuration
