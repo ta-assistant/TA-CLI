@@ -42,11 +42,10 @@ class ConfigEditor:
     def readconfig(self) -> dict:
         """
         Function to read config.json
-        
-        Return
-        --------------------------------
-            Dictionary
-            dict of converting json string
+        ====================================================
+
+        Return:
+            Dictionary(dict of converting json string)
         """
         with open(os.path.join(self.path, 'ta', "config.json"), "r") as r:
             data = json.load(r)
@@ -65,6 +64,10 @@ class ConfigEditor:
     def checkdata(self):
         """
         Function to check data inside config.json if data is invalid will recreate config.json
+        =======================================================================================
+
+        Return:
+            None
         """
         data = self.readconfig()
         if data['workId'] == '':
