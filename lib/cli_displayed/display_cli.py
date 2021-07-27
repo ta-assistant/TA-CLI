@@ -1,12 +1,16 @@
 # private
 def _display_order(order,end):
     if order > 0:
+        _order = order
         if order >1:
             set = 1
         else:
             set = 0
         if set != 0:
             order += 1
+        if _order > 2:
+            for i in range(_order-2):
+                order += 3
         if end:
             order = " │"*(set) + " "*order +"└─ "
         else:
