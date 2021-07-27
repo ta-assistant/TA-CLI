@@ -168,23 +168,41 @@ def _scoring(path, work, openvs, onebyone):
 # public
 
 def run_work(path, openvs=True, onebyone=False):
+    # Fetch or read draft
     draft_config = _draft_config(path)
+
     display_status_symbol(0,2,"starting...")
+
+    # Checking draft and config.json that are exist or not
+    # ! If draft.json not exists but user choose to fetch draft from server it won't get error
     if not _preparework(path,draft_config):
         return False
+
+    # Get component
     draft = _get_draft(path,draft_config)
     config = ConfigEditor(path=path).readconfig()
     workId = config["workId"]
     ta_api = config["prefix"]
-    num_file = len(os.listdir(os.path.join(path, "ta", "Assignment")))
+
+    # Check component then write data to work.json
     workstate, work = _add_data_to_work(path, draft, workId)
     if not workstate:
+        # Component is not ready
         display_status_symbol(0,1,"Failed")
         return False
+
+    # Move Extract file to Assignment dir.
     if not _manage_work(path, draft):
+        # None of them are follow the draft
         display_status_symbol(0,1,"Failed")
         return False
+
+    # Number of file in Assignment directory
+    num_file = len(os.listdir(os.path.join(path, "ta", "Assignment")))
+
     display_configuration(draft,workId,ta_api,num_file)
     print("If you want to stop the process press Ctrl^C\n")
+
+    # Scoring part
     _scoring(path, work, openvs, onebyone)
     return True
