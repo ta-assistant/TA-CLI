@@ -181,7 +181,7 @@ def manage_work_file(path: str, draft: dict):
 
     # Have an invalid filename
     if len(validfile) != 0:
-        display_status_symbol(1,1,"Valid file: (not include in scoring process)")
+        display_status_symbol(1,1,"Valid file: (not include on scoring process)")
         # Displayed invalid filename
         count = 0
         end = False
