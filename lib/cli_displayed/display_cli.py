@@ -118,13 +118,13 @@ def display_api_status_message(api_message,order,end=False):
     # display each message except workDraft
     count = 0
     endl = False
-    for k,i in dict(api_message).items():
-        if k == "workDraft":
+    for key,item in dict(api_message).items():
+        if key == "workDraft":
             continue
         count += 1
         if end:
             if count == len(dict(api_message)) -1: endl = True
-        display_status_symbol(order,symbol,f"{k}:{i}",endl)
+        display_status_symbol(order,symbol,f"{key}:{item}",endl)
 
 def display_configuration(draft,workId,ta_api,number_file):
     """
