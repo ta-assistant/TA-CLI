@@ -19,8 +19,8 @@ def _display_order(order,end):
         order = ""
     return order
 
-def _massage_func(typo,massage,order,end):
-    return f"{_display_order(order,end)}[{typo}] {massage}"
+def _massage_func(symbol,massage,order,end):
+    return f"{_display_order(order,end)}[{symbol}] {massage}"
 
 def _set_to_center(max_len,strvar):
     import math
