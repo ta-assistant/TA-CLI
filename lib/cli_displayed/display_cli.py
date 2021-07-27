@@ -57,7 +57,7 @@ def display_status_symbol(order,symbol,massage,end=False):
     list_symbol = ["/", "x", "*"]
     print(_massage_func(list_symbol[symbol],massage,order,end))
 
-def display_api_status_message(json_message,order,end):
+def display_api_status_message(api_message,order,end=False):
     """
     Display api status message
 
@@ -77,9 +77,29 @@ def display_api_status_message(json_message,order,end):
                 >>> ├─
           false  -> ├─
           true  ->  └─
+
+    Example
+    -------
+    >>> api_message = {'statusCode': 400, 'message': 'The workId you specified was not found.', 'requestId': 'xxxxxxxxxx-xx'}
+    >>> display_api_status_message(api_messag,1,end=True)
+    ... ├─ [x] statusCode:400
+    ... ├─ [x] message:The workId you specified was not found.
+    ... └─ [x] requestId:xxxxxxxxxx-xx
+
+    >>> api_message = {'statusCode': 400, 'message': 'The workId you specified was not found.', 'requestId': 'xxxxxxxxxx-xx'}
+    >>> display_api_status_message(api_messag,0)
+    ... [x] statusCode:400
+    ... [x] message:The workId you specified was not found.
+    ... [x] requestId:xxxxxxxxxx-xx
+
+    >>> api_message = {'statusCode': 400, 'message': 'The workId you specified was not found.', 'requestId': 'xxxxxxxxxx-xx'}
+    >>> display_api_status_message(api_messag,1,end=False)
+    ... ├─ [x] statusCode:400
+    ... ├─ [x] message:The workId you specified was not found.
+    ... ├─ [x] requestId:xxxxxxxxxx-xx
     """
     # Check request status
-    if json_message["statusCode"] != 200:
+    if api_message["statusCode"] != 200:
         symbol = 1
     else:
         symbol = 0
@@ -87,11 +107,11 @@ def display_api_status_message(json_message,order,end):
     # display each message except workDraft
     count = 0
     end = False
-    for k,i in dict(json_message).items():
+    for k,i in dict(api_message).items():
         if k == "workDraft":
             continue
         count += 1
-        if count == len(dict(json_message)) -1: end = True
+        if count == len(dict(api_message)) -1: end = True
         display_status_symbol(order,symbol,f"{k}:{i}",end)
 
 def display_configuration(draft,workId,ta_api,number_file):
