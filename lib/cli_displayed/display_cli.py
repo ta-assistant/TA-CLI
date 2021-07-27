@@ -1,3 +1,5 @@
+import math
+
 # private
 def _display_order(order,end):
     if order > 0:
@@ -23,7 +25,6 @@ def _massage_func(symbol,massage,order,end):
     return f"{_display_order(order,end)}[{symbol}] {massage}"
 
 def _set_to_center(max_len,strvar):
-    import math
     space = (max_len-len(str(strvar)))/2
     if space.is_integer():
         space = int(space)*" "
