@@ -179,19 +179,16 @@ def manage_work_file(path: str, draft: dict):
     
     validfile = _check_valid_file_name(draft,listfile)
     num_valid_file = len(validfile)
-    
+
     # Have an invalid filename
     if num_valid_file != 0:
         display_status_symbol(1,1,"Valid file: (not include on scoring process)")
         # Displayed invalid filename
         count = 0
         end = False
-
-        for i in validfile:
-            count += 1
-            if count == num_valid_file:
-                end = True
-            display_status_symbol(2,2,i,end)
+        total_valid_file = len(validfile)
+        for index,item in enumerate(validfile):
+            display_status_symbol(2,2,item, index + 1 == total_valid_file)
         # No file are follow the draft
         if len(listfile) == 0:
             return False
