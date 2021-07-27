@@ -56,7 +56,102 @@ class TestDisplayStatusSymbol(unittest.TestCase):
         self.assertEqual(self._get_io_order_symbol_test(2,2)," │   ├─ [*] test oreder and symbol\n")
 
         
+class TestDisplayApiStatusMessage(unittest.TestCase):
+    def setUp(self) -> None:
+        self.success_api_message = {"statusCode":200,"message":"Success","requestId":"xxxxxxxxxxx-xxx","workDraft":{"Draft":"draft"}}
+        self.fail_api_message = {"statusCode":400,"message":"The workId you specified was not found.","requestId":"xxxxxxxxxxx-xxx","workDraft":{"Draft":"draft"}}
+        return super().setUp()
 
+    def _get_io_status_code_200_order(self,order):
+        # create StringIO object
+        capturedOutput = io.StringIO()
+        # Redirect stdout
+        sys.stdout = capturedOutput
+        # call function
+        display_api_status_message(self.success_api_message,order)
+        # reset redirect.
+        sys.stdout = sys.__stdout__
+        return capturedOutput.getvalue()
+    
+    def _get_io_status_code_200_end(self,end):
+        # create StringIO object
+        capturedOutput = io.StringIO()
+        # Redirect stdout
+        sys.stdout = capturedOutput
+        # call function
+        display_api_status_message(self.success_api_message,1,end)
+        # reset redirect.
+        sys.stdout = sys.__stdout__
+        return capturedOutput.getvalue()
 
+    def _get_io_status_code_fail_order(self,order):
+        # create StringIO object
+        capturedOutput = io.StringIO()
+        # Redirect stdout
+        sys.stdout = capturedOutput
+        # call function
+        display_api_status_message(self.fail_api_message,order,False)
+        # reset redirect.
+        sys.stdout = sys.__stdout__
+        return capturedOutput.getvalue()
+
+    def _get_io_status_code_fail_end(self,end):
+        # create StringIO object
+        capturedOutput = io.StringIO()
+        # Redirect stdout
+        sys.stdout = capturedOutput
+        # call function
+        display_api_status_message(self.fail_api_message,1,end)
+        # reset redirect.
+        sys.stdout = sys.__stdout__
+        return capturedOutput.getvalue()
+
+    def test_status_code_200_order(self):
+        expectAnswer1 = """ ├─ [/] statusCode:200
+ ├─ [/] message:Success
+ ├─ [/] requestId:xxxxxxxxxxx-xxx
+"""     
+        expectAnswer2 = """[/] statusCode:200
+[/] message:Success
+[/] requestId:xxxxxxxxxxx-xxx
+"""     
+        self.assertEqual(self._get_io_status_code_200_order(1),expectAnswer1)
+        self.assertEqual(self._get_io_status_code_200_order(0),expectAnswer2)
+
+    def test_status_code_200_end(self):
+        expectAnswer1 = """ ├─ [/] statusCode:200
+ ├─ [/] message:Success
+ ├─ [/] requestId:xxxxxxxxxxx-xxx
+"""
+        expectAnswer2 = """ ├─ [/] statusCode:200
+ ├─ [/] message:Success
+ └─ [/] requestId:xxxxxxxxxxx-xxx
+"""
+        self.assertEqual(self._get_io_status_code_200_end(False),expectAnswer1)
+        self.assertEqual(self._get_io_status_code_200_end(True),expectAnswer2)
+
+    def test_status_code_fail_order(self):
+        expectAnswer1 = """ ├─ [x] statusCode:400
+ ├─ [x] message:The workId you specified was not found.
+ ├─ [x] requestId:xxxxxxxxxxx-xxx
+"""     
+        expectAnswer2 = """[x] statusCode:400
+[x] message:The workId you specified was not found.
+[x] requestId:xxxxxxxxxxx-xxx
+"""     
+        self.assertEqual(self._get_io_status_code_fail_order(1),expectAnswer1)
+        self.assertEqual(self._get_io_status_code_fail_order(0),expectAnswer2)
+
+    def test_status_code_fail_end(self):
+        expectAnswer1 = """ ├─ [x] statusCode:400
+ ├─ [x] message:The workId you specified was not found.
+ ├─ [x] requestId:xxxxxxxxxxx-xxx
+"""
+        expectAnswer2 = """ ├─ [x] statusCode:400
+ ├─ [x] message:The workId you specified was not found.
+ └─ [x] requestId:xxxxxxxxxxx-xxx
+"""
+        self.assertEqual(self._get_io_status_code_fail_end(False),expectAnswer1)
+        self.assertEqual(self._get_io_status_code_fail_end(True),expectAnswer2)
 if __name__ == "__main__":
     unittest.main()

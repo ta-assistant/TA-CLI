@@ -56,7 +56,7 @@ def display_status_symbol(order,symbol,massage,end=False):
         false -> ├─
 
         true ->  └─
-        
+
     Example
     -------
     >>> display_status_symbol(1,1,"hi",end=False)
@@ -116,13 +116,14 @@ def display_api_status_message(api_message,order,end=False):
     
     # display each message except workDraft
     count = 0
-    end = False
+    endl = False
     for k,i in dict(api_message).items():
         if k == "workDraft":
             continue
         count += 1
-        if count == len(dict(api_message)) -1: end = True
-        display_status_symbol(order,symbol,f"{k}:{i}",end)
+        if end:
+            if count == len(dict(api_message)) -1: endl = True
+        display_status_symbol(order,symbol,f"{k}:{i}",endl)
 
 def display_configuration(draft,workId,ta_api,number_file):
     """
