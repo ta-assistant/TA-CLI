@@ -72,16 +72,17 @@ def _move_stu_file(path,filename):
     shutil.copyfile(os.path.join(path,filename),os.path.join(path,"ta","Assignment",dirname,filename))
     return True
 
-def _check_valid_file_name(draft,listfile):
+def _check_invalid_file_name(draft,listfile):
     # Check that filename is folow draft or not
-    validfile = []
+    invalid = []
     for i in listfile[::]:
         if not _check_file_name(i,draft):
             listfile.remove(i)
             # Remove ta dir from list file
             if i != "ta":
-                validfile.append(i)
-    return validfile
+                invalid.append(i)
+
+    return invalid
 
 def _remove_extension(filename):
     countname = 0
@@ -176,21 +177,17 @@ def manage_work_file(path: str, draft: dict):
     """
     create_dir = DirManagement().create_dir
     listfile = os.listdir(path)
-    
-    validfile = _check_valid_file_name(draft,listfile)
-    num_valid_file = len(validfile)
-
+    # remove invalid file on list file and return name of those invalid file
+    invalidfile = _check_invalid_file_name(draft,listfile)
+    total_invalid_file = len(invalidfile)
     # Have an invalid filename
-    if num_valid_file != 0:
-        display_status_symbol(1,1,"Valid file: (not include on scoring process)")
+    if total_invalid_file != 0:
+        display_status_symbol(1,1,"Invalid file: (not include on scoring process)")
         # Displayed invalid filename
-        count = 0
-        end = False
-        total_valid_file = len(validfile)
-        for index,item in enumerate(validfile):
-            display_status_symbol(2,2,item, index + 1 == total_valid_file)
+        for index,item in enumerate(invalidfile):
+            display_status_symbol(2,2,item, index + 1 == total_invalid_file)
         # No file are follow the draft
-        if len(listfile) == 0:
+        if listfile == []:
             return False
 
     # Create Assignment directory
