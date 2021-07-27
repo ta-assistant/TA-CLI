@@ -56,7 +56,13 @@ def display_status_symbol(order,symbol,massage,end=False):
         false -> ├─
 
         true ->  └─
+        
+    Example
     -------
+    >>> display_status_symbol(1,1,"hi",end=False)
+    ... ├─ [x] hi
+    >>> display_status_symbol(1,0,"hi",end=True)
+    ... └─ [/] hi
     """
     list_symbol = ["/", "x", "*"]
     print(_massage_func(list_symbol[symbol],massage,order,end))
