@@ -39,10 +39,8 @@ class Work(WorkEditor):
         try:
             filedraft = value["fileDraft"]
             outputdraft = value["outputDraft"]
-            if "studentId" not in outputdraft or "score" not in outputdraft:
-                pass
-            else:
-                self.__draft = value
+            if "studentId" in outputdraft and "score" in outputdraft:
+                 self.__draft = value
         except KeyError:
             pass
 
