@@ -41,8 +41,10 @@ class Work(WorkEditor):
             outputdraft = value["outputDraft"]
             if "studentId" in outputdraft and "score" in outputdraft:
                  self.__draft = value
+            else:
+                display_status_symbol(1,1,"Invalid draft")
         except KeyError:
-            pass
+            display_status_symbol(1,1,"Invalid draft")
 
     def property_is_ready(self):
         if self.__path == None:
