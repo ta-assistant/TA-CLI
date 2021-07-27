@@ -212,8 +212,6 @@ def manage_work_file(path: str, draft: dict):
 
     # Displayed processed file
     print("     "*20,end="\r")
-    if count == 0:
-        display_status_symbol(1,1,f"{count} file has processed")
-    else:
-        display_status_symbol(1,0,f"{count} file has processed")
+    # Display number of file that has been processed
+    display_status_symbol(1,1 if count == 0 else 0,f"{count} file has processed")
     return True
