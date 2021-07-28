@@ -116,15 +116,12 @@ def display_api_status_message(api_message,order,end=False):
         symbol = 0
     
     # display each message except workDraft
-    count = 0
-    endl = False
-    for key,item in dict(api_message).items():
-        if key == "workDraft":
+    api_message_size = len(dict(api_message)) 
+    for index, item in enumerate(dict(api_message).items()):
+        if item[0] == "workDraft":
             continue
-        count += 1
-        if end:
-            if count == len(dict(api_message)) -1: endl = True
-        display_status_symbol(order,symbol,f"{key}:{item}",endl)
+        endline_condition =  end and (index + 1 == api_message_size)
+        display_status_symbol(order,symbol,f"{item[0]}:{item[1]}", endline_condition)
 
 def display_configuration(draft,workId,ta_api,number_file):
     """
