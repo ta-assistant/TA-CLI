@@ -19,10 +19,18 @@ def _check_config(path):
 
 
 def _check_draft(path,draft_config):
-    if SaveApiKey().exsitapikey() and not os.path.exists(os.path.join(path, "ta", "draft.json")) and not draft_config:
-        return False
-    elif not SaveApiKey().exsitapikey() and not os.path.exists(os.path.join(path, "ta", "draft.json")):
-        return False
+    # Not have draft.json
+    if not os.path.exists(os.path.join(path, "ta", "draft.json")):
+        # Have an api-key
+        if SaveApiKey().exsitapikey():
+            # Choose read draft
+            if not draft_config:
+                return False
+            # Choose fetch draft
+            return True
+        # Not have an api-key and draft.json
+        if not SaveApiKey().exsitapikey():
+            return False
     else:
         return True
 
