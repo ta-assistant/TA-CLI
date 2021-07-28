@@ -70,10 +70,8 @@ def _draft_config(path):
         user_in = input("(R)ead from file or (F)etch from server: ")
         if user_in.lower() in "RrFf":
             break
-    if user_in.lower() == "f":
-        return True
-    else:
-        return False
+    return user_in.lower() == "f":
+
 
 def _display_draft(draft):
     outputdraft = draft["outputDraft"]
