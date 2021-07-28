@@ -34,8 +34,9 @@ class ConfigEditor:
         """
         Function to create, wirte data of config.josn
         """
-        data = {"prefix": f"{self.prefix}",
-                "apikeydir": os.path.join(os.path.expanduser("~"), 'key')}
+        data = {"prefix": f"{self.pre}",
+                "workId" : f"{self.id}",
+                "apikeydir" : os.path.join(os.path.expanduser("~"), 'key')}
         with open(os.path.join(self.path, 'ta', 'config.json'), "w") as wri:
             json.dump(data, wri)
 

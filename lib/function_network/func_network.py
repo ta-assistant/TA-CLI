@@ -1,13 +1,14 @@
 import os, json
 import requests
-
-from lib.file_management import SaveApiKey, WorkEditor, ConfigEditor
+from lib.file_management.config_editor import ConfigEditor
+from lib.file_management.file_management_lib import WorkEditor
+from lib.file_management.create_apikeyfile import *
 
 
 class Api:
     def __init__(self, path) -> None:
         self.path = path
-        self.apikey = SaveApiKey.readapikey(self)
+        self.apikey = readapikey()
         self.data = ConfigEditor.readconfig(self)
         self.prefix = self.data['prefix']
         self.workID = self.data['workId']
@@ -21,9 +22,9 @@ class Api:
                                             "method" : "POST"
                         }
                         }
-        self.getapi = self.list_api['getworkdraft']['endpoind']
+        self.getapi = self.list_api['getworkdraft']['endpoint']
         self.url = self.prefix+self.getapi
-        self.postapi = self.list_api['submitscore']['endpoind']
+        self.postapi = self.list_api['submitscore']['endpoint']
         self.posturl = self.prefix+self.postapi
 
     
@@ -59,13 +60,8 @@ class CallApi(Api):
             self.writejson(self.data)
             return True
         elif self.res.status_code != 500 and self.res.status_code != 503 and self.res.status_code != 501 and self.res.status_code != 502:
-            print(self.res.status_code)
-            print(self.res.json())
             return False
         else:
-            print(self.res.status_code)
-            print('!!!SERVER HAVE ISSUE!!!')
-            print("PLEASE TRY AGAIN LATER")
             return False
 
     def writejson(self, data) -> None:
@@ -84,8 +80,9 @@ class SendData(Api):
             self.posturl, headers=self.hparameter, data=json.dumps(work))
         if send.status_code == 200:
             for i in send.json().items():print(i[0],":",i[1])
+            return True
         elif send.status_code != 500 and send.status_code != 503 and send.status_code != 501 and send.status_code != 502:
             for i in send.json().items():print(i[0],":",i[1])
+            return False
         else:
-            print('!!!SERVER HAVE ISSUE!!!')
-            print("PLEASE TRY AGAIN LATER")
+            return False
