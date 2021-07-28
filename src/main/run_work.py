@@ -4,7 +4,7 @@ import json
 from src.main.pre_work import Work
 from src.main.student_data import StudentData
 
-from lib.file_management import manage_work_file, ConfigEditor, SaveApiKey
+from lib.file_management import *
 from lib.function_network import CallApi
 from lib.cli_displayed import display_status_symbol, display_configuration
 
@@ -19,7 +19,7 @@ def _check_draft(path,draft_config):
     # Not have draft.json
     if not os.path.exists(os.path.join(path, "ta", "draft.json")):
         # Have an api-key
-        if SaveApiKey().exsitapikey():
+        if exsitapikey():
             return draft_config
         # Not have an api-key and draft.json
         return False

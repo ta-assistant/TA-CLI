@@ -3,8 +3,8 @@ import sys
 import inspect
 
 from lib.cli_displayed import display_status_symbol, display_api_status_message
-from lib.file_management import  ConfigEditor, DirManagement
-from lib.function_network import CallApi, SaveApiKey
+from lib.file_management import writeconfig , readconfig, DirManagement
+from lib.function_network import CallApi, exsitapikey
 
 
 # private
@@ -22,12 +22,12 @@ def _check_config(workId, path):
     if os.path.exists(config_path):
         return False
     else:
-        ConfigEditor(workId, path).writeconfig()
+        writeconfig(path,workId)
         return True
 
 
 def _check_api_key(path):
-    return SaveApiKey().exsitapikey()
+    return exsitapikey()
 
 
 def _fetch_draft(callapi_func):
@@ -51,14 +51,14 @@ def _display_check_config_status(workId, path):
         display_status_symbol(1,0,f"Creating `config.json`")
     else:
         # check that old_workid is the same with user input workid
-        old_workId = ConfigEditor(path=path).readconfig()["workId"]
+        old_workId = readconfig(path)["workId"]
         if old_workId == workId:
             display_status_symbol(1,2,f"Creating `config.json`")
             display_status_symbol(2,2,f"Skipped. Already exists",end=True)
         
         else:
             # if it not the same with user input workid rewrite new workid to config.json
-            ConfigEditor(workId, path).writeconfig()
+            writeconfig(path,workId)
             display_status_symbol(1,1,f"Creating `config.json`")
             display_status_symbol(2,2,f"workId has been changed to {workId}",end=True)
 
