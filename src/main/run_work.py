@@ -12,7 +12,7 @@ from lib.cli_displayed import display_status_symbol, display_configuration
 # private
 
 def _check_config(path):
-    return os.path.exists(os.path.join(path, "ta", "config.json")):
+    return os.path.exists(os.path.join(path, "ta", "config.json"))
 
 
 def _check_draft(path,draft_config):
@@ -157,7 +157,7 @@ def run_work(path, openvs=True, onebyone=False):
 
     # Get component
     draft = _get_draft(path,draft_config)
-    config = ConfigEditor(path=path).readconfig()
+    config = readconfig(path)
     workId = config["workId"]
     ta_api = config["prefix"]
 
