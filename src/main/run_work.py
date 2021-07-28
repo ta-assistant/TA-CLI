@@ -12,10 +12,7 @@ from lib.cli_displayed import display_status_symbol, display_configuration
 # private
 
 def _check_config(path):
-    if not os.path.exists(os.path.join(path, "ta", "config.json")):
-        return False
-    else:
-        return True
+    return os.path.exists(os.path.join(path, "ta", "config.json")):
 
 
 def _check_draft(path,draft_config):
@@ -23,11 +20,7 @@ def _check_draft(path,draft_config):
     if not os.path.exists(os.path.join(path, "ta", "draft.json")):
         # Have an api-key
         if SaveApiKey().exsitapikey():
-            # Choose read draft
-            if not draft_config:
-                return False
-            # Choose fetch draft
-            return True
+            return draft_config
         # Not have an api-key and draft.json
         return False
     # Have an draft.json
