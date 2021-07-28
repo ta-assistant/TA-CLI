@@ -92,10 +92,7 @@ def exsitapikey():
     Return:
         Boolean
     """
-    if os.path.exists(os.path.join(os.path.expanduser("~"), 'key', 'taconfig.json')):
-        return True
-    else:
-        return False
+    return os.path.exists(os.path.join(os.path.expanduser("~"), 'key', 'taconfig.json'))
 
 def removeapikey():
     """
