@@ -15,10 +15,10 @@ class Api:
         self.hparameter = {'Authorization': self.apikey,
                            'Content-Type': 'application/json'
                            }
-        self.list_api = {"getworkdraft" : { "endpoint" : "v1/workManagement/{self.workID}/getWorkDraft",
+        self.list_api = {"getworkdraft" : { "endpoint" : f"v1/workManagement/{self.workID}/getWorkDraft",
                                             "method" : "GET"
                                             },
-                        "submitscore" : {   "endpoint" : "v1/workManagement/{self.workID}/submitScores",
+                        "submitscore" : {   "endpoint" : f"v1/workManagement/{self.workID}/submitScores",
                                             "method" : "POST"
                         }
                         }
