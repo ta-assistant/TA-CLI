@@ -69,11 +69,11 @@ class SendData(Api):
 
     def getworkDraft(self):
         work = WorkEditor.read_filework(self, self.path)
-        send = requests.post(
+        self.res = requests.post(
             self.posturl, headers=self.hparameter, data=json.dumps(work))
-        if send.status_code == 200:
+        if self.res.status_code == 200:
             return True
-        elif send.status_code != 500 and send.status_code != 503 and send.status_code != 501 and send.status_code != 502:
+        elif self.res.status_code != 500 and self.res.status_code != 503 and self.res.status_code != 501 and send.status_code != 502:
             return False
         else:
             return False
