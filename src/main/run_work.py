@@ -56,7 +56,7 @@ def _preparework(path,draft_config):
     return _check_state(config_state, draft_state)
 
 
-def _draft_config(path):
+def _draft_config():
     print("Do you want to use draft from draft.json or fetch from the server")
     while True:
         user_in = input("(R)ead from file or (F)etch from server: ")
@@ -146,7 +146,7 @@ def _scoring(path, work, openvs, onebyone):
 
 def run_work(path, openvs=True, onebyone=False):
     # Fetch or read draft
-    draft_config = _draft_config(path)
+    draft_config = _draft_config()
 
     display_status_symbol(0,2,"starting...")
 
