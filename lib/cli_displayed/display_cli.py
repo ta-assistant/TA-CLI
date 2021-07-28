@@ -120,7 +120,7 @@ def display_api_status_message(api_message,order,end=False):
     for index, item in enumerate(dict(api_message).items()):
         if item[0] == "workDraft":
             continue
-        endline_condition =  end and (index + 1 == api_message_size)
+        endline_condition =  end and (index + 1 == api_message_size - 1)
         display_status_symbol(order,symbol,f"{item[0]}:{item[1]}", endline_condition)
 
 def display_configuration(draft,workId,ta_api,number_file):
