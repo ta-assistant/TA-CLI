@@ -27,10 +27,10 @@ class Api:
         self.postapi = self.list_api['submitscore']['endpoint']
         self.posturl = self.prefix+self.postapi
 
-        def api_massage(self):
-            out = "  API Request \n\n"
-            for i in self.res.json().items():out += f"  * {i[0]} : {i[1]} \n"
-            return out
+    def api_massage(self):
+        out = "  API Request \n\n"
+        for i in self.res.json().items():out += f"  * {i[0]} : {i[1]} \n"
+        return out
 
 class CallApi(Api):
     def __init__(self, path) -> None:
