@@ -57,23 +57,11 @@ def _preparework(path,draft_config):
     config_state = _check_config(path)
     draft_state = _check_draft(path,draft_config)
 
-    # Check that config.json is exists or not
-    
-    if config_state:
-        display_status_symbol(1,0,"Checking config.json")
-    else:
-        display_status_symbol(1,1,"Checking config.json")
-
+    # Check that config.json is exists or not 
+    display_status_symbol(1,0 if config_state else 1,"Checking config.json")
     # Check that draft.json is exists or not
-    
-    if draft_state:
-        display_status_symbol(1,0,"Checking draft.json")
-    else:
-        display_status_symbol(1,1,"Checking draft.json")
-
-    if not _check_state(config_state, draft_state):
-        return False
-    return True
+    display_status_symbol(1,0 if draft_state else 1,"Checking draft.json")
+    return _check_state(config_state, draft_state)
 
 
 def _draft_config(path):
