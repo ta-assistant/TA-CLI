@@ -48,8 +48,7 @@ def _check_state(config_state, draft_state):
             display_status_symbol(2, 0, "draft.json")
         else:
             display_status_symbol(2, 1, "draft.json not found")
-        
-        display_status_symbol(0, 2, "")
+        display_status_symbol(0, 1, "Failed")
         return False
 
 
@@ -108,20 +107,15 @@ def _add_data_to_work(path, draft, workId):
     else:
         display_status_symbol(1, 1, f"Error: Invalid component")
         component = {"draft":work.draft,"path":work.path,"workId":work.workId}
-        count = 0
-        end = False
-        for key,item in component.items():
-            count += 1
-            if count == len(component):
-                end = True
-            display_status_symbol(2,1 if item == None else 0, f"{key}",end)
+        component_size = len({"draft":work.draft,"path":work.path,"workId":work.workId})
+        for index,item in enumerate(component.items()):
+            display_status_symbol(2,1 if item[1] == None else 0, f"{item[0]}",component_size == index+1)
         return False, None
     return True, work
 
 
 def _manage_work(path, draft):
     if not manage_work_file(path, draft):
-        display_status_symbol(1, 1,"all file aren't follow the draft")
         return False
     display_status_symbol(0, 0,"Finish")
     return True
@@ -178,12 +172,13 @@ def run_work(path, openvs=True, onebyone=False):
     workstate, work = _add_data_to_work(path, draft, workId)
     if not workstate:
         # Component is not ready
-        display_status_symbol(0,1,"Failed")
+        display_status_symbol(0,1,"Failed Invalid conponent")
         return False
 
     # Move Extract file to Assignment dir.
     if not _manage_work(path, draft):
         # None of them are follow the draft
+        display_status_symbol(1, 1,"All file aren't follow the draft")
         display_status_symbol(0,1,"Failed")
         return False
 
