@@ -4,6 +4,7 @@ import json
 
 from src.main.run_work import run_work
 from src.build import make
+from lib.cli_displayed import display_api_status_message
 from lib.file_management import save
 from lib.function_network import SendData
 
@@ -69,6 +70,6 @@ def fetch():
 def submit():
     """Submit"""
     if os.path.exists(os.path.join(current_dir,"ta","work.json")):
-        SendData(current_dir)
+        display_api_status_message((SendData(current_dir).api_massage()),0) 
     else:
         print("You don't have work.json to submit")
