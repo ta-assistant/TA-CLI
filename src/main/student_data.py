@@ -32,7 +32,8 @@ class StudentData:
         self.filename = filename
 
     def _filename_pre_data(self) -> dict:
-        """prepare filename to dict
+        """
+        prepare filename to dict
         pseudo code:
         -get key word form file draft and store it in key
         -split filename with "_" so we will got list of student name, id, ex, etc.

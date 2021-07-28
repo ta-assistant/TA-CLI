@@ -27,11 +27,7 @@ def _check_config(workId, path):
 
 
 def _check_api_key(path):
-    if SaveApiKey().exsitapikey():
-        return True
-    else:
-        return False
-
+    return SaveApiKey().exsitapikey()
 
 
 def _fetch_draft(callapi_func):
