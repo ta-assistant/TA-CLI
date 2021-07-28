@@ -1,57 +1,49 @@
+from src.main.student_data import StudentData
+from src.main.pre_work import Work
 import unittest
-import os, sys, inspect, json
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+from unittest.mock import patch
+import os
+import sys
+import inspect
+import json
+import shutil
+currentdir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
+
+
+
 sys.path.insert(0, parentdir)
-from lib.function_network.func_network import SendData
-from lib.file_management.file_management_lib import DirManagement
-from lib.file_management.create_apikeyfile import *
-from lib.file_management.config_editor import ConfigEditor
-
-class TestSendData(unittest.TestCase):
+class TestStudentData(unittest.TestCase):
     def setUp(self) -> None:
-        self.path = os.path.join(parentdir)
-        DirManagement.create_dir(os.path.join(self.path, 'ta'))
-        workdata = {
-    "workDraft": {
-        "outputDraft": ["studentId", 
-            "param1", 
-            "param2", 
-            "comment", 
-            "score", 
-            "scoreTimestamp"], 
-        "fileDraft": "{studentId}_test.zip"
-    },
-    "scores": [
-        {
-            "studentId": "6310545000",
-            "param1": "100",
-            "param2": "print('hello')",
-            "comment": "good",
-            "score": "10",
-            "scoreTimestamp": "100"
-        }]
-}    
-        ConfigEditor('testWork2', self.path).writeconfig()
-        with open(os.path.join(self.path, 'ta', "work.json"), "w") as create:
-            json.dump(workdata, create)
-        removeapikey()
-        save('testKey')
-        self.post = SendData(parentdir)
-        return super().setUp()
+        os.mkdir(os.path.join(currentdir,"ta"))
+        self.path = currentdir
+        self.draft = {"fileDraft": "{studentId}_test.zip", "outputDraft": ["studentId", "paraasdfasdfm1", "param2", "comment", "score", "scoreTimestamp"]}
+        self.create_work()
 
-    def test_getworkdraft(self):
-        """
-        return None
-        """
-        self.assertFalse(self.post.getworkDraft())
-        
+    def test_run_all_passed(self):
+        student = StudentData(path=self.path, filename="123456789_test", draft=self.draft)
+        with open(os.path.join(self.path, "ta", "work.json"), "r") as workfile:
+            scores = json.load(workfile)["scores"]
+            workfile.close
+        student.prepare_student_data()
+        self.assertEqual(student.pre_data,{'scoreTimestamp': 'N/A', 'studentId': '123456789', 'paraasdfasdfm1': 'N/A', 'param2': 'N/A', 'comment': 'N/A', 'score': 'N/A'})
+        with patch('src.main.student_data.StudentData.ask', side_effect=[-99,-99,-99,-99]):
+            result = student.ask()
+        print(result)
+
+    def create_work(self):
+        work = Work()
+        work.draft = self.draft
+        work.workId = "testWork2"
+        work.path = currentdir
+        work.property_is_ready()
+        work.create()
+
 
     def tearDown(self) -> None:
-        removeapikey()
-        DirManagement.remove_dir(os.path.join(self.path, 'ta'))
+        shutil.rmtree(os.path.join(currentdir,"ta"))
         return super().tearDown()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
