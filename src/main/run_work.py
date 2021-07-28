@@ -70,7 +70,7 @@ def _draft_config(path):
         user_in = input("(R)ead from file or (F)etch from server: ")
         if user_in.lower() in "RrFf":
             break
-    return user_in.lower() == "f":
+    return user_in.lower() == "f"
 
 
 def _display_draft(draft):
@@ -110,14 +110,12 @@ def _add_data_to_work(path, draft, workId):
         component = {"draft":work.draft,"path":work.path,"workId":work.workId}
         count = 0
         end = False
-        for k,i in component.items():
+        for key,item in component.items():
             count += 1
             if count == len(component):
                 end = True
-            if i == None:
-                display_status_symbol(2, 1, f"{k}",end)
-            else:
-                display_status_symbol(2, 0, f"{k}",end)
+            display_status_symbol(2,1 if item == None else 0, f"{key}",end)
+               
         
         return False, None
     return True, work
