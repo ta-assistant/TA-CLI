@@ -115,8 +115,6 @@ def _add_data_to_work(path, draft, workId):
             if count == len(component):
                 end = True
             display_status_symbol(2,1 if item == None else 0, f"{key}",end)
-               
-        
         return False, None
     return True, work
 
