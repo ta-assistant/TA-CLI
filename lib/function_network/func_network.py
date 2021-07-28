@@ -28,9 +28,7 @@ class Api:
         self.posturl = self.prefix+self.postapi
 
     def api_massage(self):
-        out = "  API Request \n\n"
-        for i in self.res.json().items():out += f"  * {i[0]} : {i[1]} \n"
-        return out
+        return self.res.json()
 
 class CallApi(Api):
     def __init__(self, path) -> None:
