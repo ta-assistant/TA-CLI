@@ -161,7 +161,7 @@ def display_configuration(draft,workId,ta_api,number_file):
     """
     outputDraft = draft["outputDraft"]
     fileDraft = draft["fileDraft"]
-    dict_ele = {"ta-api": ta_api,"workId": workId,"fileDraft": fileDraft,"outputDraft": outputDraft,"Number of files": number_file}
+    configuration_element = {"ta-api": ta_api,"workId": workId,"fileDraft": fileDraft,"outputDraft": outputDraft,"Number of files": number_file}
     # find longest string
     # plus 2 becuse it's inclue 2 space |^string^|
     max_len = max([len(str(fileDraft)),len(str(outputDraft)),len(str(workId)),len(str(ta_api))])+2
@@ -177,9 +177,9 @@ def display_configuration(draft,workId,ta_api,number_file):
     print(new_tab_line) 
     print(setup)
     print(new_tab_line) 
-    for key, ele in dict_ele.items():
-        ele = _set_to_center(max_len,ele)
-        print(f"| {key:^16} |{ele}|")
+    for key, item in configuration_element.items():
+        item = _set_to_center(max_len,item)
+        print(f"| {key:^16} |{item}|")
         print(new_tab_line) 
 
 
