@@ -29,8 +29,8 @@ def _check_draft(path,draft_config):
             # Choose fetch draft
             return True
         # Not have an api-key and draft.json
-        if not SaveApiKey().exsitapikey():
-            return False
+        return False
+    # Have an draft.json
     else:
         return True
 
