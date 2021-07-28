@@ -3,11 +3,11 @@ import os, sys, inspect, json
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from lib.file_management.configeditor import ConfigEditor
+from lib.file_management.config_editor import *
 from lib.file_management.file_management_lib import DirManagement
 
 
-class TestSendData(unittest.TestCase):
+class TestConfig_editor(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
@@ -32,34 +32,33 @@ class TestSendData(unittest.TestCase):
 
         with open(os.path.join(self.path, "work.json"), "w") as create:
             json.dump(workdata, create)
-        self.con = ConfigEditor('testWork2', parentdir)
-        self.con.writeconfig()
+        writeconfig(parentdir, 'testWork2')
         return super().setUp()
 
     def test_writeconfig(self):
         """
         return None
         """
-        self.assertIsNone(self.con.writeconfig())
+        self.assertIsNone(writeconfig(parentdir))
 
 
     def test_readconfig(self):
         """
         return str
         """
-        self.assertIs(type(self.con.readconfig()), dict)
+        self.assertIs(type(readconfig(parentdir)), dict)
 
     def test_ishaveconfig(self):
         """
         return None
         """
-        self.assertIsNone(self.con.ishaveconfig())
+        self.assertIsNone(ishaveconfig(parentdir))
 
     def test_checkdata(self):
         """
         return None
         """
-        self.assertIsNone(self.con.checkdata())
+        self.assertIsNone(checkdata(parentdir))
 
     def tearDown(self) -> None:
         """

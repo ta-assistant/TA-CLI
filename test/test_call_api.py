@@ -3,7 +3,7 @@ import os, sys, inspect, json
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from lib.file_management.createapikeyfile import SaveApiKey
+from lib.file_management.create_apikeyfile import *
 from lib.function_network.func_network import CallApi
 from lib.file_management.file_management_lib import DirManagement
 
@@ -15,8 +15,8 @@ class TestCallApi(unittest.TestCase):
                 "workId" : 'testWork2'}
         with open(os.path.join(self.path, 'config.json'), "w") as wri:
             json.dump(self.data, wri)
-        SaveApiKey().removeapikey()
-        SaveApiKey().save('testKey')
+        removeapikey()
+        save('testKey')
         self.call = CallApi(parentdir)
         return super().setUp()
 
