@@ -13,17 +13,18 @@ class TestCreate_apikey(unittest.TestCase):
         DirManagement.create_dir(self.path)
         return super().setUp()
 
-    def test_save(self):
+    def test_save_api_key(self):
         """
         return None
         """
-        self.assertIsNone(save_api_key('K4nPEs7RhhCzcjdlvr3X=='))
+        self.assertIsNone(save_api_key('testKey'))
+        self.assertIn('testKey', readapikey())
 
     def test_readapikey(self):
         """
         return ...
         """
-        save('K4nPEs7RhhCzcjdlvr3X==')
+        save_api_key('K4nPEs7RhhCzcjdlvr3X==')
         self.assertIs(type(readapikey()), str)
 
 
