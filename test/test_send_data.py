@@ -36,7 +36,7 @@ class TestSendData(unittest.TestCase):
         with open(os.path.join(self.path, 'ta', "work.json"), "w") as create:
             json.dump(workdata, create)
         removeapikey()
-        save('testKey')
+        save_api_key('testKey')
         self.post = SendData(parentdir)
         return super().setUp()
 

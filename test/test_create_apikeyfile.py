@@ -17,7 +17,7 @@ class TestCreate_apikey(unittest.TestCase):
         """
         return None
         """
-        self.assertIsNone(save('K4nPEs7RhhCzcjdlvr3X=='))
+        self.assertIsNone(save_api_key('K4nPEs7RhhCzcjdlvr3X=='))
 
     def test_readapikey(self):
         """
