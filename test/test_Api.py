@@ -1,13 +1,13 @@
 import unittest
-import os, sys, inspect, json
+import os, sys, inspect, json, requests
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from lib.file_management.create_apikeyfile import *
-from lib.function_network.func_network import CallApi
+from lib.function_network.func_network import Api
 from lib.file_management.file_management_lib import DirManagement
+from lib.file_management.create_apikeyfile import *
 
-class TestCallApi(unittest.TestCase):
+class TestApi(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
@@ -18,37 +18,19 @@ class TestCallApi(unittest.TestCase):
             json.dump(self.data, wri)
         removeapikey()
         save('testKey')
-        self.call = CallApi(parentdir)
+        self.api = Api(parentdir)
+        self.api.res = requests.get(self.api.url, headers=self.api.hparameter)
         return super().setUp()
 
-    def Test_apimassage(self):
+    def test_api_massage(self):
         """
         return dict
         """
-        self.assertIs(type(self.call.api_massage()), dict)
-
-    def Test_fetch(self):
-        """
-        return boolean
-        """
-        self.assertTrue(self.call.fetch())
-
-    def Test_CreateWork(self):
-        """
-        print(str)
-        """
-        self.assertTrue(self.call.createworkdraft())
-
-
-    def test_Writejson(self):
-        """
-        return None
-        """
-        self.assertIsNone(self.call.writejson(self.data))
-        
+        self.assertIs(type(self.api.api_massage()), dict)
 
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)
+        removeapikey()
         return super().tearDown()
 
 if __name__ == "__main__":

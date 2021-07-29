@@ -6,7 +6,7 @@ sys.path.insert(0, parentdir)
 from lib.function_network.func_network import SendData
 from lib.file_management.file_management_lib import DirManagement
 from lib.file_management.create_apikeyfile import *
-from lib.file_management.config_editor import ConfigEditor
+from lib.file_management.config_editor import *
 
 class TestSendData(unittest.TestCase):
     def setUp(self) -> None:
@@ -32,7 +32,7 @@ class TestSendData(unittest.TestCase):
             "scoreTimestamp": "100"
         }]
 }    
-        ConfigEditor('testWork2', self.path).writeconfig()
+        writeconfig(parentdir, 'testWork2')
         with open(os.path.join(self.path, 'ta', "work.json"), "w") as create:
             json.dump(workdata, create)
         removeapikey()
@@ -44,12 +44,12 @@ class TestSendData(unittest.TestCase):
         """
         return None
         """
-        self.assertFalse(self.post.getworkDraft())
+        self.assertTrue(self.post.getworkDraft())
         
 
     def tearDown(self) -> None:
         removeapikey()
-        DirManagement.remove_dir(self.path, 'ta')
+        DirManagement.remove_dir(os.path.join(self.path, 'ta'))
         return super().tearDown()
 
 
