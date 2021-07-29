@@ -11,27 +11,6 @@ class TestConfig_editor(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(parentdir,"ta")
         DirManagement.create_dir(self.path)
-        workdata = {
-    "workDraft": {
-        "outputDraft": [
-            "ID",
-            "param1",
-            "param2",
-            "comment"
-        ],
-        "fileDraft": "{ID}_test.py"
-    },
-    "scores": [
-        {
-            "ID": "6310545000",
-            "param1": "100",
-            "param2": "print('hello')",
-            "comment": "good"
-        }]
-}
-
-        with open(os.path.join(self.path, "work.json"), "w") as create:
-            json.dump(workdata, create)
         writeconfig(parentdir, 'testWork2')
         return super().setUp()
 
@@ -39,7 +18,11 @@ class TestConfig_editor(unittest.TestCase):
         """
         return None
         """
-        self.assertIsNone(writeconfig(parentdir))
+        self.assertIsNone(writeconfig(parentdir, 'testWork2'))
+        self.assertIn('prefix', readconfig(parentdir))
+        self.assertIn('workId', readconfig(parentdir))
+        self.assertIn('testWork2', readconfig(parentdir)['workId'])
+        self.assertIn('apikeydir', readconfig(parentdir))
 
 
     def test_readconfig(self):

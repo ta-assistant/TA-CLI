@@ -17,7 +17,7 @@ class TestCallApi(unittest.TestCase):
         with open(os.path.join(self.path, 'config.json'), "w") as wri:
             json.dump(self.data, wri)
         removeapikey()
-        save('testKey')
+        save_api_key('testKey')
         self.call = CallApi(parentdir)
         return super().setUp()
 

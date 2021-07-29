@@ -4,7 +4,7 @@ import shutil
 
 
 
-def save(apikey):
+def save_api_key(apikey):
     """
     Parameter
     -------------------------------------
