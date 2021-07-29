@@ -1,4 +1,5 @@
 import time
+from typing import Counter
 
 
 
@@ -100,6 +101,9 @@ class StudentData:
                     data_input = input(f"Enter {i}: ")
                     if data_input == "-99":
                         break
+                    if data_input == "":
+                        print("Can't put it as an expty")
+                        continue
                     if i == "score":
                         try:
                             data_input = float(data_input)
