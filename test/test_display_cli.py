@@ -59,7 +59,7 @@ class TestDisplayStatusSymbol(unittest.TestCase):
 class TestDisplayApiStatusMessage(unittest.TestCase):
     def setUp(self) -> None:
         self.success_api_message = {"statusCode":200,"message":"Success","requestId":"xxxxxxxxxxx-xxx","workDraft":{"Draft":"draft"}}
-        self.fail_api_message = {"statusCode":400,"message":"The workId you specified was not found.","requestId":"xxxxxxxxxxx-xxx","workDraft":{"Draft":"draft"}}
+        self.fail_api_message = {"statusCode":400,"message":"The workId you specified was not found.","requestId":"xxxxxxxxxxx-xxx"}
         return super().setUp()
 
     def _get_io_status_code_200_order(self,order):
