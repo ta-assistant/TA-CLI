@@ -32,7 +32,7 @@ class Work(WorkEditor):
     @property
     def workId_state(self):
         return self.__workId_state
-        
+
     @property
     def draft_state(self):
         return self.__draft_state
@@ -60,9 +60,9 @@ class Work(WorkEditor):
                  self.__draft = value
                  self.__draft_state = True
             else:
-                display_status_symbol(1,1,"Invalid draft")
+                display_status_symbol(1,1,"Invalid draft: draft not follow the requriment.")
         except KeyError:
-            display_status_symbol(1,1,"Invalid draft")
+            display_status_symbol(1,1,"Invalid draft: Key error.")
 
     def property_is_ready(self):
         return self.__draft_state and self.__workId_state and self.__path_state

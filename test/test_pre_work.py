@@ -8,4 +8,4 @@ class TestPreWork(unittest.TestCase):
 
 work = Work()
 work.workId = 123456
-print(work.workId)
+print(work.workId_state)
