@@ -1,5 +1,5 @@
 from src.build.make import init_work_directory
-from lib.file_management import save, readapikey, exsitapikey, removeapikey, readapikey
+from lib.file_management import save_api_key, readapikey, exsitapikey, removeapikey, readapikey
 import unittest
 from unittest.mock import patch
 import os, inspect, shutil
@@ -19,7 +19,7 @@ class TestInitWorkDir(unittest.TestCase):
         if exsitapikey():
             self.old_apikey_state = True
             self.old_apikey = readapikey()
-        self.assertIsNone(save(apikey))
+        self.assertIsNone(save_api_key(apikey))
 
     
     def test_init_work_dir(self):
@@ -40,7 +40,7 @@ class TestInitWorkDir(unittest.TestCase):
     @patch('builtins.input',return_value='y')
     def tearDown(self,input) -> None:
         if self.old_apikey_state:
-            self.assertIsNone(save(self.old_apikey))
+            self.assertIsNone(save_api_key(self.old_apikey))
         else:
             removeapikey()
         if os.path.exists(os.path.join(currentdir,"work_dir")):
