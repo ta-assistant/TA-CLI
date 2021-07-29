@@ -5,6 +5,9 @@ import os
 class Work(WorkEditor):
     def __init__(self) -> None:
         super().__init__()
+        self.__workId_state = False
+        self.__path_state = False
+        self.__draft_state = False
         self.__path = None
         self.__workId = None
         self.__draft = None
@@ -22,17 +25,31 @@ class Work(WorkEditor):
     def draft(self):
         return self.__draft
 
+    @property
+    def path_state(self):
+        return self.__path_state
+
+    @property
+    def workId_state(self):
+        return self.__workId_state
+        
+    @property
+    def draft_state(self):
+        return self.__draft_state
+
     # setter
     @path.setter
     def path(self, value):
         if os.path.exists(str(value)):
             self.__path = value
+            self.__path_state = True
         else:
             print("Invalid Path")
 
     @workId.setter
     def workId(self, value):
         self.__workId = value
+        self.__workId_state = True 
 
     @draft.setter
     def draft(self, value):
@@ -41,19 +58,14 @@ class Work(WorkEditor):
             outputdraft = value["outputDraft"]
             if "studentId" in outputdraft and "score" in outputdraft:
                  self.__draft = value
+                 self.__draft_state = True
             else:
                 display_status_symbol(1,1,"Invalid draft")
         except KeyError:
             display_status_symbol(1,1,"Invalid draft")
 
     def property_is_ready(self):
-        if self.__path == None:
-            return False
-        if self.__draft == None:
-            return False
-        if self.__workId == None:
-            return False
-        return True
+        return self.__draft_state and self.__workId_state and self.__path_state
 
     def create(self):
         return self.create_file_work()
