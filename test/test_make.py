@@ -20,7 +20,11 @@ class TestInitWorkDir(unittest.TestCase):
             self.old_apikey_state = True
             self.old_apikey = readapikey()
         self.assertIsNone(save_api_key(apikey))
-
+    def rm_apikey(self):
+        if exsitapikey():
+            self.old_apikey_state = True
+            self.old_apikey = readapikey()
+            removeapikey()
     def check_file(self):
         # all success can create config and fetch draft
         self.sucess = os.path.exists(os.path.join(currentdir,"work_dir","ta")) and \
@@ -56,6 +60,7 @@ class TestInitWorkDir(unittest.TestCase):
 
     def test_init_work_dir_not_have_apikey(self):
         # not have api-key
+        self.rm_apikey()
         self.assertFalse(init_work_directory(self.work_dir,'testWork2'))
         self.check_file()
         self.assertFalse(self.sucess)
