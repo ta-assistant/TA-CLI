@@ -177,6 +177,9 @@ def manage_work_file(path: str, draft: dict):
     """
     create_dir = DirManagement().create_dir
     listfile = os.listdir(path)
+    if len(listfile) == 1:
+        display_status_symbol(1,1,"No file to work.")
+        return False
     # remove invalid file on list file and return name of those invalid file
     invalidfile = _check_invalid_file_name(draft,listfile)
     total_invalid_file = len(invalidfile)

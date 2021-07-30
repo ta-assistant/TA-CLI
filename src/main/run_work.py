@@ -147,7 +147,9 @@ def _scoring(path, work, openvs, onebyone):
 def run_work(path, openvs=True, onebyone=False):
     # Fetch or read draft
     draft_config = _draft_config()
-
+    if draft_config and not exsitapikey():
+        display_status_symbol(0,1,"You don't have an api-key please login and try again.")
+        return False
     display_status_symbol(0,2,"starting...")
 
     # Checking draft and config.json that are exist or not
