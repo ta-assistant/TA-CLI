@@ -12,6 +12,9 @@ class TestInitWorkDir(unittest.TestCase):
         self.old_apikey_state = False
         self.work_dir = os.path.join(currentdir,"work_dir")
         os.mkdir(self.work_dir)
+        self.sucess = os.path.exists(os.path.join(currentdir,"work_dir","ta")) and \
+        os.path.exists(os.path.join(currentdir,"work_dir","ta","config.json"))
+        self.cant_fetch_draft = os.path.exists(os.path.join(currentdir,"work_dir","ta","config.json"))
         return super().setUp()
         
     @patch('builtins.input',return_value='y')
@@ -25,17 +28,21 @@ class TestInitWorkDir(unittest.TestCase):
     def test_init_work_dir(self):
         self.create_env("testKey")
         self.assertTrue(init_work_directory(self.work_dir,'testWork2'))
+        self.assertTrue(self.sucess)
 
     def test_init_work_dir_invalid_workid(self):
         self.create_env("testKey")
         self.assertFalse(init_work_directory(self.work_dir,'testWork'))
-    
+        self.assertTrue(self.cant_fetch_draft)
+
     def test_init_work_dir_invalid_apikey(self):
         self.create_env("testKey1")
         self.assertFalse(init_work_directory(self.work_dir,'testWork2'))
-    
+        self.assertTrue(self.cant_fetch_draft)
+
     def test_init_work_dir_not_have_apikey(self):
         self.assertFalse(init_work_directory(self.work_dir,'testWork2'))
+        self.assertTrue(self.cant_fetch_draft)
 
     @patch('builtins.input',return_value='y')
     def tearDown(self,input) -> None:

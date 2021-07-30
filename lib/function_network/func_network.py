@@ -10,7 +10,7 @@ class Api:
     Api
     Create a base code that is required.
     """
-    def __init__(self, path, apikey = readapikey()) -> None:
+    def __init__(self, path) -> None:
         """
         Parameter
         -------------------------------------------------------
@@ -18,7 +18,7 @@ class Api:
             Directory of config.josn file
         """
         self.path = path
-        self.apikey = apikey
+        self.apikey = readapikey()
         self.data = readconfig(self.path)
         self.prefix = self.data['prefix']
         self.workID = self.data['workId']

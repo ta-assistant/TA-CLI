@@ -5,7 +5,7 @@ import json
 from src.main.run_work import run_work
 from src.build import make
 from lib.cli_displayed import display_api_status_message
-from lib.file_management import save
+from lib.file_management import save_api_key
 from lib.function_network import SendData
 
 
@@ -39,7 +39,7 @@ def cli():
 @click.option("--apikey", required=True, type=str)
 def login(apikey):
     """Login"""
-    save(apikey)
+    save_api_key(apikey)
 
 
 @cli.command()
