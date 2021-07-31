@@ -58,6 +58,28 @@ class TestRunWork(unittest.TestCase):
 
     side_effect = [1 for _ in range(20)]
     @patch('builtins.input',side_effect=['f']+side_effect)
+    def test_no_draft_choose_fetch(self,input):
+        os.remove(os.path.join(self.work_dir,"ta","draft.json"))
+        self.create_file_zip("6310546066")
+        self.create_file_zip("6310546065")
+        self.create_file_zip("6310546064")
+        self.create_file_zip("6310546063")
+        self.create_file_zip("6310546062")
+        self.assertTrue(run_work(self.work_dir,False,False))
+
+    side_effect = [1 for _ in range(20)]
+    @patch('builtins.input',side_effect=['r']+side_effect)
+    def test_no_draft_choose_read(self,input):
+        os.remove(os.path.join(self.work_dir,"ta","draft.json"))
+        self.create_file_zip("6310546066")
+        self.create_file_zip("6310546065")
+        self.create_file_zip("6310546064")
+        self.create_file_zip("6310546063")
+        self.create_file_zip("6310546062")
+        self.assertFalse(run_work(self.work_dir,False,False))
+
+    side_effect = [1 for _ in range(20)]
+    @patch('builtins.input',side_effect=['f']+side_effect)
     def test_run_work_fetch(self,input):
         self.create_file_zip("6310546066")
         self.create_file_zip("6310546065")
@@ -90,6 +112,28 @@ class TestRunWork(unittest.TestCase):
     def test_run_work_fetch_but_no_apikey(self,input):
         removeapikey()
         self.assertFalse(run_work(self.work_dir,False,False))
+    
+    @patch('builtins.input',side_effect=['r'])
+    def test_run_work_read_but_no_apikey(self,input):
+        removeapikey()
+        self.create_file_zip("6310546066")
+        self.create_file_zip("6310546065")
+        self.create_file_zip("6310546064")
+        self.create_file_zip("6310546063")
+        self.create_file_zip("6310546062")
+        self.assertTrue(run_work(self.work_dir,False,False))
+
+    @patch('builtins.input',side_effect=['r'])
+    def test_no_file_follow_draft(self,input):
+        listname = ["test_1.txt","test_2.txt","test_3.txt"]
+        test_data = "123456"
+        # Create test file
+        for filename in listname:
+            with open(os.path.join(self.work_dir,filename),"w") as file:
+                json.dump(test_data,file)
+                file.close()
+        self.assertFalse(run_work(self.work_dir,False,False))
+
     @patch('builtins.input',return_value='y')
     def tearDown(self,input) -> None:
         if self.old_apikey_state:
