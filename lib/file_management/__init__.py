@@ -30,7 +30,7 @@ manage_work_file
     Manage and check student work
 """
 
-from .configeditor import *
-from .createapikeyfile import *
+from .config_editor import *
+from .create_apikeyfile import *
 from .manage_work_file import *
 from .file_management_lib import *

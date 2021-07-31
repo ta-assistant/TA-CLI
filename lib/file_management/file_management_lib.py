@@ -1,7 +1,7 @@
 import json
 import os
 import shutil
-    
+
 
 class DirManagement:
     """
@@ -110,7 +110,6 @@ class WorkEditor:
     def _add_workid(self, path, workId):
         # check that work.json is exists or not
         if self._check_exits_work(path):
-
             # load data on work.json keep in var data
             with open(os.path.join(path, "ta", "work.json"), "r") as file:
                 data = json.load(file)
@@ -123,7 +122,7 @@ class WorkEditor:
                 file.close()
 
             # displayed
-            print(f" |-[*] Your workId is \'{workId}\'")
+
 
     def _add_draft(self, path, draft):
         # check that work.json is exists or not
@@ -135,7 +134,7 @@ class WorkEditor:
                 data["workDraft"] = draft
                 json.dump(data, file)
                 file.close()
-            print(" |-[*] draft has been written to work.json")
+
     
     def _check_work_draft(self,path,draft):
         workDraft = self.read_filework(path)

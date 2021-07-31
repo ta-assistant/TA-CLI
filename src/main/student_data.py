@@ -1,4 +1,5 @@
 import time
+from typing import Counter
 
 
 
@@ -32,7 +33,8 @@ class StudentData:
         self.filename = filename
 
     def _filename_pre_data(self) -> dict:
-        """prepare filename to dict
+        """
+        prepare filename to dict
         pseudo code:
         -get key word form file draft and store it in key
         -split filename with "_" so we will got list of student name, id, ex, etc.
@@ -99,6 +101,9 @@ class StudentData:
                     data_input = input(f"Enter {i}: ")
                     if data_input == "-99":
                         break
+                    if data_input == "":
+                        print("Can't put it as an expty")
+                        continue
                     if i == "score":
                         try:
                             data_input = float(data_input)

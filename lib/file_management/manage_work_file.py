@@ -12,7 +12,7 @@ import os
 
 from .file_management_lib import DirManagement
 from .loadin_bar import progressBar
-
+from lib.cli_displayed import display_status_symbol
 
 # private
 
@@ -72,16 +72,17 @@ def _move_stu_file(path,filename):
     shutil.copyfile(os.path.join(path,filename),os.path.join(path,"ta","Assignment",dirname,filename))
     return True
 
-def _check_valid_file_name(draft,listfile):
+def _check_invalid_file_name(draft,listfile):
     # Check that filename is folow draft or not
-    validfile = []
+    invalid = []
     for i in listfile[::]:
         if not _check_file_name(i,draft):
             listfile.remove(i)
             # Remove ta dir from list file
             if i != "ta":
-                validfile.append(i)
-    return validfile
+                invalid.append(i)
+
+    return invalid
 
 def _remove_extension(filename):
     countname = 0
@@ -176,16 +177,20 @@ def manage_work_file(path: str, draft: dict):
     """
     create_dir = DirManagement().create_dir
     listfile = os.listdir(path)
-    
-    validfile = _check_valid_file_name(draft,listfile)
-
+    if len(listfile) == 1:
+        display_status_symbol(1,1,"No file to work.")
+        return False
+    # remove invalid file on list file and return name of those invalid file
+    invalidfile = _check_invalid_file_name(draft,listfile)
+    total_invalid_file = len(invalidfile)
     # Have an invalid filename
-    if len(validfile) != 0:
-        print(" |-[x] Valid file: (not include in scoring process)")
+    if total_invalid_file != 0:
+        display_status_symbol(1,1,"Invalid file: (not include on scoring process)")
         # Displayed invalid filename
-        for i in validfile: print(" |   |-[*]",i)
+        for index,item in enumerate(invalidfile):
+            display_status_symbol(2,2,item, index + 1 == total_invalid_file)
         # No file are follow the draft
-        if len(listfile) == 0:
+        if listfile == []:
             return False
 
     # Create Assignment directory
@@ -210,6 +215,6 @@ def manage_work_file(path: str, draft: dict):
 
     # Displayed processed file
     print("     "*20,end="\r")
-    print(" |")
-    print(f" |-[/] {count} file has processed")
+    # Display number of file that has been processed
+    display_status_symbol(1,1 if count == 0 else 0,f"{count} file has processed")
     return True

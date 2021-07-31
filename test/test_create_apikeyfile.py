@@ -3,48 +3,48 @@ import os, sys, inspect, json
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from lib.file_management.createapikeyfile import SaveApiKey
+from lib.file_management.create_apikeyfile import *
 from lib.file_management.file_management_lib import DirManagement
 
 
-class TestSendData(unittest.TestCase):
+class TestCreate_apikey(unittest.TestCase):
     def setUp(self) -> None:
         self.path = os.path.join(os.path.expanduser("~") ,"key")
         DirManagement.create_dir(self.path)
-        self.key = SaveApiKey()
         return super().setUp()
 
-    def test_save(self):
+    def test_save_api_key(self):
         """
         return None
         """
-        self.assertIsNone(self.key.save('K4nPEs7RhhCzcjdlvr3X=='))
+        self.assertIsNone(save_api_key('testKey'))
+        self.assertIn('testKey', readapikey())
 
     def test_readapikey(self):
         """
         return ...
         """
-        self.key.save('K4nPEs7RhhCzcjdlvr3X==')
-        self.assertIs(type(self.key.readapikey()), str)
+        save_api_key('K4nPEs7RhhCzcjdlvr3X==')
+        self.assertIs(type(readapikey()), str)
 
 
     def test_writeapikey(self):
         """
         return None
         """
-        self.assertIsNone(self.key.writeapikey('K4nPEs7RhhCzcjdlvr3X=='))
+        self.assertIsNone(writeapikey('K4nPEs7RhhCzcjdlvr3X=='))
 
     def test_existapikey(self):
         """
         return boolean
         """
-        self.assertTrue(self.key.exsitapikey())
+        self.assertTrue(exsitapikey())
 
     def test_removeapikey(self):
         """
         return None
         """
-        self.assertIsNone(self.key.removeapikey())
+        self.assertIsNone(removeapikey())
 
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)
