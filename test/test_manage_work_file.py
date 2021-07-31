@@ -66,6 +66,7 @@ class TestExtract(unittest.TestCase):
             my_zip.close()
 
         for filename in listname:
+            # remove text file
             os.remove(os.path.join(currentdir,filename))
         
     def create_py_file(self):
@@ -77,23 +78,31 @@ class TestExtract(unittest.TestCase):
                 json.dump(test_data,file)
                 file.close()
 
-
     def test_extract_zip(self):
+        # add draft
         self.add_draft(self.draft_zip)
+        # create zip file
         self.create_zip()
         manage_work_file(currentdir,self.draft_zip)
         listfile = os.listdir(currentdir)
         self.assertIn("631055555_hi_ex1.zip",listfile)
+        # remove original zip file
         os.remove(os.path.join(currentdir,"631055555_hi_ex1.zip"))
 
     def test_manage_work_py(self):
+        # ad draft
         self.add_draft(self.draft_py)
+        # create python file
         self.create_py_file()
         manage_work_file(currentdir,self.draft_py)
-        listdir = os.listdir(os.path.join(currentdir,"ta","Assignment"))
+        listassign = os.listdir(os.path.join(currentdir,"ta","Assignment"))
+        listcurrent = os.listdir(os.path.join(currentdir))
+        # check that file.py that are created is copy to Assignment dir
         for dir in ["test_1","test_2","test_3"]:
-            self.assertTrue(dir in listdir)
+            self.assertTrue(dir in listassign)
+            self.assertTrue(f"{dir}.py" in listcurrent)
             os.remove(os.path.join(currentdir,f"{dir}.py"))
+
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path_ta)
         path_folder = os.path.join(currentdir,"631055555_hi_ex1")
