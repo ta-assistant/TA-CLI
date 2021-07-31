@@ -44,27 +44,32 @@ class TestRunWork(unittest.TestCase):
 
     @patch('builtins.input',side_effect=["r"])
     def test_no_file_to_run(self,input):
+        # 0 student file on working directory
         self.assertFalse(run_work(self.work_dir,False,False))
 
     side_effect = [1 for _ in range(20)]
     @patch('builtins.input',side_effect=['r']+side_effect)
     def test_run_work_read(self,input):
+        # create 5 zipfile
         self.create_file_zip("6310546066")
         self.create_file_zip("6310546065")
         self.create_file_zip("6310546064")
         self.create_file_zip("6310546063")
         self.create_file_zip("6310546062")
+        # run config[/] draft[/][r] input[1]
         self.assertTrue(run_work(self.work_dir,False,False))
 
     side_effect = [1 for _ in range(20)]
     @patch('builtins.input',side_effect=['f']+side_effect)
     def test_no_draft_choose_fetch(self,input):
         os.remove(os.path.join(self.work_dir,"ta","draft.json"))
+        # create 5 zipfile
         self.create_file_zip("6310546066")
         self.create_file_zip("6310546065")
         self.create_file_zip("6310546064")
         self.create_file_zip("6310546063")
         self.create_file_zip("6310546062")
+        # run config[/] draft[x][f]
         self.assertTrue(run_work(self.work_dir,False,False))
 
     side_effect = [1 for _ in range(20)]
@@ -76,6 +81,7 @@ class TestRunWork(unittest.TestCase):
         self.create_file_zip("6310546064")
         self.create_file_zip("6310546063")
         self.create_file_zip("6310546062")
+        # run config[/] draft[x][r]
         self.assertFalse(run_work(self.work_dir,False,False))
 
     side_effect = [1 for _ in range(20)]
@@ -86,6 +92,7 @@ class TestRunWork(unittest.TestCase):
         self.create_file_zip("6310546064")
         self.create_file_zip("6310546063")
         self.create_file_zip("6310546062")
+        # run config[/] draft[x][f]
         self.assertTrue(run_work(self.work_dir,False,False))
     
     side_effect = [str(-99) for _ in range(20)]
@@ -96,6 +103,7 @@ class TestRunWork(unittest.TestCase):
         self.create_file_zip("6310546064")
         self.create_file_zip("6310546063")
         self.create_file_zip("6310546062")
+        # run config[/] draft[x][f] input[-99]
         self.assertTrue(run_work(self.work_dir,False,False))
 
     @patch('builtins.input',side_effect=['r'])
@@ -112,8 +120,9 @@ class TestRunWork(unittest.TestCase):
     def test_run_work_fetch_but_no_apikey(self,input):
         removeapikey()
         self.assertFalse(run_work(self.work_dir,False,False))
-    
-    @patch('builtins.input',side_effect=['r'])
+
+    side_effect = [1 for _ in range(20)]
+    @patch('builtins.input',side_effect=['r']+ side_effect)
     def test_run_work_read_but_no_apikey(self,input):
         removeapikey()
         self.create_file_zip("6310546066")

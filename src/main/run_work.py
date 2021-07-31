@@ -1,3 +1,4 @@
+from lib.cli_displayed.display_cli import display_api_status_message
 import os
 import json
 
@@ -73,7 +74,12 @@ def _display_draft(draft):
 
 def _get_draft(path,draft_config):
     if draft_config:
-        draft = CallApi(path).fetch()
+        API = CallApi(path)
+        draft = API.fetch()
+        display_status_symbol(1,2,"Fetching draft ...")
+        display_api_status_message(API.api_massage(),2,True)
+        if not draft:
+            return None, False
         display_status_symbol(1,2,"Choosen draft")
         _display_draft(draft)
     else:
@@ -83,7 +89,7 @@ def _get_draft(path,draft_config):
         display_status_symbol(1,2,"Choosen draft")
         _display_draft(draft)
         
-    return draft
+    return draft, True
 
 
 def _add_data_to_work(path, draft, workId):
@@ -158,7 +164,10 @@ def run_work(path, openvs=True, onebyone=False):
         return False
 
     # Get component
-    draft = _get_draft(path,draft_config)
+    draft, draft_state = _get_draft(path,draft_config)
+    if not draft_state:
+        display_status_symbol(0,1,"Failed can not fetch draft")
+        return False
     config = readconfig(path)
     workId = config["workId"]
     ta_api = config["prefix"]
