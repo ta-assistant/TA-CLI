@@ -15,7 +15,7 @@ class TestExtract(unittest.TestCase):
         DirManagement.create_dir(self.path_ta)
         
         self.draft_zip = {
-            "fileDraft": "{student_id}_{name}_{ex}.zip",
+            "fileDraft": "{student_id}.zip",
             "outputDraft": [
             "student_id",
             "name",
@@ -26,7 +26,7 @@ class TestExtract(unittest.TestCase):
             ]
         }
         self.draft_py = {
-            "fileDraft": "{student_id}_{name}_{ex}.py",
+            "fileDraft": "{student_id}.py",
             "outputDraft": [
             "student_id",
             "name",
@@ -45,7 +45,7 @@ class TestExtract(unittest.TestCase):
             file.close()
         return super().setUp()
 
-    def create_zip(self):
+    def create_zip(self,name):
         # Init test file
         listname = ["test_1.txt","test_2.txt","test_3.txt"]
         test_data = "123456"
@@ -55,7 +55,7 @@ class TestExtract(unittest.TestCase):
                 json.dump(test_data,file)
                 file.close()
         # Zip test file
-        self.path_target = os.path.join(currentdir,"631055555_hi_ex1.zip")
+        self.path_target = os.path.join(currentdir,f"{name}.zip")
         with zipfile.ZipFile(self.path_target,"w") as my_zip:
             text_1 = os.path.join(currentdir,"test_1.txt")
             text_2 = os.path.join(currentdir,"test_2.txt")
@@ -70,9 +70,9 @@ class TestExtract(unittest.TestCase):
             os.remove(os.path.join(currentdir,filename))
         
     def create_py_file(self):
-        listname = ["test_1.py","test_2.py","test_3.py"]
         test_data = "123456"
         # Create test file
+        listname = [f"100056{i}.py" for i in range(100)]
         for filename in listname:
             with open(os.path.join(currentdir,filename),"w") as file:
                 json.dump(test_data,file)
@@ -82,12 +82,18 @@ class TestExtract(unittest.TestCase):
         # add draft
         self.add_draft(self.draft_zip)
         # create zip file
-        self.create_zip()
+        for i in range(100):
+            self.create_zip(f"100000254{i}")
         manage_work_file(currentdir,self.draft_zip)
+        listdir = os.listdir(os.path.join(currentdir,"ta","Assignment"))
         listfile = os.listdir(currentdir)
-        self.assertIn("631055555_hi_ex1.zip",listfile)
+        for i in range(100):
+            self.assertIn(f"100000254{i}",listdir)
+            self.assertIn(f"100000254{i}.zip",listfile)
+        
         # remove original zip file
-        os.remove(os.path.join(currentdir,"631055555_hi_ex1.zip"))
+        for i in range(100):
+            os.remove(os.path.join(currentdir,f"100000254{i}.zip"))
 
     def test_manage_work_py(self):
         # ad draft
@@ -98,7 +104,8 @@ class TestExtract(unittest.TestCase):
         listassign = os.listdir(os.path.join(currentdir,"ta","Assignment"))
         listcurrent = os.listdir(os.path.join(currentdir))
         # check that file.py that are created is copy to Assignment dir
-        for dir in ["test_1","test_2","test_3"]:
+        listname = [f"100056{i}" for i in range(100)]
+        for dir in listname:
             self.assertTrue(dir in listassign)
             self.assertTrue(f"{dir}.py" in listcurrent)
             os.remove(os.path.join(currentdir,f"{dir}.py"))
