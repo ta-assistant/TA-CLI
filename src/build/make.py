@@ -113,4 +113,5 @@ def init_work_directory(path, workId) -> bool:
 
 def reset(path):
     ta_path = os.path.join(path, "ta")
+    # Remove ta dir
     DirManagement.remove_dir(ta_path)
