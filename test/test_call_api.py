@@ -1,5 +1,5 @@
 import unittest
-import os, sys, inspect, json
+import os, sys, inspect, json, requests
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
@@ -21,13 +21,15 @@ class TestCallApi(unittest.TestCase):
         self.call = CallApi(parentdir)
         return super().setUp()
 
-    def Test_apimassage(self):
+    def test_apimassage(self):
         """
         return dict
         """
+        self.call.res = requests.post(
+            self.call.posturl, headers=self.call.hparameter, data=json.dumps(self.data))
         self.assertIs(type(self.call.api_massage()), dict)
 
-    def Test_fetch(self):
+    def test_fetch(self):
         """
         if success will return dict
         if fail will return boolean
@@ -38,7 +40,7 @@ class TestCallApi(unittest.TestCase):
         self.call = CallApi(parentdir)
         self.assertFalse(self.call.fetch())
 
-    def Test_CreateWork(self):
+    def test_CreateWork(self):
         """
         return boolean
         """
