@@ -63,38 +63,51 @@ def _display_check_config_status(workId, path):
             display_status_symbol(1,1,f"Creating `config.json`")
             display_status_symbol(2,2,f"workId has been changed to {workId}",end=True)
 
-def _display_check_api_key_status(path):
-    if _check_api_key(path):
+def _display_check_api_key_status(path,key_state):
+    # Check apikey path
+    if key_state:
         display_status_symbol(1,0,"Checking API-KEY")
     else:
+        # Send apikey not found message
         display_status_symbol(1,1,"Checking API-KEY")
         display_status_symbol(2,1,"API-KEY not found",end=True)
 
 def _display_call_api(path):
+    # Init callapi obj
     callapi_obj = CallApi(path)
+    # Fetch draft it will create draft.json in ta dir
     apistate = _fetch_draft(callapi_obj)
+    # Send message
     display_status_symbol(1,2,"Fetching draft ...")
     display_api_status_message(_fetch_api_massage(callapi_obj),2,end=True)
 
 # public
 def init_work_directory(path, workId) -> bool:
+    # Init file path
     config_path = os.path.join(path, "ta", "config.json")
     ta_path = os.path.join(path, "ta")
     draft_path = os.path.join(path, "ta", "draft.json")
-
+    # Check api-key
     keystate = _check_api_key(path)
-
+    # Start
     print(f"[*] {path} makeing work directory")
+    # Create ta directory
     _display_create_ta_dir_status(path)
+    # Check config if it not exists create config.json
+    # If workid is change config.json will change to new workid
     _display_check_config_status(workId, path)
-    _display_check_api_key_status(path)
+    # Display api-key status
+    _display_check_api_key_status(path,keystate)
+    # Have an apikey
     if keystate:
+        # Call Api (Fetch draft) and write draft.json
         _display_call_api(path)
-    
+    # Check all items [ draft.json, config.json, and ta directory ]
     if os.path.exists(draft_path) and os.path.exists(config_path) and os.path.exists(ta_path):
         display_status_symbol(0,0,f"{path} is ready")
         return True
     else:
+        # Some items is not exist.
         display_status_symbol(0,1,"Something went wrong please try again.")
         return False
 
