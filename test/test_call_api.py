@@ -30,9 +30,10 @@ class TestCallApi(unittest.TestCase):
 
     def Test_fetch(self):
         """
-        return boolean
+        if success will return dict
+        if fail will return boolean
         """
-        self.assertTrue(self.call.fetch())
+        self.assertIs(self.call.fetch(), dict)
         save('wrongkey')
         self.call = CallApi(parentdir)
         self.assertFalse(self.call.fetch())
