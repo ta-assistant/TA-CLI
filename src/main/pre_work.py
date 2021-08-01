@@ -54,14 +54,18 @@ class Work(WorkEditor):
     @draft.setter
     def draft(self, value):
         try:
+            # Test workDraft that have fileDraft and outputDraft
             filedraft = value["fileDraft"]
             outputdraft = value["outputDraft"]
+            # Check that outputdraft must have studentId and score
             if "studentId" in outputdraft and "score" in outputdraft:
                  self.__draft = value
                  self.__draft_state = True
             else:
+                # Display Error message if it not have studentId or score
                 display_status_symbol(1,1,"Invalid draft: draft not follow the requriment.")
         except KeyError:
+            # Display Error message if
             display_status_symbol(1,1,"Invalid draft: Key error.")
 
     def property_is_ready(self):
