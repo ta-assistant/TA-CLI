@@ -6,6 +6,7 @@ sys.path.insert(0, parentdir)
 from lib.file_management.create_apikeyfile import *
 from lib.function_network.func_network import CallApi
 from lib.file_management.file_management_lib import DirManagement
+from lib.file_management.config_editor import *
 
 class TestCallApi(unittest.TestCase):
     def setUp(self) -> None:
@@ -32,12 +33,18 @@ class TestCallApi(unittest.TestCase):
         return boolean
         """
         self.assertTrue(self.call.fetch())
+        save('wrongkey')
+        self.call = CallApi(parentdir)
+        self.assertFalse(self.call.fetch())
 
     def Test_CreateWork(self):
         """
         print(str)
         """
         self.assertTrue(self.call.createworkdraft())
+        save('wrongkey')
+        self.call = CallApi(parentdir)
+        self.assertFalse(self.call.createworkdraft())
 
 
     def test_Writejson(self):
@@ -49,7 +56,8 @@ class TestCallApi(unittest.TestCase):
 
     def tearDown(self) -> None:
         DirManagement.remove_dir(self.path)
+        removeapikey()
         return super().tearDown()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

@@ -13,7 +13,7 @@ class TestSendData(unittest.TestCase):
         self.path = os.path.join(parentdir)
         DirManagement.create_dir(os.path.join(self.path, 'ta'))
         workdata = {
-    "workDraft": {
+        "workDraft": {
         "outputDraft": ["studentId", 
             "param1", 
             "param2", 
@@ -21,8 +21,8 @@ class TestSendData(unittest.TestCase):
             "score", 
             "scoreTimestamp"], 
         "fileDraft": "{studentId}_test.zip"
-    },
-    "scores": [
+        },
+        "scores": [
         {
             "studentId": "6310545000",
             "param1": "100",
@@ -30,8 +30,9 @@ class TestSendData(unittest.TestCase):
             "comment": "good",
             "score": "10",
             "scoreTimestamp": "100"
-        }]
-}    
+        }
+        ]
+        }    
         writeconfig(parentdir, 'testWork2')
         with open(os.path.join(self.path, 'ta', "work.json"), "w") as create:
             json.dump(workdata, create)
@@ -45,6 +46,10 @@ class TestSendData(unittest.TestCase):
         return None
         """
         self.assertTrue(self.post.getworkDraft())
+        removeapikey()
+        save('wrongkey')
+        self.post = SendData(parentdir)
+        self.assertFalse(self.post.getworkDraft())
         
 
     def tearDown(self) -> None:
