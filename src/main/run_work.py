@@ -31,16 +31,22 @@ def _check_draft(path,draft_config):
 
 def _check_state(config_state, draft_state):
     if config_state and draft_state:
+        # Have config.json and draft.json
         return True
     else:
+        # Display Error message
         display_status_symbol(1, 2, "Error!!")
         if config_state:
+            # Have config.json
             display_status_symbol(2, 0, "config.json")
         else:
+            # Not have config.json
             display_status_symbol(2, 1, "config.json not found")
         if draft_state:
+            # Have draft.json
             display_status_symbol(2, 0, "draft.json")
         else:
+            # Not have draft.json
             display_status_symbol(2, 1, "draft.json not found")
         display_status_symbol(0, 1, "Failed")
         return False
@@ -58,62 +64,82 @@ def _preparework(path,draft_config):
 
 
 def _draft_config():
+    # Ask user that they want to read draft.json or fetch draft from the server
     print("Do you want to use draft from draft.json or fetch from the server")
     while True:
         user_in = input("(R)ead from file or (F)etch from server: ")
+        # Check user input
         if user_in.lower() in "RrFf":
             break
+    # if user input = r return False
+    # if user input = f return True
     return user_in.lower() == "f"
 
 
 def _display_draft(draft):
+    # Init outputdraft and filedraft
     outputdraft = draft["outputDraft"]
     filedraft = draft["fileDraft"]
+    # Display drafts item
     display_status_symbol(2,2,f"fileDraft: {filedraft}")
     display_status_symbol(2,2,f"outputDraft: {outputdraft}",True)
 
 def _get_draft(path,draft_config):
     if draft_config:
+        # Init CallAPi obj
         API = CallApi(path)
+        # Fetch draft
+        # draft can be False and json obj
         draft = API.fetch()
+        # Display API message
         display_status_symbol(1,2,"Fetching draft ...")
         display_api_status_message(API.api_massage(),2,True)
         if not draft:
             return None, False
+        # Display draft's item
         display_status_symbol(1,2,"Choosen draft")
         _display_draft(draft)
     else:
+        # Read draft.json
         with open(os.path.join(path, "ta", "draft.json"), "r") as draftfile:
             draft = json.load(draftfile)
             draftfile.close()
+        # Display draft's item
         display_status_symbol(1,2,"Choosen draft")
         _display_draft(draft)
-        
     return draft, True
 
 
 def _add_data_to_work(path, draft, workId):
+    # Init Work obj
     work = Work()
+    # Add element to Work obj
     work.draft = draft
     work.path = path
     work.workId = workId
+    # Check Work items (draf workid ta_path)
     if work.property_is_ready():
         work_path = os.path.join(path, "ta", "work.json")
+        # Create work.json
         if work.create():
             display_status_symbol(1, 0, f"{work_path} created")
         else:
+            # work.json is already created
             display_status_symbol(1, 2, f"{work_path} already exists")
     else:
+        # Work's item is not ready
         display_status_symbol(1, 1, f"Error: Invalid component")
         component = {"draft":work.draft,"path":work.path,"workId":work.workId}
         component_size = len({"draft":work.draft,"path":work.path,"workId":work.workId})
         for index,item in enumerate(component.items()):
+            # Display missing item
             display_status_symbol(2,1 if item[1] == None else 0, f"{item[0]}",component_size == index+1)
         return False, None
     return True, work
 
 
 def _manage_work(path, draft):
+    # Call menage_work_file
     if not manage_work_file(path, draft):
         return False
     display_status_symbol(0, 0,"Finish")
@@ -121,16 +147,21 @@ def _manage_work(path, draft):
 
 
 def _student_checking(path, work, file, openvs, onebyone):
+    # Init StudentData obj
     student = StudentData(path=work.path, filename=file, draft=work.draft)
+    # Read work.json scores
     with open(os.path.join(path, "ta", "work.json"), "r") as workfile:
         scores = json.load(workfile)["scores"]
         workfile.close
+    # Prepare student data
     student.prepare_student_data()
     _did_student_checked(path,work, file, student, scores, openvs, onebyone)
 
 
 def _did_student_checked(path,work, file, student, scores, openvs, onebyone):
+    # Check that that student is already scored or not
     if student.check_work_score(scores):
+        # open vscode 1 by 1 file
         if openvs and onebyone:
             assignmentpath = os.path.join(path,"ta", "Assignment", file)
             print(assignmentpath)
@@ -139,13 +170,17 @@ def _did_student_checked(path,work, file, student, scores, openvs, onebyone):
 
 
 def _scoring(path, work, openvs, onebyone):
+    # Init Assignment path
     list_file = os.listdir(os.path.join(path, "ta", "Assignment"))
     assignmentpath = os.path.join("ta", "Assignment")
+    # open vscode path=Aassignment directory
     if openvs and not onebyone:
         os.system(f"code \"{assignmentpath}\"")
+    # Ignore ta directory
     for file in list_file:
         if "." in file or file == "ta":
             continue
+        # Checking student work.
         _student_checking(path, work, file, openvs, onebyone)
 
 # public
