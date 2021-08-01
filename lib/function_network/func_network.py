@@ -142,7 +142,7 @@ class SendData(Api):
             self.posturl, headers=self.hparameter, data=json.dumps(work))
         if self.res.status_code == 200:
             return True
-        elif self.res.status_code != 500 and self.res.status_code != 503 and self.res.status_code != 501 and self.send.status_code != 502:
+        elif self.res.status_code != 500 and self.res.status_code != 503 and self.res.status_code != 501 and self.res.status_code != 502:
             return False
         else:
             return False

@@ -29,15 +29,24 @@ class TestCallApi(unittest.TestCase):
 
     def Test_fetch(self):
         """
-        return boolean
+        if success will return dict
+        if fail will return boolean
         """
-        self.assertTrue(self.call.fetch())
+        self.assertIs(type(self.call.fetch()), dict)
+        removeapikey()
+        save_api_key('wrongKey')
+        self.call = CallApi(parentdir)
+        self.assertFalse(self.call.fetch())
 
     def Test_CreateWork(self):
         """
-        print(str)
+        return boolean
         """
         self.assertTrue(self.call.createworkdraft())
+        removeapikey()
+        save_api_key('wrongKey')
+        self.call = CallApi(parentdir)
+        self.assertFalse(self.call.createworkdraft())
 
 
     def test_Writejson(self):
